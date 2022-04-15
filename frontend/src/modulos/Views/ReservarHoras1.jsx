@@ -12,6 +12,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 import { COLOR_BASE_2 } from '../../constantes';
 import Stepper from '../Componentes/Stepper';
 import api from '../../API/api';
@@ -38,8 +39,8 @@ function ReservarHoras1() {
   return (
     <Container>
       <Stepper step={1} search={OpcionesDeBusquedaSeleccionada} />
-      <Box sx={{ marginTop: 5 }}>
-        <FormControl>
+      <Box sx={{ marginTop: 5, width: '100%' }}>
+        <FormControl sx={{ width: '100%' }}>
           <FormLabel sx={{ color: 'black' }}>Metodo de Busqueda</FormLabel>
           <RadioGroup
             row
@@ -53,14 +54,19 @@ function ReservarHoras1() {
           </RadioGroup>
           <FormLabel sx={{ color: 'black' }}>
             Buscar por
+            {' '}
             {OpcionesDeBusquedaSeleccionada}
           </FormLabel>
-          <Box sx={{ backgroundColor: COLOR_BASE_2 }}>
+          <Box sx={{
+            backgroundColor: COLOR_BASE_2, width: '100%', padding: 20,
+          }}
+          >
             <FormLabel sx={{ color: 'white' }}>
               Seleccione Área Medica
             </FormLabel>
-            {AutocompleteAreaMedica()}
+            {OpcionesDeBusqueda[0] === OpcionesDeBusquedaSeleccionada && AutocompleteAreaMedica()}
           </Box>
+          <Button>Hola</Button>
         </FormControl>
       </Box>
     </Container>
