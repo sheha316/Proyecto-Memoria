@@ -7,6 +7,7 @@ export const COLOR_BUTTON_2 = '#80B100';
 export const RUTAS_HOME = '/';
 export const RUTAS_SUCURSALES = '/sucursales';
 export const RUTAS_QUIENES_SOMOS = '/quienes-somos';
+
 export const RUTAS_RESERVAR_HORA = '/reservar-hora';
 export const RUTAS_RESERVAR_HORA_AREA = '/reservar-hora-area';
 // ----------------direcciones Sucursales

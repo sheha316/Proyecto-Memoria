@@ -2,15 +2,22 @@
 /* eslint-disable import/no-named-as-default-member */
 import React from 'react';
 import {
-  Stepper, StepLabel, Step, StepButton,
+  Stepper, Step, StepButton,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { RUTAS_RESERVAR_HORA } from '../../constantes';
 
 function stepper({ step, search }) {
   const history = useNavigate();
   const steps = [`Buscar por ${search}`, 'Seleccionar Fecha y Profesional', 'Ingresar Datos'];
   const handleStep = (index) => {
-    console.log(index);
+    if (index !== step) {
+      if (index === 0) {
+        history(RUTAS_RESERVAR_HORA);
+      } else if (index === 1) {
+        history(RUTAS_RESERVAR_HORA);
+      }
+    }
   };
   return (
     <Stepper activeStep={step} alternativeLabel>

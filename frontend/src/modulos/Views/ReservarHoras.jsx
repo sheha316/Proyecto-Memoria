@@ -40,7 +40,6 @@ function ReservarHoras() {
 
   function AutocompleteAreaMedica() {
     const handleSubmit = (values) => {
-      console.log('algo paso aqui', values);
       history(RUTAS_RESERVAR_HORA_AREA, { state: { area: values.areaSeleccionada, OpcionesDeBusquedaSeleccionada } });
     };
     const validationSchema = Yup.object().shape({
@@ -82,7 +81,6 @@ function ReservarHoras() {
                   groupBy={(option) => `--${option.profesion}--`}
                   getOptionLabel={(option) => option.especializacion}
                   onChange={(e, value) => {
-                    console.log(value);
                     setFieldValue(
                       'areaSeleccionada',
                       value,
@@ -128,7 +126,7 @@ function ReservarHoras() {
   console.log(medicos, areaMedica);
   return (
     <Container>
-      <Stepper step={1} search={OpcionesDeBusquedaSeleccionada} />
+      <Stepper step={0} search={OpcionesDeBusquedaSeleccionada} />
       <Box sx={{ marginTop: 5, width: '100%' }}>
         <FormLabel sx={{ color: 'black' }}>Método de Búsqueda</FormLabel>
         <RadioGroup

@@ -10,19 +10,25 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
+import Grid from '@mui/material/Grid';
 import Calendario from '../Componentes/Calendario';
 import TablaMedicos from '../Componentes/TablaMedicos';
+import api from '../../API/api';
+
 import {
   COLOR_BASE_2, COLOR_BUTTON_1, COLOR_BUTTON_2, SUCURSAL_1, SUCURSAL_2, SUCURSAL_3, SUCURSAL_4,
 } from '../../constantes';
 import Stepper from '../Componentes/Stepper';
-import api from '../../API/api';
 
 function ReservarHorasArea() {
   const history = useNavigate();
   const { OpcionesDeBusquedaSeleccionada, area } = useLocation().state;
   const [sucursal, setSucursal] = useState(SUCURSAL_1);
-
+  const [medicos, setMedicos] = useState([]);
+  useEffect(async () => {
+    setMedicos(await api.getMedicosBySpec(area.profesion));
+  }, []);
+  console.log(medicos);
   console.log(area, OpcionesDeBusquedaSeleccionada);
 
   const optionsSucursales = () => {
@@ -50,16 +56,24 @@ function ReservarHorasArea() {
   const optionMedicos = () => (
     <Box>
       <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Seleccione Profesional y Hora</FormLabel>
-      <TablaMedicos />
+      <TablaMedicos medicos={medicos} />
     </Box>
   );
   return (
     <Container>
       <Stepper step={1} search={OpcionesDeBusquedaSeleccionada} />
       <Box sx={{ marginTop: 5, width: '100%' }}>
-        {optionsSucursales()}
-        {optionCalendario()}
-        {optionMedicos()}
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            {optionsSucursales()}
+          </Grid>
+          <Grid item xs={6}>
+            {optionCalendario()}
+          </Grid>
+          <Grid item xs={12}>
+            {optionMedicos()}
+          </Grid>
+        </Grid>
       </Box>
     </Container>
   );

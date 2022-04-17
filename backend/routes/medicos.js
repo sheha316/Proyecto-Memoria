@@ -1,6 +1,7 @@
 const express = require('express')
-const {getMedicos}=require('../controllers/medicocontroller')
+const {getMedicos,getMedicosBySpec}=require('../controllers/medicocontroller')
 const api = express.Router()
 
 api.get("/obtenerMedicos",getMedicos)
+api.get("/obtenerMedicosBySpec",getMedicosBySpec)
 module.exports= api

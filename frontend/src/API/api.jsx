@@ -11,4 +11,8 @@ async function getSpecs() {
   const response = await axios.get(`${baseUrl}/spec/obtenerSpecs`);
   return response.data.response;
 }
-export default { getMedicos, getSpecs };
+async function getMedicosBySpec(spec) {
+  const response = await axios.get(`${baseUrl}/medicos/obtenerMedicosBySpec`, { params: { spec } });
+  return response.data.response;
+}
+export default { getMedicos, getSpecs, getMedicosBySpec };

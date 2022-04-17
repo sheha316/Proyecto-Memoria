@@ -1,3 +1,10 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable array-callback-return */
+/* eslint-disable no-param-reassign */
+/* eslint-disable react/prop-types */
+/* eslint-disable max-len */
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -6,43 +13,39 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
+import Button from '@mui/material/Button';
 import TableRow from '@mui/material/TableRow';
+import { COLOR_BASE_2, COLOR_BASE_1 } from '../../constantes';
 
 const columns = [
-  { id: 'Profesionales', label: 'Profesionales', minWidth: 200 },
-  { id: '08:00', label: '08:00', minWidth: 100 },
-];
-function createData(
-  name,
-  code,
-  population,
-  size,
-) {
-  const density = population / size;
-  return {
-    name, code, population, size, density,
-  };
-}
-
-const rows = [
-  createData('India', 'IN', 1324171354, 3287263),
-  createData('China', 'CN', 1403500365, 9596961),
-  createData('Italy', 'IT', 60483973, 301340),
-  createData('United States', 'US', 327167434, 9833520),
-  createData('Canada', 'CA', 37602103, 9984670),
-  createData('Australia', 'AU', 25475400, 7692024),
-  createData('Germany', 'DE', 83019200, 357578),
-  createData('Ireland', 'IE', 4857000, 70273),
-  createData('Mexico', 'MX', 126577691, 1972550),
-  createData('Japan', 'JP', 126317000, 377973),
-  createData('France', 'FR', 67022000, 640679),
-  createData('United Kingdom', 'GB', 67545757, 242495),
-  createData('Russia', 'RU', 146793744, 17098246),
-  createData('Nigeria', 'NG', 200962417, 923768),
-  createData('Brazil', 'BR', 210147125, 8515767),
+  { id: 'Profesionales', label: 'Profesionales', minWidth: 100 },
+  { id: '08:00', label: '08:00', minWidth: 40 },
+  { id: '08:30', label: '08:30', minWidth: 40 },
+  { id: '09:00', label: '09:00', minWidth: 40 },
+  { id: '09:30', label: '09:30', minWidth: 40 },
+  { id: '10:00', label: '10:00', minWidth: 40 },
+  { id: '10:30', label: '10:30', minWidth: 40 },
+  { id: '11:00', label: '11:00', minWidth: 40 },
+  { id: '11:30', label: '11:30', minWidth: 40 },
+  { id: '12:00', label: '12:00', minWidth: 40 },
+  { id: '12:30', label: '12:30', minWidth: 40 },
+  { id: '14:00', label: '14:00', minWidth: 40 },
+  { id: '14:30', label: '14:30', minWidth: 40 },
+  { id: '15:00', label: '15:00', minWidth: 40 },
+  { id: '15:30', label: '15:30', minWidth: 40 },
+  { id: '16:00', label: '16:00', minWidth: 40 },
+  { id: '16:30', label: '16:30', minWidth: 40 },
+  { id: '17:00', label: '17:00', minWidth: 40 },
+  { id: '17:30', label: '17:30', minWidth: 40 },
+  { id: '18:00', label: '18:00', minWidth: 40 },
+  { id: '18:30', label: '18:30', minWidth: 40 },
+  { id: '19:00', label: '19:00', minWidth: 40 },
+  { id: '19:30', label: '19:30', minWidth: 40 },
+  { id: '20:00', label: '20:00', minWidth: 40 },
+  { id: '20:30', label: '20:30', minWidth: 40 },
 ];
 
-export default function StickyHeadTable() {
+export default function StickyHeadTable({ medicos }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -54,10 +57,17 @@ export default function StickyHeadTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
+  const getAviableDates = () => {
+    medicos.map((medico) => {
+      medico.dates = [true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true];
+    });
+    console.log('cambio de medico', medicos);
+    return medicos;
+  };
+  getAviableDates();
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
+      <TableContainer sx={{ maxHeight: 440, backgroundColor: 'gray' }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -65,7 +75,7 @@ export default function StickyHeadTable() {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth }}
+                  style={{ color: 'white', minWidth: column.minWidth, backgroundColor: COLOR_BASE_1 }}
                 >
                   {column.label}
                 </TableCell>
@@ -73,18 +83,34 @@ export default function StickyHeadTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
+            {medicos.length > 0 && medicos
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                  {columns.map((column) => {
-                    const value = row[column.id];
+              .map((row, indexRow) => (
+                <TableRow hover role="checkbox" tabIndex={-1} key={row._id} style={{ backgroundColor: indexRow % 2 === 0 ? 'white' : COLOR_BASE_2 }}>
+                  {columns.map((column, indexColumn) => {
+                    console.log('toy cachando', row);
+                    const value = row;
+                    if (indexColumn === 0) {
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          <img style={{ width: 80, height: 80 }} alt="" src="https://img.freepik.com/foto-gratis/doctor-brazos-cruzados-sobre-fondo-blanco_1368-5790.jpg?w=2000" />
+                          <span>Dr(a):</span>
+                          <span>
+                            {`${row.nombre}
+                            ${row.apellido}`}
+                          </span>
+                        </TableCell>
+                      );
+                    }
+                    if (row.dates[indexColumn]) {
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          <Button>Hola</Button>
+                        </TableCell>
+                      );
+                    }
                     return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number'
-                          ? column.format(value)
-                          : value}
-                      </TableCell>
+                      <TableCell key={column.id} align={column.align} />
                     );
                   })}
                 </TableRow>
@@ -95,7 +121,7 @@ export default function StickyHeadTable() {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={rows.length}
+        count={medicos.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
