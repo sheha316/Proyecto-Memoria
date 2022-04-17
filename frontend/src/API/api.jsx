@@ -1,6 +1,14 @@
-import { medicos, spec } from '../medicos';
+import axios from 'axios';
 
-const getMedicos = () => medicos;
+const baseUrl = process.env.REACT_APP_API_URL;
 
-const getSpecs = () => spec;
+async function getMedicos() {
+  const response = await axios.get(`${baseUrl}/medicos/obtenerMedicos`);
+  return response.data.response;
+}
+
+async function getSpecs() {
+  const response = await axios.get(`${baseUrl}/spec/obtenerSpecs`);
+  return response.data.response;
+}
 export default { getMedicos, getSpecs };

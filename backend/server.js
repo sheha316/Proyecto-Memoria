@@ -7,7 +7,7 @@ const connectionDB = require('./db/mongodb')
 async function initApp(appConfig,dbConfig){
 	try{
 		await connectionDB(dbConfig)
-		app.listen(appConfig.port,()=> console.log("corriendo yay",appConfig.port))
+		app.listen(appConfig.port,()=> console.log("corriendo BD en el puerto:",appConfig.port))
 	}catch(e){
 		console.error(e)
 		proccess.exit(0)

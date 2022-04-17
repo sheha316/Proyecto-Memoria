@@ -1,7 +1,10 @@
 const express = require('express')
-const citasroutes= require('./routes/citas')
 const bodyparser=require('body-parser')
 const cors = require('cors')
+
+const medicosroutes= require('./routes/medicos')
+const specroutes= require('./routes/spec')
+
 
 const app = express()
 
@@ -10,6 +13,6 @@ app.use(cors())
 app.use(bodyparser.urlencoded({extended:false}))
 app.use(bodyparser.json())
 
-app.use('/public',express.static(__dirname+'/storage/imgs'))
-app.use('/v1',citasroutes)
+app.use('/v1/medicos',medicosroutes)
+app.use('/v1/spec',specroutes)
 module.exports = app

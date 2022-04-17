@@ -1,7 +1,4 @@
 /* eslint-disable max-len */
-/* eslint-disable import/no-named-as-default-member */
-/* eslint-disable import/no-named-as-default */
-/* eslint-disable no-undef */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
@@ -10,23 +7,27 @@ import {
 import reportWebVitals from './reportWebVitals';
 import Layout from './Layout';
 
-import ReservarHoras1 from './modulos/Views/ReservarHoras1';
+import ReservarHoras from './modulos/Views/ReservarHoras';
+import ReservarHorasArea from './modulos/Views/ReservarHorasArea';
 import {
   RUTAS_HOME,
   RUTAS_SUCURSALES,
   RUTAS_QUIENES_SOMOS,
   RUTAS_RESERVAR_HORA,
+  RUTAS_RESERVAR_HORA_AREA,
 } from './constantes';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes path="/">
+
         <Route exact path={RUTAS_HOME} element={<Layout component={<>hola</>} />} />
         <Route exact path={RUTAS_SUCURSALES} element={<Layout component={<>hola</>} />} />
         <Route exact path={RUTAS_QUIENES_SOMOS} element={<Layout component={<>hola</>} />} />
-        <Route exact path={RUTAS_RESERVAR_HORA} element={<Layout component={<ReservarHoras1 />} />} />
-        <Route exact path="" element={<Layout component={<>hola</>} />} />
+
+        <Route exact path={RUTAS_RESERVAR_HORA} element={<Layout component={<ReservarHoras />} />} />
+        <Route exact path={RUTAS_RESERVAR_HORA_AREA} element={<Layout component={<ReservarHorasArea />} />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
