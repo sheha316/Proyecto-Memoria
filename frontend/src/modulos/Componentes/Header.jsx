@@ -40,10 +40,15 @@ function Header() {
       </Box>
 
       <Box style={{
-        display: 'flex', backgroundColor: COLOR_BASE_1, alignItems: 'center', justifyContent: 'flex-end', marginBottom: '10px',
+        display: 'flex',
+        backgroundColor: COLOR_BASE_1,
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        marginBottom: '10px',
       }}
       >
-        <Stack style={{ margin: '10px' }} direction="row" spacing={10} alignItems="center">
+        .
+        <Stack style={{ margin: '10px', marginRight: '50px' }} direction="row" spacing={10} alignItems="center">
           <Button
             sx={{ textTransform: 'none' }}
             onClick={() => {

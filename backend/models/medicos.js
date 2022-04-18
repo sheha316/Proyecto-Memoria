@@ -7,6 +7,7 @@ const medicosSchema=Schema({
 	apellido: String,
 	genero: String,
 	profesion: String,
+	sucursal:String,
 	especializacion: String,
 },{
 	timestamps:true

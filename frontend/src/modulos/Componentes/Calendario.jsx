@@ -7,19 +7,14 @@ import { Calendar } from 'react-multi-date-picker';
 import Box from '@mui/material/Box';
 
 function Calendario({ initialDate, disableDates }) {
+  const minDate = new Date();
+  minDate.setDate(minDate.getDate() + 1);
   const weekDays = ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'];
   const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
   const [value, setValue] = useState(new Date(2022, 3, 19));
-
+  // new Date(date).getTime() === new Date(2022, 3, 18).getTime()
   const isDisableDate = (date) => {
-    if (new Date(date).getTime() === new Date(2022, 3, 18).getTime()
-    ) {
-      console.log('weona que brutal');
-      return {
-        disabled: true,
-      };
-    }
     if ([0, 6].includes(date.weekDay.index)) {
       return {
         disabled: true,
@@ -33,7 +28,7 @@ function Calendario({ initialDate, disableDates }) {
         onChange={setValue}
         weekDays={weekDays}
         months={months}
-        minDate={new Date()}
+        minDate={minDate}
         weekStartDayIndex={1}
         numberOfMonths={2}
         mapDays={({ date }) => isDisableDate(date)}

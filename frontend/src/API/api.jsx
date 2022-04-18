@@ -11,10 +11,10 @@ async function getSpecs() {
   const response = await axios.get(`${baseUrl}/spec/obtenerSpecs`);
   return response.data.response;
 }
-async function getMedicosBySpec(spec) {
-  console.log('getMedicosBySpec', spec);
-  const response = await axios.get(`${baseUrl}/medicos/obtenerMedicosBySpec`, { params: { spec } });
-  console.log('getMedicosBySpec', response);
-  return response.data.response;
+async function getAllMedicosBySpec(spec) {
+  console.log('getAllMedicosBySpec', spec);
+  const response = await axios.get(`${baseUrl}/medicos/getAllMedicosBySpec`, { params: { spec } });
+  console.log('getAllMedicosBySpec', response.data);
+  return response.data;
 }
-export default { getMedicos, getSpecs, getMedicosBySpec };
+export default { getMedicos, getSpecs, getAllMedicosBySpec };

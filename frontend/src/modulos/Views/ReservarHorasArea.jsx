@@ -27,7 +27,7 @@ function ReservarHorasArea() {
   const [fechaSeleccionada, setFechaSeleccionada] = useState([]);
   const [medicos, setMedicos] = useState([]);
   useEffect(async () => {
-    setMedicos(await api.getMedicosBySpec(area.especializacion));
+    setMedicos(await api.getAllMedicosBySpec(area.especializacion));
   }, [sucursalSeleccionada, fechaSeleccionada]);
   console.log(medicos);
   console.log(area, OpcionesDeBusquedaSeleccionada);
@@ -43,7 +43,7 @@ function ReservarHorasArea() {
           onChange={(e) => setSucursalSeleccionada(e.target.value)}
         >
           {sucursales.map((sucursalOptions) => (
-            <FormControlLabel key={sucursalOptions} value={sucursalOptions} control={<Radio />} label={sucursalOptions} />
+            <FormControlLabel style={{ width: 'fit-content' }} key={sucursalOptions} value={sucursalOptions} control={<Radio />} label={sucursalOptions} />
           ))}
         </RadioGroup>
       </Box>
