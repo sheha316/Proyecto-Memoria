@@ -23,11 +23,12 @@ import Stepper from '../Componentes/Stepper';
 function ReservarHorasArea() {
   const history = useNavigate();
   const { OpcionesDeBusquedaSeleccionada, area } = useLocation().state;
-  const [sucursal, setSucursal] = useState(SUCURSAL_1);
+  const [sucursalSeleccionada, setSucursalSeleccionada] = useState(SUCURSAL_1);
+  const [fechaSeleccionada, setFechaSeleccionada] = useState([]);
   const [medicos, setMedicos] = useState([]);
   useEffect(async () => {
-    setMedicos(await api.getMedicosBySpec(area.profesion));
-  }, []);
+    setMedicos(await api.getMedicosBySpec(area.especializacion));
+  }, [sucursalSeleccionada, fechaSeleccionada]);
   console.log(medicos);
   console.log(area, OpcionesDeBusquedaSeleccionada);
 
@@ -38,7 +39,8 @@ function ReservarHorasArea() {
         <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Seleccione Sucursal</FormLabel>
         <RadioGroup
           defaultValue={sucursales[0]}
-          onChange={(e) => setSucursal(e.target.value)}
+          sx={{ marginTop: 1 }}
+          onChange={(e) => setSucursalSeleccionada(e.target.value)}
         >
           {sucursales.map((sucursalOptions) => (
             <FormControlLabel key={sucursalOptions} value={sucursalOptions} control={<Radio />} label={sucursalOptions} />
@@ -61,7 +63,7 @@ function ReservarHorasArea() {
   );
   return (
     <Container>
-      <Stepper step={1} search={OpcionesDeBusquedaSeleccionada} />
+      <Stepper step={1} search={`${OpcionesDeBusquedaSeleccionada}: ${area.especializacion}`} />
       <Box sx={{ marginTop: 5, width: '100%' }}>
         <Grid container spacing={2}>
           <Grid item xs={6}>

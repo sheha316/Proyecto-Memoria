@@ -9,7 +9,7 @@ import { RUTAS_RESERVAR_HORA } from '../../constantes';
 
 function stepper({ step, search }) {
   const history = useNavigate();
-  const steps = [`Buscar por ${search}`, 'Seleccionar Fecha y Profesional', 'Ingresar Datos'];
+  const steps = [`Buscar ${search}`, 'Seleccionar Fecha y Profesional', 'Ingresar Datos'];
   const handleStep = (index) => {
     if (index !== step) {
       if (index === 0) {

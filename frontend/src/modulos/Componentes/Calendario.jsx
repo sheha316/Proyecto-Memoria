@@ -4,6 +4,7 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useState } from 'react';
 import { Calendar } from 'react-multi-date-picker';
+import Box from '@mui/material/Box';
 
 function Calendario({ initialDate, disableDates }) {
   const weekDays = ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'];
@@ -26,16 +27,18 @@ function Calendario({ initialDate, disableDates }) {
     }
   };
   return (
-    <Calendar
-      value={value}
-      onChange={setValue}
-      weekDays={weekDays}
-      months={months}
-      minDate={new Date()}
-      weekStartDayIndex={1}
-      numberOfMonths={2}
-      mapDays={({ date }) => isDisableDate(date)}
-    />
+    <Box sx={{ marginTop: 1 }}>
+      <Calendar
+        value={value}
+        onChange={setValue}
+        weekDays={weekDays}
+        months={months}
+        minDate={new Date()}
+        weekStartDayIndex={1}
+        numberOfMonths={2}
+        mapDays={({ date }) => isDisableDate(date)}
+      />
+    </Box>
   );
 }
 export default Calendario;

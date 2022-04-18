@@ -24,7 +24,7 @@ import api from '../../API/api';
 
 function ReservarHoras() {
   const history = useNavigate();
-  const OpcionesDeBusqueda = ['Por Área Médica', 'Por Médico Especialista'];
+  const OpcionesDeBusqueda = ['Área Médica', 'Médico Especialista'];
   const [OpcionesDeBusquedaSeleccionada, setOpcionesDeBusquedaSeleccionada] = useState(OpcionesDeBusqueda[0]);
 
   const [areaMedica, setAreaMedica] = useState([]);
@@ -48,7 +48,9 @@ function ReservarHoras() {
           .required('Debes seleccionar un área médica'),
         profesion: Yup.string()
           .required('Debes seleccionar un área médica'),
-      }),
+      })
+        .required('Debes seleccionar un área médica')
+        .nullable(),
     });
     return (
       <Formik
@@ -67,7 +69,7 @@ function ReservarHoras() {
         }) => (
           <Form>
             <Box sx={{
-              backgroundColor: COLOR_BASE_2, padding: 5,
+              backgroundColor: COLOR_BASE_2, padding: 5, marginTop: 1,
             }}
             >
               <FormControl warning={errors.areaSeleccionada && touched.areaSeleccionada} sx={{ width: '100%' }}>
@@ -99,8 +101,8 @@ function ReservarHoras() {
                   {(errors.areaSeleccionada && touched.areaSeleccionada)
                     ? (
                       <span style={{ color: 'yellow' }}>
-                        {' '}
-                        {errors.areaSeleccionada?.especializacion}
+                        {console.log(errors.areaSeleccionada, errors.areaSeleccionada?.especializacion)}
+                        {errors.areaSeleccionada?.especializacion || errors.areaSeleccionada}
                       </span>
                     )
                     : ''}
@@ -112,7 +114,7 @@ function ReservarHoras() {
               <Button
                 type="submit"
                 sx={{
-                  marginTop: 5, color: 'white', alignSelf: 'flex-end', backgroundColor: COLOR_BUTTON_1, ':hover': { backgroundColor: COLOR_BUTTON_2 },
+                  marginTop: 2, color: 'white', alignSelf: 'flex-end', backgroundColor: COLOR_BUTTON_1, ':hover': { backgroundColor: COLOR_BUTTON_2 },
                 }}
               >
                 Siguiente
@@ -123,14 +125,14 @@ function ReservarHoras() {
       </Formik>
     );
   }
-  console.log(medicos, areaMedica);
   return (
     <Container>
-      <Stepper step={0} search={OpcionesDeBusquedaSeleccionada} />
+      <Stepper step={0} search={`por ${OpcionesDeBusquedaSeleccionada}`} />
       <Box sx={{ marginTop: 5, width: '100%' }}>
         <FormLabel sx={{ color: 'black' }}>Método de Búsqueda</FormLabel>
         <RadioGroup
           row
+          sx={{ marginBottom: 2 }}
           aria-labelledby="demo-row-radio-buttons-group-label"
           name="row-radio-buttons-group"
           defaultValue={OpcionesDeBusqueda[0]}
