@@ -8,7 +8,9 @@ async function getMedicos() {
 }
 
 async function getSpecs() {
+  console.log('getAllMedicosBySpec');
   const response = await axios.get(`${baseUrl}/spec/obtenerSpecs`);
+  console.log('getAllMedicosBySpec');
   return response.data.response;
 }
 async function getAllMedicosBySpec(spec) {
