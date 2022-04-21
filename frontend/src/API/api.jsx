@@ -19,4 +19,15 @@ async function getAllMedicosBySpec(spec) {
   console.log('getAllMedicosBySpec', response.data);
   return response.data;
 }
-export default { getMedicos, getSpecs, getAllMedicosBySpec };
+async function postCreateCita(datos) {
+  console.log('postCreateCita');
+  const response = await axios.post(`${baseUrl}/medicos/getAllMedicosBySpec`, datos);
+  console.log('postCreateCita', response.data);
+  return response.data;
+}
+export default {
+  getMedicos,
+  getSpecs,
+  getAllMedicosBySpec,
+  postCreateCita,
+};

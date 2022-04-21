@@ -1,4 +1,3 @@
-/* eslint-disable import/no-named-as-default-member */
 import React from 'react';
 import { Box, Stack, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';

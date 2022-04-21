@@ -10,6 +10,9 @@ export const RUTAS_QUIENES_SOMOS = '/quienes-somos';
 
 export const RUTAS_RESERVAR_HORA = '/reservar-hora';
 export const RUTAS_RESERVAR_HORA_AREA = '/reservar-hora-area';
+
+export const RUTAS_INGRESAR_DATOS = '/reservar-hora-area-formulario';
+
 // ----------------direcciones Sucursales
 export const SUCURSAL_1 = 'Vitacura, El Canal 4500';
 export const SUCURSAL_2 = 'Ñuñoa, Antonio Varas 3250';
