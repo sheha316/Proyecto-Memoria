@@ -70,7 +70,7 @@ function ReservarHoras() {
         }) => (
           <Form>
             <Box sx={{
-              backgroundColor: COLOR_BASE_2, padding: 5, marginTop: 1,
+              backgroundColor: COLOR_BASE_2, padding: 5, marginTop: 1, borderRadius: 5,
             }}
             >
               <FormControl warning={errors.areaSeleccionada && touched.areaSeleccionada} sx={{ width: '100%' }}>

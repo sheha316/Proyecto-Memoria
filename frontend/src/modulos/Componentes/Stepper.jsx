@@ -3,9 +3,11 @@ import {
   Stepper, Step, StepButton,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { RUTAS_RESERVAR_HORA } from '../../constantes';
+import { RUTAS_RESERVAR_HORA, RUTAS_RESERVAR_HORA_AREA } from '../../constantes';
 
-function stepper({ step, search }) {
+function stepper({
+  step, search, OpcionesDeBusquedaSeleccionada, area,
+}) {
   const history = useNavigate();
   const steps = [`Buscar ${search}`, 'Seleccionar Fecha y Profesional', 'Ingresar Datos'];
   const handleStep = (index) => {
@@ -13,7 +15,12 @@ function stepper({ step, search }) {
       if (index === 0) {
         history(RUTAS_RESERVAR_HORA);
       } else if (index === 1) {
-        history(RUTAS_RESERVAR_HORA);
+        history(RUTAS_RESERVAR_HORA_AREA, {
+          state: {
+            area,
+            OpcionesDeBusquedaSeleccionada,
+          },
+        });
       }
     }
   };
