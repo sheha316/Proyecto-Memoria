@@ -93,7 +93,7 @@ export default function TablaMedicos({
   };
   getAviableDates();
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden', marginTop: 1 }}>
+    <Paper sx={{ marginTop: 1 }}>
       <TableContainer sx={{ maxHeight: 600 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -136,22 +136,26 @@ export default function TablaMedicos({
                     if (indexColumn === 0) {
                       return (
                         <TableCell key={column.id} align={column.align} sx={[BORDERLEFTONLY, { display: 'grid' }, STICKYCOLUMN(indexRow)]}>
-                          <Paper elevation={4} sx={{ display: 'flex', marginBottom: 1, justifyContent: 'center' }}>
-                            <img
-                              style={{
-                                width: 80, height: 80,
-                              }}
-                              alt=""
-                              src={row.genero === 'm'
-                                ? 'https://img.freepik.com/foto-gratis/doctor-brazos-cruzados-sobre-fondo-blanco_1368-5790.jpg?w=2000'
-                                : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIIMvIYUfgxZwSZRb3XHS1umgQjcMuaE9N9Q&usqp=CAU'}
-                            />
-                          </Paper>
-                          <span>Dr(a):</span>
-                          <span>
-                            {`${row.nombre}
+                          <Box sx={{
+                            display: 'flex', justifyContent: 'center', flexFlow: 'column', textAlign: 'center',
+                          }}
+                          >
+                            <Paper elevation={4} sx={{ display: 'flex', marginBottom: 1, justifyContent: 'center' }}>
+                              <img
+                                style={{
+                                  width: 100, height: 100,
+                                }}
+                                alt=""
+                                src={row.genero === 'm'
+                                  ? 'https://img.freepik.com/foto-gratis/doctor-brazos-cruzados-sobre-fondo-blanco_1368-5790.jpg?w=2000'
+                                  : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIIMvIYUfgxZwSZRb3XHS1umgQjcMuaE9N9Q&usqp=CAU'}
+                              />
+                            </Paper>
+                            <span style={{ color: indexRow % 2 === 0 ? 'black' : 'white' }}>
+                              {`${row.nombre}
                             ${row.apellido}`}
-                          </span>
+                            </span>
+                          </Box>
                         </TableCell>
                       );
                     }
@@ -164,8 +168,8 @@ export default function TablaMedicos({
                         >
                           <Button
                             sx={{
-                              width: 50,
-                              fontSize: 10,
+                              width: 80,
+                              fontSize: 12,
                               color: 'white',
                               backgroundColor: COLOR_BUTTON_1,
                               ':hover': { backgroundColor: COLOR_BUTTON_2 },

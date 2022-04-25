@@ -6,7 +6,7 @@ import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import {
   Container, Box, Radio, RadioGroup, TextField, Autocomplete, FormLabel, FormHelperText,
-  Button, FormControl, FormControlLabel,
+  Button, FormControl, FormControlLabel, Paper,
 } from '@mui/material';
 import {
   COLOR_BASE_2, COLOR_BUTTON_1, COLOR_BUTTON_2, RUTAS_RESERVAR_HORA_AREA,
@@ -69,9 +69,12 @@ function ReservarHoras() {
           setFieldValue,
         }) => (
           <Form>
-            <Box sx={{
-              backgroundColor: COLOR_BASE_2, padding: 5, marginTop: 1, borderRadius: 5,
-            }}
+
+            <Paper
+              elevation={4}
+              sx={{
+                backgroundColor: COLOR_BASE_2, padding: 5, marginTop: 1, borderRadius: 5,
+              }}
             >
               <FormControl warning={errors.areaSeleccionada && touched.areaSeleccionada} sx={{ width: '100%' }}>
                 <FormLabel sx={{ color: (errors.areaSeleccionada && touched.areaSeleccionada) ? 'yellow' : 'white' }}>
@@ -104,10 +107,6 @@ function ReservarHoras() {
                   {(errors.areaSeleccionada && touched.areaSeleccionada)
                     ? (
                       <span style={{ color: 'yellow' }}>
-                        {console.log(
-                          errors.areaSeleccionada,
-                          errors.areaSeleccionada?.especializacion,
-                        )}
                         {errors.areaSeleccionada?.especializacion || errors.areaSeleccionada}
                       </span>
                     )
@@ -115,7 +114,7 @@ function ReservarHoras() {
                 </FormHelperText>
               </FormControl>
 
-            </Box>
+            </Paper>
             <Box sx={{ display: 'flex', justifyContent: 'end' }}>
               <Button
                 type="submit"
@@ -135,7 +134,7 @@ function ReservarHoras() {
     <Container>
       <Stepper step={0} search={`por ${OpcionesDeBusquedaSeleccionada}`} />
       <Box sx={{ marginTop: 5, width: '100%' }}>
-        <FormLabel sx={{ color: 'black' }}>Método de Búsqueda</FormLabel>
+        <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Método de Búsqueda</FormLabel>
         <RadioGroup
           row
           sx={{ marginBottom: 2 }}
@@ -155,7 +154,8 @@ function ReservarHoras() {
             label={OpcionesDeBusqueda[1]}
           />
         </RadioGroup>
-        <FormLabel sx={{ color: 'black' }}>
+
+        <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>
           Buscar por
           {' '}
           {OpcionesDeBusquedaSeleccionada}
@@ -163,7 +163,6 @@ function ReservarHoras() {
 
         {OpcionesDeBusqueda[0] === OpcionesDeBusquedaSeleccionada
          && areaMedica.length > 0 && AutocompleteAreaMedica()}
-
       </Box>
     </Container>
   );

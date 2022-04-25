@@ -1,13 +1,18 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import { Calendar } from 'react-multi-date-picker';
-import Box from '@mui/material/Box';
+import { Box, TextField } from '@mui/material/';
+import './CalendarStyle.css';
 
 function Calendario({ disableDates, fecha, setFecha }) {
+  const now = new Date();
   const minDate = new Date();
-  minDate.setDate(minDate.getDate() + 1);
+  minDate.setDate(now.getDate() + 1);
+  const maxDate = new Date(minDate.getFullYear(), minDate.getMonth() + 5, 0);
+
   const weekDays = ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'];
   const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
@@ -22,6 +27,16 @@ function Calendario({ disableDates, fecha, setFecha }) {
       };
     }
   };
+  console.log(minDate);
+  console.log(maxDate);
+  const [value, setValue] = useState(
+    new Date('2014-08-18T21:11:54'),
+  );
+
+  const handleChange = (newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <Box sx={{ marginTop: 1 }}>
       <Calendar
@@ -30,8 +45,10 @@ function Calendario({ disableDates, fecha, setFecha }) {
         weekDays={weekDays}
         months={months}
         minDate={minDate}
+        maxDate={maxDate}
+        disableYearPicker
         weekStartDayIndex={1}
-        numberOfMonths={2}
+        numberOfMonths={1}
         mapDays={({ date }) => isDisableDate(date)}
       />
     </Box>

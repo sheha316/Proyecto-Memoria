@@ -1,7 +1,6 @@
 const spec = require('../models/spec')
 
 async function getSpecs(req,res){
-	console.log("hola?")
 	try{
 		const response= await spec.find().lean().exec()
 		res.status(200).send({response})

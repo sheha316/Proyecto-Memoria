@@ -10,7 +10,6 @@ async function getMedicos(req,res){
 }
 async function getAllMedicosBySpec(req,res){
 	try{
-		console.log("hola, me llego: ",req.query)
 		const  Cisterna= await medicos.find(
 			{"especializacion":req.query.spec,
 			"sucursal":"La Cisterna, Livio Morra 2770"

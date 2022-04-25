@@ -24,7 +24,6 @@ function ReservarHorasArea() {
   const getBaseSucursal = () => {
     for (let i = 0; i < sucursales.length; i++) {
       if (medicos[sucursales[i].split(',')[0]] !== undefined && medicos[sucursales[i].split(',')[0]].length !== 0) {
-        console.log('la wea es:', sucursales[i]);
         setSucursalBase(i);
         setSucursalSeleccionada(sucursales[i]);
         return;

@@ -5,17 +5,19 @@
 /* eslint-disable no-console */
 import {
   Container, Box, Radio, RadioGroup, TextField, FormLabel,
-  Button, FormControl, FormControlLabel, Grid, InputAdornment,
-  Select, MenuItem, FormHelperText,
+  Button, FormControl, FormControlLabel, Grid, InputAdornment, Stack,
+  Select, MenuItem, FormHelperText, Paper,
 } from '@mui/material';
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { validate, clean, format } from 'rut.js';
+import es from 'date-fns/locale/es';
+import * as dateFns from 'date-fns';
 import api from '../../API/api';
 import {
-  COLOR_BASE_2, COLOR_BUTTON_1, COLOR_BUTTON_2,
+  COLOR_BASE_2, COLOR_BUTTON_1, COLOR_BUTTON_2, COLOR_BASE_1,
 } from '../../constantes';
 import Stepper from '../Componentes/Stepper';
 
@@ -24,7 +26,7 @@ function IngresarDatos() {
   const {
     hora, dia, medico, OpcionesDeBusquedaSeleccionada, area,
   } = useLocation().state;
-
+  console.log(useLocation().state);
   function TextFieldInput(id, placeholder, onChange, values, errors, touched, onBlur) {
     return (
 
@@ -34,13 +36,13 @@ function IngresarDatos() {
           display: 'flex', justifyContent: 'space-around', alignItems: 'center',
         }}
       >
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <FormLabel sx={{ color: (errors[id] && touched[id]) ? 'yellow' : 'white' }}>
             {id}
             :
           </FormLabel>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={8} style={{ display: 'flex' }}>
           <TextField
             id={id}
             name={id}
@@ -69,13 +71,13 @@ function IngresarDatos() {
           display: 'flex', justifyContent: 'space-around', alignItems: 'center',
         }}
       >
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <FormLabel sx={{ color: 'white' }}>
             Nacionalidad
             :
           </FormLabel>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={8} style={{ display: 'flex' }}>
           <FormControl sx={{ width: '100%' }}>
             <RadioGroup
               row
@@ -148,12 +150,12 @@ function IngresarDatos() {
           display: 'flex', justifyContent: 'space-around', alignItems: 'center',
         }}
       >
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <FormLabel sx={{ color: (errors[id] && touched[id]) ? 'yellow' : 'white' }}>
             Previsión:
           </FormLabel>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={8} style={{ display: 'flex' }}>
           <FormControl sx={{ width: '100%' }}>
             <Select
               id={id}
@@ -231,24 +233,35 @@ function IngresarDatos() {
           setFieldValue,
         }) => (
           <Form>
-            <Box sx={{
-              backgroundColor: COLOR_BASE_2, padding: 5, marginTop: 1, borderRadius: 5,
-            }}
+            <Paper
+              elevation={4}
+              sx={{
+                display: 'grid',
+                borderRadius: 5,
+                backgroundColor: COLOR_BASE_2,
+                marginTop: 1,
+              }}
             >
-              <FormControl sx={{ width: '100%' }}>
-                {NacionalidadRadio(handleChange, values, touched)}
-                {values.Nacionalidad === 'Chileno'
-                 && TextFieldInput('Rut', '102586808', handleChange, values, errors, touched, handleBlur)}
-                {values.Nacionalidad !== 'Chileno'
-                 && TextFieldInput('Pasaporte', '102586808', handleChange, values, errors, touched, handleBlur)}
-                {TextFieldInput('Nombres', 'Álvaro Eduardo', handleChange, values, errors, touched, handleBlur)}
-                {TextFieldInput('Apellidos', 'Gómez Sanches', handleChange, values, errors, touched, handleBlur)}
-                {TextFieldInput('Email', 'ejemplo@gmail.com', handleChange, values, errors, touched, handleBlur)}
-                {TextFieldInput('Teléfono', '123456789', handleChange, values, errors, touched, handleBlur)}
-                {PrevisionSelector('Previsión', handleChange, values, errors, touched, handleBlur)}
-              </FormControl>
+              <Box sx={{
+                padding: 2, borderRadius: 5,
+              }}
+              >
 
-            </Box>
+                <FormControl sx={{ width: '100%' }}>
+                  {NacionalidadRadio(handleChange, values, touched)}
+                  {values.Nacionalidad === 'Chileno'
+                 && TextFieldInput('Rut', '102586808', handleChange, values, errors, touched, handleBlur)}
+                  {values.Nacionalidad !== 'Chileno'
+                 && TextFieldInput('Pasaporte', '102586808', handleChange, values, errors, touched, handleBlur)}
+                  {TextFieldInput('Nombres', 'Álvaro Eduardo', handleChange, values, errors, touched, handleBlur)}
+                  {TextFieldInput('Apellidos', 'Gómez Sanches', handleChange, values, errors, touched, handleBlur)}
+                  {TextFieldInput('Email', 'ejemplo@gmail.com', handleChange, values, errors, touched, handleBlur)}
+                  {TextFieldInput('Teléfono', '123456789', handleChange, values, errors, touched, handleBlur)}
+                  {PrevisionSelector('Previsión', handleChange, values, errors, touched, handleBlur)}
+                </FormControl>
+
+              </Box>
+            </Paper>
             <Box sx={{ display: 'flex', justifyContent: 'end' }}>
               <Button
                 type="submit"
@@ -259,19 +272,153 @@ function IngresarDatos() {
                 Confirmar Reserva
               </Button>
             </Box>
+
           </Form>
         )}
       </Formik>
     );
   }
+  function ObtenerHoraSegunBloque(bloque) {
+    let horafinal = 8 + Math.floor(bloque / 2);
+    if (horafinal > 12) {
+      horafinal += 1;
+    }
+    let textoHora = '';
+    if (horafinal < 10) {
+      textoHora = `0${horafinal}:`;
+    } else {
+      textoHora = `${horafinal}:`;
+    }
+    return `${textoHora}${bloque % 2 === 0 ? '00' : '30'}`;
+  }
+  function RecordatorioSeleccionLabel(texto) {
+    return (
+      <FormLabel sx={{ color: 'black', margin: 1, marginLeft: 2 }}>{texto}</FormLabel>
+    );
+  }
+  function RecordatorioSeleccionLabelTirulo(texto) {
+    return (
+      <Box sx={{ display: 'grid' }}>
+        <FormLabel sx={{
+          color: 'White',
+          backgroundColor: COLOR_BASE_1,
+          borderRadius: 5,
+          borderBottomLeftRadius: 0,
+          borderBottomRightRadius: 0,
+          padding: 2,
+        }}
+        >
+          {texto}
+        </FormLabel>
+      </Box>
+    );
+  }
+  function RecordatorioSeleccionProfesional() {
+    return (
+      <Paper
+        elevation={4}
+        sx={{
+          display: 'grid',
+          borderRadius: 5,
+        }}
+      >
+        {RecordatorioSeleccionLabelTirulo('Profesional')}
+        <Box sx={{ display: 'inline-flex' }}>
+
+          <Paper
+            elevation={4}
+            sx={{
+              display: 'flex', marginTop: 1, marginLeft: 2, height: 90,
+            }}
+          >
+
+            <img
+              style={{
+                width: 90, height: 90,
+              }}
+              alt=""
+              src={medico.genero === 'm'
+                ? 'https://img.freepik.com/foto-gratis/doctor-brazos-cruzados-sobre-fondo-blanco_1368-5790.jpg?w=2000'
+                : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIIMvIYUfgxZwSZRb3XHS1umgQjcMuaE9N9Q&usqp=CAU'}
+            />
+          </Paper>
+          <Box sx={{ display: 'grid', marginLeft: 2, padding: 1 }}>
+            {RecordatorioSeleccionLabel(`${medico.genero === 'm' ? 'Dr:' : 'Dra:'} ${medico.nombre} ${medico.apellido}`)}
+            {RecordatorioSeleccionLabel(`Especialidad: ${medico.especializacion}`)}
+          </Box>
+        </Box>
+
+      </Paper>
+    );
+  }
+  function RecordatorioSeleccionDate(fecha, horafinal) {
+    return (
+      <Paper
+        elevation={4}
+        sx={{
+          display: 'grid',
+          borderRadius: 5,
+        }}
+      >
+        {RecordatorioSeleccionLabelTirulo('Fecha y Hora')}
+        {RecordatorioSeleccionLabel(`Fecha: ${fecha}`)}
+        {RecordatorioSeleccionLabel(`Hora: ${horafinal}`)}
+      </Paper>
+    );
+  }
+  function RecordatorioSeleccionSucursal(sucursal) {
+    return (
+      <Paper
+        elevation={4}
+        sx={{
+          display: 'grid',
+          borderRadius: 5,
+        }}
+      >
+        {RecordatorioSeleccionLabelTirulo('Sucursal')}
+
+        {RecordatorioSeleccionLabel(`Direccion: ${sucursal}`)}
+      </Paper>
+    );
+  }
+  function RecordatorioSeleccion() {
+    console.log(hora, dia, medico, OpcionesDeBusquedaSeleccionada, area);
+    const fecha = dateFns.format(dia, 'PPPPpppp', { locale: es }).split(' a las')[0];
+    const horafinal = ObtenerHoraSegunBloque(hora);
+    return (
+      <Box sx={{ marginTop: 4 }}>
+        <Stack spacing={4}>
+
+          {RecordatorioSeleccionProfesional()}
+          {RecordatorioSeleccionDate(fecha, horafinal)}
+          {RecordatorioSeleccionSucursal(medico.sucursal)}
+        </Stack>
+      </Box>
+    );
+  }
+
   return (
     <Container>
       <Stepper OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada} area={area} step={2} search={`${OpcionesDeBusquedaSeleccionada}: ${area.especializacion}`} />
       <Box sx={{ marginTop: 5, width: '100%' }}>
-        <FormLabel sx={{ color: 'black' }}>
-          Ingresar Datos del Paciente
-        </FormLabel>
-        {Formulario()}
+        <Grid
+          container
+          style={{
+            display: 'flex', justifyContent: 'space-around', alignItems: 'flex-start',
+          }}
+        >
+          <Grid item xs={4}>
+            {RecordatorioSeleccion()}
+          </Grid>
+          <Grid item xs={6}>
+            <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>
+              Ingresar Datos del Paciente
+            </FormLabel>
+
+            {Formulario()}
+          </Grid>
+
+        </Grid>
       </Box>
     </Container>
   );
