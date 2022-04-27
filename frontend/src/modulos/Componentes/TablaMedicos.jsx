@@ -1,7 +1,5 @@
-/* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable array-callback-return */
-/* eslint-disable max-len */
+/* eslint-disable no-param-reassign */
 /* eslint-disable react/prop-types */
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -61,6 +59,7 @@ const STICKYCOLUMN = (index) => {
       left: 0,
       zIndex: z,
       backgroundColor: color,
+      fontWeight: 'bold',
     });
 };
 export default function TablaMedicos({
@@ -80,7 +79,11 @@ export default function TablaMedicos({
   };
   const getAviableDates = () => {
     medicos.map((medico) => {
-      medico.dates = [false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true];
+      medico.dates = [
+        false,
+        true,
+        true, true, true, true, true, true, true, true, true, true, true, true, true, true, true];
+      return {};
     });
     return medicos;
   };

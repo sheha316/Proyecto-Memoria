@@ -1,31 +1,44 @@
-/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable no-plusplus */
 /* eslint-disable no-unused-vars */
-/* eslint-disable consistent-return */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { Calendar } from 'react-multi-date-picker';
-import { Box, TextField } from '@mui/material/';
+import { Box } from '@mui/material/';
 import './CalendarStyle.css';
 
-function Calendario({ disableDates, fecha, setFecha }) {
+function Calendario({ agendasMedicos, fecha, setFecha }) {
   const now = new Date();
+  console.log(now);
+  console.log(now.toISOString());
   const minDate = new Date();
   minDate.setDate(now.getDate() + 1);
   const maxDate = new Date(minDate.getFullYear(), minDate.getMonth() + 5, 0);
 
   const weekDays = ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'];
   const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-
+  let Dia = -1;
   // new Date(date).getTime() === new Date(2022, 3, 18).getTime()
   const isDisableDate = (date) => {
+    // console.log(new Date(date).toISOString().split('T')[0]);
     if (new Date(date).getTime() < new Date().getTime()) {
-      return;
+      return {};
     }
     if ([0, 6].includes(date.weekDay.index)) {
       return {
         disabled: true,
       };
     }
+    Dia += 1;
+    console.log(Dia);
+    for (let i = 0; i < agendasMedicos.Medicos.length; i++) {
+      if (agendasMedicos.agendas[i][Dia].disponible) {
+        return {};
+      }
+    }
+
+    return {
+      disabled: true,
+    };
   };
   console.log(minDate);
   console.log(maxDate);
