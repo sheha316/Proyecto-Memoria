@@ -1,19 +1,19 @@
 const agendas = require('../models/agendas')
 
 async function getAgendas(req,res){
-	const hoy = new Date(req.query.diaLocal)
-	const maxDate = new Date(hoy.getFullYear(), hoy.getMonth() + 5, 0);
+	let hoy = new Date(req.query.diaLocal)
+	const maxDate = (new Date(hoy.getFullYear(), hoy.getMonth() + 5, 0)).toISOString().split("T")[0]
+	hoy=hoy.toISOString().split("T")[0]
 	let agendasMedicos=[]
 	let Medicos=[]
-	console.log(req.query)
 	try{
 		req.query.medicos.map(async(medicoI)=>{
 			const medico=JSON.parse(medicoI)
 			agendasMedicos.push(
 				agendas.find({
 					$and: [
-						{"fecha": {$lte: maxDate.toISOString()}},
-						{"fecha": {$gt: hoy.toISOString()}},
+						{"fecha": {$lte: maxDate}},
+						{"fecha": {$gt: hoy}},
 						{"id_medico":medico._id},
 					]
 				}).sort({fecha:1}).lean().exec()

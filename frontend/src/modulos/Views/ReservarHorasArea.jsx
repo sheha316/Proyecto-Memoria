@@ -16,7 +16,7 @@ function ReservarHorasArea() {
   const { OpcionesDeBusquedaSeleccionada, area } = useLocation().state;
   const [sucursalSeleccionada, setSucursalSeleccionada] = useState('');
   const [sucursalBase, setSucursalBase] = useState(-1);
-  const [fechaSeleccionada, setFechaSeleccionada] = useState(new Date(2022, 3, 19));
+  const [fechaSeleccionada, setFechaSeleccionada] = useState('');
   const [medicos, setMedicos] = useState({});
   const [agendasMedicos, setAgendasMedicos] = useState({});
 
@@ -38,11 +38,27 @@ function ReservarHorasArea() {
     getBaseSucursal(sucursales);
   }, [medicos]);
   useEffect(async () => {
-    // setAgendasMedicos({});
     if (Object.keys(medicos).length !== 0) {
       setAgendasMedicos(await api.getAgendas(medicos[sucursalSeleccionada.split(',')[0]]));
     }
   }, [sucursalSeleccionada]);
+  useEffect(() => {
+    if (Object.keys(agendasMedicos).length !== 0) {
+      const now = new Date();
+      now.setDate(now.getDate() + 1);
+      console.log('1', now);
+      for (let i = 0; i < agendasMedicos.agendas[0].length; i++) {
+        for (let j = 0; j < agendasMedicos.Medicos.length; j++) {
+          if (agendasMedicos.agendas[j][i].disponible) {
+            now.setDate(now.getDate() + i);
+            console.log('2', now, i);
+            setFechaSeleccionada(now);
+            return;
+          }
+        }
+      }
+    }
+  }, [agendasMedicos]);
 
   const optionsSucursales = () => (
     <Box>
@@ -51,7 +67,7 @@ function ReservarHorasArea() {
       <RadioGroup
         defaultValue={sucursales[sucursalBase]}
         sx={{ marginTop: 1 }}
-        onChange={(e) => setSucursalSeleccionada(e.target.value)}
+        onChange={(e) => { setAgendasMedicos({}); setSucursalSeleccionada(e.target.value); }}
       >
         {sucursales.map((sucursalOptions) => (
           <FormControlLabel
@@ -101,12 +117,12 @@ function ReservarHorasArea() {
             </Grid>
           )}
 
-          {Object.keys(agendasMedicos).length !== 0 && (
+          {Object.keys(agendasMedicos).length !== 0 && fechaSeleccionada !== '' && (
             <Grid item xs={6}>
               {optionCalendario()}
             </Grid>
           )}
-          {Object.keys(agendasMedicos).length !== 0 && (
+          {Object.keys(agendasMedicos).length !== 0 && fechaSeleccionada !== '' && (
           <Grid item xs={12}>
             {optionMedicos()}
           </Grid>

@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-plusplus */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/prop-types */
@@ -18,6 +20,7 @@ import {
 import {
   COLOR_BASE_2, COLOR_BASE_1, COLOR_BUTTON_1, COLOR_BUTTON_2, RUTAS_INGRESAR_DATOS,
 } from '../../constantes';
+import './TablaMedicosStyle.css';
 
 const columns = [
   { id: 'Profesionales', label: 'Profesionales', minWidth: 100 },
@@ -63,12 +66,12 @@ const STICKYCOLUMN = (index) => {
     });
 };
 export default function TablaMedicos({
-  medicos, dia, OpcionesDeBusquedaSeleccionada, area,
+  medicos, dia, OpcionesDeBusquedaSeleccionada, area, agendasMedicos,
 }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const history = useNavigate();
-
+  let TableRowIndex = -1;
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -78,14 +81,20 @@ export default function TablaMedicos({
     setPage(0);
   };
   const getAviableDates = () => {
+    TableRowIndex = -1;
+    const now = new Date();
     medicos.map((medico) => {
-      medico.dates = [
-        false,
-        true,
-        true, true, true, true, true, true, true, true, true, true, true, true, true, true, true];
+      console.log('el dia seleccionado es', dia);
+      const DifferenceInTime = dia.getTime() - now.getTime();
+      const DifferenceInDays = Math.floor(DifferenceInTime / (1000 * 3600 * 24));
+      for (let i = 0; i < agendasMedicos.agendas.length; i++) {
+        if (agendasMedicos.agendas[i][DifferenceInDays].id_medico === medico._id) {
+          medico.disponible = agendasMedicos.agendas[i][DifferenceInDays].disponible;
+          medico.dates = agendasMedicos.agendas[i][DifferenceInDays].bloques;
+        }
+      }
       return {};
     });
-    return medicos;
   };
   const onReservar = (hora, medico) => {
     history(RUTAS_INGRESAR_DATOS, {
@@ -127,69 +136,91 @@ export default function TablaMedicos({
           <TableBody>
             {medicos.length > 0 && medicos
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, indexRow) => (
-                <TableRow
-                  hover
-                  role="checkbox"
-                  tabIndex={-1}
-                  key={row._id}
-                  style={{ backgroundColor: indexRow % 2 === 0 ? 'white' : COLOR_BASE_2 }}
-                >
-                  {columns.map((column, indexColumn) => {
-                    if (indexColumn === 0) {
-                      return (
-                        <TableCell key={column.id} align={column.align} sx={[BORDERLEFTONLY, { display: 'grid' }, STICKYCOLUMN(indexRow)]}>
-                          <Box sx={{
-                            display: 'flex', justifyContent: 'center', flexFlow: 'column', textAlign: 'center',
-                          }}
-                          >
-                            <Paper elevation={4} sx={{ display: 'flex', marginBottom: 1, justifyContent: 'center' }}>
-                              <img
-                                style={{
-                                  width: 100, height: 100,
-                                }}
-                                alt=""
-                                src={row.genero === 'm'
-                                  ? 'https://img.freepik.com/foto-gratis/doctor-brazos-cruzados-sobre-fondo-blanco_1368-5790.jpg?w=2000'
-                                  : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIIMvIYUfgxZwSZRb3XHS1umgQjcMuaE9N9Q&usqp=CAU'}
-                              />
-                            </Paper>
-                            <span style={{ color: indexRow % 2 === 0 ? 'black' : 'white' }}>
-                              {`${row.nombre}
+              .map((row) => {
+                if (!row.disponible) {
+                  return;
+                }
+                TableRowIndex += 1;
+                return (
+                  <TableRow
+                    hover
+                    role="checkbox"
+                    tabIndex={-1}
+                    key={row._id}
+                    style={{ backgroundColor: TableRowIndex % 2 === 0 ? 'white' : COLOR_BASE_2 }}
+                  >
+                    {columns.map((column, indexColumn) => {
+                      if (indexColumn === 0) {
+                        return (
+                          <TableCell key={column.id} align={column.align} sx={[BORDERLEFTONLY, { display: 'grid' }, STICKYCOLUMN(TableRowIndex)]}>
+                            <Box sx={{
+                              display: 'flex', justifyContent: 'center', flexFlow: 'column', textAlign: 'center',
+                            }}
+                            >
+                              <Paper elevation={4} sx={{ display: 'flex', marginBottom: 1, justifyContent: 'center' }}>
+                                <img
+                                  style={{
+                                    width: 100, height: 100,
+                                  }}
+                                  alt=""
+                                  src={row.genero === 'm'
+                                    ? 'https://img.freepik.com/foto-gratis/doctor-brazos-cruzados-sobre-fondo-blanco_1368-5790.jpg?w=2000'
+                                    : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIIMvIYUfgxZwSZRb3XHS1umgQjcMuaE9N9Q&usqp=CAU'}
+                                />
+                              </Paper>
+                              <span style={{ color: TableRowIndex % 2 === 0 ? 'black' : 'white' }}>
+                                {`${row.nombre}
                             ${row.apellido}`}
-                            </span>
-                          </Box>
-                        </TableCell>
-                      );
-                    }
-                    if (row.dates[indexColumn - 1]) {
+                              </span>
+                            </Box>
+                          </TableCell>
+                        );
+                      }
+                      if (row.dates[indexColumn - 1] === '') {
+                        return (
+                          <TableCell
+                            key={column.id}
+                            align={column.align}
+                            sx={BORDERLEFTONLY}
+                          >
+                            <Button
+                              sx={{
+                                width: 80,
+                                fontSize: 12,
+                                color: 'white',
+                                backgroundColor: COLOR_BUTTON_1,
+                                ':hover': { backgroundColor: COLOR_BUTTON_2 },
+                              }}
+                              onClick={() => onReservar(indexColumn, row)}
+                            >
+                              Reservar
+                            </Button>
+                          </TableCell>
+                        );
+                      }
                       return (
                         <TableCell
                           key={column.id}
                           align={column.align}
-                          sx={BORDERLEFTONLY}
+                          sx={[BORDERLEFTONLY, { width: 80 }]}
                         >
                           <Button
+                            disabled
                             sx={{
                               width: 80,
                               fontSize: 12,
-                              color: 'white',
-                              backgroundColor: COLOR_BUTTON_1,
-                              ':hover': { backgroundColor: COLOR_BUTTON_2 },
+                              color: 'ffffff',
+                              backgroundColor: 'gray',
                             }}
-                            onClick={() => onReservar(indexColumn, row)}
                           >
                             Reservar
                           </Button>
                         </TableCell>
                       );
-                    }
-                    return (
-                      <TableCell key={column.id} align={column.align} sx={BORDERLEFTONLY} />
-                    );
-                  })}
-                </TableRow>
-              ))}
+                    })}
+                  </TableRow>
+                );
+              })}
           </TableBody>
         </Table>
       </TableContainer>

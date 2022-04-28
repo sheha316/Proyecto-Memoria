@@ -3,8 +3,8 @@ const mongoose=require('mongoose')
 const Schema=mongoose.Schema
 
 const agendaSchema=Schema({
-	fecha: Date,
-	id_medico: Schema.Types.ObjectId,
+	fecha: String,
+	id_medico: String,
 	disponible: Boolean,
 	bloques: [String],
 
