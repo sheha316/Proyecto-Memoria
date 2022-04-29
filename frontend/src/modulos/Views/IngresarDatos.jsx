@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable no-unused-vars */
@@ -22,6 +23,7 @@ import './NumberInputAsText.css';
 
 function IngresarDatos() {
   const history = useNavigate();
+  // localStorage.clear();
   const {
     hora, dia, medico, OpcionesDeBusquedaSeleccionada, area,
   } = useLocation().state;
@@ -46,6 +48,7 @@ function IngresarDatos() {
             name={id}
             onChange={onChange}
             onBlur={onBlur}
+            autoComplete="on"
             type={id === 'Teléfono' ? 'number' : ''}
             placeholder={placeholder}
             value={(id === 'Rut' && values[id].length > 0) ? format(values[id]) : values[id]}
@@ -263,9 +266,61 @@ function IngresarDatos() {
     );
   }
   function Formulario() {
+    const saveOnLocalWeb = (values) => {
+      localStorage.setItem('userForm', JSON.stringify(values));
+    };
+    const retrieveLocalWebStore = () => {
+      const storedValues = JSON.parse(localStorage.getItem('userForm'));
+      const initialValues = storedValues || {
+        Rut: '',
+        Pasaporte: '',
+        Nombres: '',
+        Apellidos: '',
+        Email: '',
+        Teléfono: '',
+        Nacionalidad: 'Chileno',
+        añoNacimiento: '',
+        mesNacimiento: '',
+        diaNacimiento: '',
+        Previsión: '',
+      };
+      return initialValues;
+    };
+    const stringToFechaFormat = (a, m, d) => {
+      let string = `${a}-`;
+      if (m < 10) {
+        string += '0';
+      }
+      string += `${m}-`;
+      if (d < 10) {
+        string += '0';
+      }
+      string += `${d}`;
+      return string;
+    };
     const handleSubmit = (values) => {
-      console.log(values);
       console.log(hora, dia, medico, OpcionesDeBusquedaSeleccionada, area);
+      console.log(dia.toISOString().split('T')[0]);
+      console.log(values);
+      saveOnLocalWeb(values);
+      delete medico.dates;
+      delete medico.disponible;
+      const valores = {
+        ...values,
+        Bloque: hora,
+        Fecha_cita: dia.toISOString().split('T')[0],
+        Medico: medico,
+        Rut: format(values.Rut),
+        Fecha_nacimiento: stringToFechaFormat(
+          values.añoNacimiento,
+          values.mesNacimiento,
+          values.diaNacimiento,
+        ),
+      };
+      delete valores.añoNacimiento;
+      delete valores.mesNacimiento;
+      delete valores.diaNacimiento;
+      api.postCreateCita(valores);
     };
     const validationSchema = Yup.object().shape({
       Nacionalidad: Yup.string().required(''),
@@ -291,20 +346,7 @@ function IngresarDatos() {
       Previsión: Yup.string().required('Debe seleccionar una previsión'),
 
     });
-    const initialValues = {
-      Rut: '',
-      Pasaporte: '',
-      Nombres: '',
-      Apellidos: '',
-      Email: '',
-      Teléfono: '',
-      Nacionalidad: 'Chileno',
-      añoNacimiento: '',
-      mesNacimiento: '',
-      diaNacimiento: '',
-      Previsión: '',
-
-    };
+    const initialValues = retrieveLocalWebStore();
     return (
       <Formik
         initialValues={initialValues}
@@ -320,7 +362,7 @@ function IngresarDatos() {
           handleBlur,
           setFieldValue,
         }) => (
-          <Form>
+          <Form autoComplete="on">
             <Paper
               elevation={4}
               sx={{

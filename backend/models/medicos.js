@@ -2,7 +2,7 @@ const mongoose=require('mongoose')
 
 const Schema=mongoose.Schema
 
-const medicosSchema=Schema({
+const MedicosSchema=Schema({
 	nombre: String,
 	apellido: String,
 	genero: String,
@@ -13,4 +13,4 @@ const medicosSchema=Schema({
 	timestamps:true
 })
 
-module.exports=mongoose.model('medicos',medicosSchema)
+module.exports=mongoose.model('medicos',MedicosSchema)

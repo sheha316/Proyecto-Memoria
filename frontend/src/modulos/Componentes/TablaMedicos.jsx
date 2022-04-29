@@ -21,6 +21,7 @@ import {
   COLOR_BASE_2, COLOR_BASE_1, COLOR_BUTTON_1, COLOR_BUTTON_2, RUTAS_INGRESAR_DATOS,
 } from '../../constantes';
 import './TablaMedicosStyle.css';
+import newDate from '../../utilities/newDate';
 
 const columns = [
   { id: 'Profesionales', label: 'Profesionales', minWidth: 100 },
@@ -81,14 +82,16 @@ export default function TablaMedicos({
     setPage(0);
   };
   const getAviableDates = () => {
+    console.log(agendasMedicos);
     TableRowIndex = -1;
-    const now = new Date();
+    const now = newDate.getActualDate();
     medicos.map((medico) => {
-      console.log('el dia seleccionado es', dia);
       const DifferenceInTime = dia.getTime() - now.getTime();
-      const DifferenceInDays = Math.floor(DifferenceInTime / (1000 * 3600 * 24));
+      const DifferenceInDays = Math.floor(DifferenceInTime / (1000 * 3600 * 24)) - 1;
       for (let i = 0; i < agendasMedicos.agendas.length; i++) {
         if (agendasMedicos.agendas[i][DifferenceInDays].id_medico === medico._id) {
+          console.log(DifferenceInDays);
+          console.log(agendasMedicos.agendas[i][DifferenceInDays]);
           medico.disponible = agendasMedicos.agendas[i][DifferenceInDays].disponible;
           medico.dates = agendasMedicos.agendas[i][DifferenceInDays].bloques;
         }
@@ -99,7 +102,7 @@ export default function TablaMedicos({
   const onReservar = (hora, medico) => {
     history(RUTAS_INGRESAR_DATOS, {
       state: {
-        hora, dia: new Date(dia), medico, OpcionesDeBusquedaSeleccionada, area,
+        hora, dia: newDate.standarDate(new Date(dia)), medico, OpcionesDeBusquedaSeleccionada, area,
       },
     });
   };

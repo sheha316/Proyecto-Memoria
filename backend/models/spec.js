@@ -2,11 +2,11 @@ const mongoose=require('mongoose')
 
 const Schema=mongoose.Schema
 
-const specSchema=Schema({
+const SpecSchema=Schema({
 	profesion: String,
 	especializacion: String,
 },{
 	timestamps:true
 })
 
-module.exports=mongoose.model('especializaciones',specSchema)
+module.exports=mongoose.model('especializaciones',SpecSchema)

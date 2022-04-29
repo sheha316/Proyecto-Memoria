@@ -11,6 +11,7 @@ import {
   SUCURSAL_1, SUCURSAL_2, SUCURSAL_3, SUCURSAL_4,
 } from '../../constantes';
 import Stepper from '../Componentes/Stepper';
+import newDate from '../../utilities/newDate';
 
 function ReservarHorasArea() {
   const { OpcionesDeBusquedaSeleccionada, area } = useLocation().state;
@@ -44,15 +45,15 @@ function ReservarHorasArea() {
   }, [sucursalSeleccionada]);
   useEffect(() => {
     if (Object.keys(agendasMedicos).length !== 0) {
-      const now = new Date();
-      now.setDate(now.getDate() + 1);
-      console.log('1', now);
       for (let i = 0; i < agendasMedicos.agendas[0].length; i++) {
         for (let j = 0; j < agendasMedicos.Medicos.length; j++) {
           if (agendasMedicos.agendas[j][i].disponible) {
-            now.setDate(now.getDate() + i);
-            console.log('2', now, i);
-            setFechaSeleccionada(now);
+            const date = newDate.getActualDate();
+            const medico = newDate.standarDate(new Date(agendasMedicos.agendas[j][i].fecha));
+            const DifferenceInTime = (medico).getTime() - date.getTime();
+            const DifferenceInDays = Math.floor(DifferenceInTime / (1000 * 3600 * 24));
+            date.setDate(date.getDate() + DifferenceInDays + 1);
+            setFechaSeleccionada(date);
             return;
           }
         }

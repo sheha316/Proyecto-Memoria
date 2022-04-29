@@ -2,7 +2,7 @@ const mongoose=require('mongoose')
 
 const Schema=mongoose.Schema
 
-const agendaSchema=Schema({
+const AgendaSchema=Schema({
 	fecha: String,
 	id_medico: String,
 	disponible: Boolean,
@@ -12,4 +12,4 @@ const agendaSchema=Schema({
 	timestamps:true
 })
 
-module.exports=mongoose.model('agendas',agendaSchema)
+module.exports=mongoose.model('agendas',AgendaSchema)
