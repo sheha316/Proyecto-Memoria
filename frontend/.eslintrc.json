@@ -19,6 +19,7 @@
     ],
     "rules": {
         "linebreak-style": 0,
+        "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
         "import/no-extraneous-dependencies": ["error",  {"devDependencies": true}],
         "import/no-unresolved": [
             2, 

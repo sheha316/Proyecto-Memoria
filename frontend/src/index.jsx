@@ -10,6 +10,9 @@ import Layout from './Layout';
 import ReservarHoras from './modulos/Views/ReservarHoras';
 import ReservarHorasArea from './modulos/Views/ReservarHorasArea';
 import IngresarDatos from './modulos/Views/IngresarDatos';
+import HoraReservada from './modulos/Views/HoraReservada';
+import ReservarConMedico from './modulos/Views/ReservarConMedico';
+
 import {
   RUTAS_HOME,
   RUTAS_SUCURSALES,
@@ -17,6 +20,8 @@ import {
   RUTAS_RESERVAR_HORA,
   RUTAS_RESERVAR_HORA_AREA,
   RUTAS_INGRESAR_DATOS,
+  RUTAS_HORA_RESERVADA,
+  RUTAS_RESERVAR_HORA_CON_MEDICO,
 } from './constantes';
 
 ReactDOM.render(
@@ -30,8 +35,11 @@ ReactDOM.render(
 
         <Route exact path={RUTAS_RESERVAR_HORA} element={<Layout component={<ReservarHoras />} />} />
         <Route exact path={RUTAS_RESERVAR_HORA_AREA} element={<Layout component={<ReservarHorasArea />} />} />
+        <Route exact path={RUTAS_RESERVAR_HORA_CON_MEDICO} element={<Layout component={<ReservarConMedico />} />} />
 
         <Route exact path={RUTAS_INGRESAR_DATOS} element={<Layout component={<IngresarDatos />} />} />
+
+        <Route exact path={RUTAS_HORA_RESERVADA} element={<Layout component={<HoraReservada />} />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

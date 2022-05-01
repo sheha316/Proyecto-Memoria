@@ -14,14 +14,14 @@ const CitasSchema=Schema({
 	Bloque:Number,
 	Fecha_cita:String,
 	Fecha_nacimiento:String,
-	Medico:[{
+	Medico:{
 		nombre: String,
 		apellido: String,
 		genero: String,
 		profesion: String,
 		sucursal:String,
 		especializacion: String,
-	}],
+	},
 },{
 	timestamps:true
 })

@@ -1,17 +1,16 @@
-/* eslint-disable no-plusplus */
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   Container, Box, Radio, RadioGroup, FormLabel, FormControlLabel, Grid,
 } from '@mui/material';
-import Calendario from '../Componentes/Calendario';
-import TablaMedicos from '../Componentes/TablaMedicos';
 import api from '../../API/api';
 import {
   SUCURSAL_1, SUCURSAL_2, SUCURSAL_3, SUCURSAL_4,
 } from '../../constantes';
 import Stepper from '../Componentes/Stepper';
 import newDate from '../../utilities/newDate';
+import Calendario from '../Componentes/Calendario';
+import TablaMedicos from '../Componentes/TablaMedicos';
 
 function ReservarHorasArea() {
   const { OpcionesDeBusquedaSeleccionada, area } = useLocation().state;

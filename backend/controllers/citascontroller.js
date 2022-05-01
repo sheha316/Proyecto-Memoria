@@ -23,17 +23,13 @@ async function postCreateCita(req,res){
 			if(!aunHayHoras(agenda)){
 				agenda.disponible=false;
 			}
-			console.log(agenda)
-			console.log(newCita)
 			await agenda.save()
 			await newCita.save()
-			res.status(200).send({message:"done"})
+			res.status(200).send({message:"done",cita:newCita})
 		}else{
-			console.log("hola?2 el retorno")
 			res.status(201).send({message:"error"})
 		}
 	}catch(e){
-		console.log("hola?3",e)
 		res.status(500).send({message:e.message})
 	}
 	return 

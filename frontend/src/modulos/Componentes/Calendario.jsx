@@ -1,10 +1,8 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React from 'react';
 import { Calendar } from 'react-multi-date-picker';
 import { Box } from '@mui/material/';
-import './CalendarStyle.css';
+import '../../css/CalendarStyle.css';
 import newDate from '../../utilities/newDate';
 
 function Calendario({ agendasMedicos, fecha, setFecha }) {
@@ -21,9 +19,8 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
     );
   };
   const HayUnDoctorDisponible = (dateInDate) => {
-    const DifferenceInTime = dateInDate.getTime() - now.getTime();
+    const DifferenceInTime = dateInDate.getTime() - minDate.getTime();
     const DifferenceInDays = Math.floor(DifferenceInTime / (1000 * 3600 * 24));
-
     for (let i = 0; i < agendasMedicos.Medicos.length; i++) {
       if (agendasMedicos.agendas[i][DifferenceInDays].disponible) {
         return true;
@@ -44,7 +41,6 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
     }
     return {};
   };
-
   return (
     <Box sx={{ marginTop: 1 }}>
       <Calendar

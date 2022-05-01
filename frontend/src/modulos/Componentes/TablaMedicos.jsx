@@ -1,7 +1,5 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-plusplus */
-/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-param-reassign */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +18,7 @@ import {
 import {
   COLOR_BASE_2, COLOR_BASE_1, COLOR_BUTTON_1, COLOR_BUTTON_2, RUTAS_INGRESAR_DATOS,
 } from '../../constantes';
-import './TablaMedicosStyle.css';
+import '../../css/TablaMedicosStyle.css';
 import newDate from '../../utilities/newDate';
 
 const columns = [
@@ -76,13 +74,11 @@ export default function TablaMedicos({
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
   const getAviableDates = () => {
-    console.log(agendasMedicos);
     TableRowIndex = -1;
     const now = newDate.getActualDate();
     medicos.map((medico) => {
@@ -90,8 +86,6 @@ export default function TablaMedicos({
       const DifferenceInDays = Math.floor(DifferenceInTime / (1000 * 3600 * 24)) - 1;
       for (let i = 0; i < agendasMedicos.agendas.length; i++) {
         if (agendasMedicos.agendas[i][DifferenceInDays].id_medico === medico._id) {
-          console.log(DifferenceInDays);
-          console.log(agendasMedicos.agendas[i][DifferenceInDays]);
           medico.disponible = agendasMedicos.agendas[i][DifferenceInDays].disponible;
           medico.dates = agendasMedicos.agendas[i][DifferenceInDays].bloques;
         }
@@ -144,6 +138,7 @@ export default function TablaMedicos({
                   return;
                 }
                 TableRowIndex += 1;
+                // eslint-disable-next-line consistent-return
                 return (
                   <TableRow
                     hover
