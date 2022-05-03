@@ -17,7 +17,7 @@ function RecordatorioSeleccion(cita) {
   return (
     <Box sx={{ marginTop: 4 }}>
       <Stack spacing={4}>
-        {Fichas.FichaProfeional(Medico)}
+        {Fichas.FichaProfeional(Medico, 0)}
         {Fichas.FichaFecha(Bloque, fechaDate)}
         {Fichas.FichaSucursal(Medico.sucursal)}
       </Stack>

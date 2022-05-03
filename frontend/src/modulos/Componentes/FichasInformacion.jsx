@@ -43,10 +43,11 @@ function FichaTitulo(texto) {
     </Box>
   );
 }
-function FichaProfeional(medico) {
+function FichaProfeional(medico, tipo) {
   const {
-    genero, nombre, apellido, especializacion,
+    genero, nombre, apellido, especializacion, sucursal,
   } = medico;
+  const Maxheight = tipo === 1 ? 180 : 90;
   return (
     <Paper
       elevation={4}
@@ -61,13 +62,13 @@ function FichaProfeional(medico) {
         <Paper
           elevation={4}
           sx={{
-            display: 'flex', marginTop: 1, marginLeft: 2, height: 90,
+            display: 'flex', marginTop: 1, marginLeft: 2, height: (Maxheight / 3) * 2,
           }}
         >
 
           <img
             style={{
-              width: 90, height: 90,
+              width: (Maxheight / 3) * 2, height: (Maxheight / 3) * 2,
             }}
             alt=""
             src={genero === 'm'
@@ -78,6 +79,7 @@ function FichaProfeional(medico) {
         <Box sx={{ display: 'grid', marginLeft: 2, padding: 1 }}>
           {RecordatorioSeleccionLabel(`${genero === 'm' ? 'Dr:' : 'Dra:'} ${nombre} ${apellido}`)}
           {RecordatorioSeleccionLabel(`Especialidad: ${especializacion}`)}
+          {tipo === 1 && RecordatorioSeleccionLabel(`Dirección: ${sucursal}`)}
         </Box>
       </Box>
 

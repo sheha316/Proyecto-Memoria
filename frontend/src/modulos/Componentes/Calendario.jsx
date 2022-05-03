@@ -30,7 +30,7 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
   };
   const isDisableDate = (date) => {
     const dateInDate = newDate.standarDate(new Date(date));
-    if (dateInDate.getTime() < newDate.getActualDate().getTime()) {
+    if (dateInDate.getTime() < minDate.getTime()) {
       return {};
     }
     if ([0, 6].includes(date.weekDay.index)

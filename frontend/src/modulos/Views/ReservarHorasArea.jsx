@@ -31,16 +31,24 @@ function ReservarHorasArea() {
       }
     }
   };
-  useEffect(async () => {
-    setMedicos(await api.getAllMedicosBySpec(area.especializacion));
+  useEffect(() => {
+    async function getData() {
+      setMedicos(await api.getAllMedicosBySpec(area.especializacion));
+    }
+    getData();
   }, []);
   useEffect(() => {
-    getBaseSucursal(sucursales);
-  }, [medicos]);
-  useEffect(async () => {
-    if (Object.keys(medicos).length !== 0) {
-      setAgendasMedicos(await api.getAgendas(medicos[sucursalSeleccionada.split(',')[0]]));
+    async function getBaseSucursalUE() {
+      getBaseSucursal(sucursales);
     }
+    getBaseSucursalUE();
+  }, [medicos]);
+  useEffect(() => {
+    async function getAgendasUE() {
+      if (Object.keys(medicos).length !== 0) {
+        setAgendasMedicos(await api.getAgendas(medicos[sucursalSeleccionada.split(',')[0]]));
+      }
+    }getAgendasUE();
   }, [sucursalSeleccionada]);
   useEffect(() => {
     if (Object.keys(agendasMedicos).length !== 0) {

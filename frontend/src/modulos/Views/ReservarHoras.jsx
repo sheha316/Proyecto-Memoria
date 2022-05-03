@@ -23,11 +23,15 @@ function ReservarHoras() {
   const [AreaSeleccionada, setAreaSeleccionada] = useState({});
   const [medicoSeleccionado, setMedicoSeleccionado] = useState({});
 
-  useEffect(async () => {
-    setAreaMedica(await api.getSpecs());
-    setMedicos(await api.getMedicos());
+  useEffect(() => {
+    async function getData() {
+      setAreaMedica(await api.getSpecs());
+      setMedicos(await api.getMedicos());
+    }
+    getData();
   }, []);
   const handleSubmitEspecialista = (values) => {
+    console.log(values);
     history(
       RUTAS_RESERVAR_HORA_CON_MEDICO,
       {
@@ -100,6 +104,7 @@ function ReservarHoras() {
          />
          )}
       </Box>
+
     </Container>
   );
 }

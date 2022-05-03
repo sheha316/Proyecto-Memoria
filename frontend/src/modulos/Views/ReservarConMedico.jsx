@@ -9,6 +9,7 @@ import Stepper from '../Componentes/Stepper';
 import newDate from '../../utilities/newDate';
 import Calendario from '../Componentes/Calendario';
 import TablaMedicos from '../Componentes/TablaMedicos';
+import Fichas from '../Componentes/FichasInformacion';
 
 function ReservarConMedico() {
   const { medico, OpcionesDeBusquedaSeleccionada } = useLocation().state;
@@ -16,8 +17,11 @@ function ReservarConMedico() {
   const [fechaSeleccionada, setFechaSeleccionada] = useState('');
   const [agendaMedico, setAgendaMedico] = useState({});
 
-  useEffect(async () => {
-    setAgendaMedico(await api.getAgendas(medico));
+  useEffect(() => {
+    async function getAgendaMedico() {
+      setAgendaMedico(await api.getAgendas(medico));
+    }
+    getAgendaMedico();
   }, []);
 
   useEffect(() => {
@@ -51,14 +55,27 @@ function ReservarConMedico() {
   return (
     <Container>
       <Box sx={{ marginTop: 5, width: '100%' }}>
-        <Grid container spacing={2}>
+        {Object.keys(agendaMedico).length !== 0 && fechaSeleccionada !== '' && (
+        <Grid container spacing={0}>
+          <Grid item xs={5}>
 
-          {Object.keys(agendaMedico).length !== 0 && fechaSeleccionada !== '' && (
-            <Grid item xs={6}>
-              {optionCalendario()}
-            </Grid>
-          )}
+            {Fichas.FichaProfeional(medico[0], 1)}
+          </Grid>
+          <Grid item xs={1} />
+          <Grid item xs={6}>
+            {optionCalendario()}
+          </Grid>
         </Grid>
+        )}
+        {fechaSeleccionada !== ''
+        && (
+        <TablaMedicos
+          dia={fechaSeleccionada}
+          agendasMedicos={agendaMedico}
+          medicos={medico}
+          OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
+        />
+        )}
       </Box>
     </Container>
   );

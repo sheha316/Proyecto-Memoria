@@ -18,8 +18,10 @@ async function getAllMedicosBySpec(spec) {
 }
 async function getAgendas(medicos) {
   const hoy = newDate.getActualDate();
+  console.log('getAgendas', medicos);
   const fecha = `${hoy.getFullYear()}-${hoy.getMonth() + 1}-${hoy.getDate()}`;
   const response = await axios.get(`${baseUrl}/agendas/getAgendas`, { params: { medicos, diaLocal: fecha } });
+  console.log('getAgendas', response.data);
   return response.data;
 }
 async function postCreateCita(datos) {
