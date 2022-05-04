@@ -44,7 +44,6 @@ function ReservarConMedico() {
 
   const optionCalendario = () => (
     <Box>
-      <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Seleccione Fecha</FormLabel>
       <Calendario
         agendasMedicos={agendaMedico}
         fecha={fechaSeleccionada}
@@ -54,10 +53,12 @@ function ReservarConMedico() {
   );
   return (
     <Container>
+      <Stepper step={1} search={`${OpcionesDeBusquedaSeleccionada}`} medico={medico} area={OpcionesDeBusquedaSeleccionada} />
+
       <Box sx={{ marginTop: 5, width: '100%' }}>
         {Object.keys(agendaMedico).length !== 0 && fechaSeleccionada !== '' && (
         <Grid container spacing={0}>
-          <Grid item xs={5}>
+          <Grid item xs={5} sx={{ marginTop: 1 }}>
 
             {Fichas.FichaProfeional(medico[0], 1)}
           </Grid>
@@ -69,12 +70,16 @@ function ReservarConMedico() {
         )}
         {fechaSeleccionada !== ''
         && (
-        <TablaMedicos
-          dia={fechaSeleccionada}
-          agendasMedicos={agendaMedico}
-          medicos={medico}
-          OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
-        />
+        <>
+          <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Seleccione una Hora</FormLabel>
+          <TablaMedicos
+            dia={fechaSeleccionada}
+            agendasMedicos={agendaMedico}
+            medicos={medico}
+            OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
+            area={OpcionesDeBusquedaSeleccionada}
+          />
+        </>
         )}
       </Box>
     </Container>

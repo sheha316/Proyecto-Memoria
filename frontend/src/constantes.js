@@ -1,8 +1,12 @@
 // ----------------colores
 export const COLOR_BASE_1 = '#0077FF';
 export const COLOR_BASE_2 = '#5DA8FF';
+
 export const COLOR_BUTTON_1 = '#90C104';
 export const COLOR_BUTTON_2 = '#80B100';
+
+export const COLOR_BUTTON_3 = '#ff0000';
+export const COLOR_BUTTON_4 = '#cc0000';
 // ----------------rutas
 export const RUTAS_HOME = '/';
 export const RUTAS_SUCURSALES = '/sucursales';

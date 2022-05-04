@@ -93,7 +93,6 @@ function ReservarHorasArea() {
   );
   const optionCalendario = () => (
     <Box>
-      <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Seleccione Fecha</FormLabel>
       <Calendario
         agendasMedicos={agendasMedicos}
         fecha={fechaSeleccionada}

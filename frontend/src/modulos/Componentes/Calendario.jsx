@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { Calendar } from 'react-multi-date-picker';
-import { Box } from '@mui/material/';
+import { Box, FormLabel } from '@mui/material/';
 import '../../css/CalendarStyle.css';
 import newDate from '../../utilities/newDate';
 
@@ -42,20 +42,23 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
     return {};
   };
   return (
-    <Box sx={{ marginTop: 1 }}>
-      <Calendar
-        value={fecha}
-        onChange={handleChange}
-        weekDays={weekDays}
-        months={months}
-        minDate={minDate}
-        maxDate={maxDate}
-        disableYearPicker
-        weekStartDayIndex={1}
-        numberOfMonths={1}
-        mapDays={({ date }) => isDisableDate(date)}
-      />
-    </Box>
+    <>
+      <FormLabel sx={{ color: 'black', fontWeight: 'bold', left: '30%' }}>Seleccione Fecha</FormLabel>
+      <Box sx={{ marginTop: 1, direction: 'rtl' }}>
+        <Calendar
+          value={fecha}
+          onChange={handleChange}
+          weekDays={weekDays}
+          months={months}
+          minDate={minDate}
+          maxDate={maxDate}
+          disableYearPicker
+          weekStartDayIndex={1}
+          numberOfMonths={1}
+          mapDays={({ date }) => isDisableDate(date)}
+        />
+      </Box>
+    </>
   );
 }
 export default Calendario;

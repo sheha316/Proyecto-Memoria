@@ -26,7 +26,13 @@ function IngresarDatos() {
 
   return (
     <Container>
-      <Stepper OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada} area={area} step={2} search={`${OpcionesDeBusquedaSeleccionada}: ${area.especializacion}`} />
+      <Stepper
+        OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
+        area={area}
+        step={2}
+        medico={medico}
+        search={`${OpcionesDeBusquedaSeleccionada}: ${area.especializacion}`}
+      />
       <Box sx={{ marginTop: 5, width: '100%' }}>
         <Grid
           container

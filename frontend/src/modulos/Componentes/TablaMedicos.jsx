@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable array-callback-return */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
@@ -64,9 +66,15 @@ const STICKYCOLUMN = (index) => {
       fontWeight: 'bold',
     });
 };
+function ModoEspecialista(area) {
+  if (area === 'Médico Especialista') {
+    return true;
+  }
+}
 export default function TablaMedicos({
   medicos, dia, OpcionesDeBusquedaSeleccionada, area, agendasMedicos,
 }) {
+  const modoEspecialista = ModoEspecialista(area);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const history = useNavigate();
@@ -107,27 +115,31 @@ export default function TablaMedicos({
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              {columns.map((column, index) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  sx={[
-                    {
-                      color: 'white',
-                      minWidth: column.minWidth,
-                      backgroundColor: COLOR_BASE_1,
-                      borderColor: 'black',
-                    },
-                    BORDERLEFTONLY,
-                    { borderTop: 1 },
-                    index === 0 ? STICKYCOLUMN(-1) : {}]}
-                >
-                  <Box>
-                    <span style={{ display: 'flex', justifyContent: 'center' }}>{column.label}</span>
-                  </Box>
+              {columns.map((column, index) => {
+                if (!(modoEspecialista && index === 0)) {
+                  return (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      sx={[
+                        {
+                          color: 'white',
+                          minWidth: column.minWidth,
+                          backgroundColor: COLOR_BASE_1,
+                          borderColor: 'black',
+                        },
+                        BORDERLEFTONLY,
+                        { borderTop: 1 },
+                        index === 0 ? STICKYCOLUMN(-1) : {}]}
+                    >
+                      <Box>
+                        <span style={{ display: 'flex', justifyContent: 'center' }}>{column.label}</span>
+                      </Box>
 
-                </TableCell>
-              ))}
+                    </TableCell>
+                  );
+                }
+              })}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -149,37 +161,38 @@ export default function TablaMedicos({
                   >
                     {columns.map((column, indexColumn) => {
                       if (indexColumn === 0) {
-                        return (
-                          <TableCell key={column.id} align={column.align} sx={[BORDERLEFTONLY, { display: 'grid' }, STICKYCOLUMN(TableRowIndex)]}>
-                            <Box sx={{
-                              display: 'flex', justifyContent: 'center', flexFlow: 'column', textAlign: 'center',
-                            }}
-                            >
-                              <Paper elevation={4} sx={{ display: 'flex', marginBottom: 1, justifyContent: 'center' }}>
-                                <img
-                                  style={{
-                                    width: 100, height: 100,
-                                  }}
-                                  alt=""
-                                  src={row.genero === 'm'
-                                    ? 'https://img.freepik.com/foto-gratis/doctor-brazos-cruzados-sobre-fondo-blanco_1368-5790.jpg?w=2000'
-                                    : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIIMvIYUfgxZwSZRb3XHS1umgQjcMuaE9N9Q&usqp=CAU'}
-                                />
-                              </Paper>
-                              <span style={{ color: TableRowIndex % 2 === 0 ? 'black' : 'white' }}>
-                                {`${row.nombre}
+                        if (!modoEspecialista) {
+                          return (
+                            <TableCell key={column.id} align={column.align} sx={[BORDERLEFTONLY, { display: 'grid' }, STICKYCOLUMN(TableRowIndex)]}>
+                              <Box sx={{
+                                display: 'flex', justifyContent: 'center', flexFlow: 'column', textAlign: 'center',
+                              }}
+                              >
+                                <Paper elevation={4} sx={{ display: 'flex', marginBottom: 1, justifyContent: 'center' }}>
+                                  <img
+                                    style={{
+                                      width: 100, height: 100,
+                                    }}
+                                    alt=""
+                                    src={row.genero === 'm'
+                                      ? 'https://img.freepik.com/foto-gratis/doctor-brazos-cruzados-sobre-fondo-blanco_1368-5790.jpg?w=2000'
+                                      : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIIMvIYUfgxZwSZRb3XHS1umgQjcMuaE9N9Q&usqp=CAU'}
+                                  />
+                                </Paper>
+                                <span style={{ color: TableRowIndex % 2 === 0 ? 'black' : 'white' }}>
+                                  {`${row.nombre}
                             ${row.apellido}`}
-                              </span>
-                            </Box>
-                          </TableCell>
-                        );
-                      }
-                      if (row.dates[indexColumn - 1] === '') {
+                                </span>
+                              </Box>
+                            </TableCell>
+                          );
+                        }
+                      } else if (row.dates[indexColumn - 1] === '') {
                         return (
                           <TableCell
                             key={column.id}
                             align={column.align}
-                            sx={BORDERLEFTONLY}
+                            sx={[BORDERLEFTONLY, { height: 80 }]}
                           >
                             <Button
                               sx={{
@@ -195,26 +208,27 @@ export default function TablaMedicos({
                             </Button>
                           </TableCell>
                         );
-                      }
-                      return (
-                        <TableCell
-                          key={column.id}
-                          align={column.align}
-                          sx={[BORDERLEFTONLY, { width: 80 }]}
-                        >
-                          <Button
-                            disabled
-                            sx={{
-                              width: 80,
-                              fontSize: 12,
-                              color: 'ffffff',
-                              backgroundColor: 'gray',
-                            }}
+                      } else {
+                        return (
+                          <TableCell
+                            key={column.id}
+                            align={column.align}
+                            sx={[BORDERLEFTONLY, { width: 80 }]}
                           >
-                            Reservar
-                          </Button>
-                        </TableCell>
-                      );
+                            <Button
+                              disabled
+                              sx={{
+                                width: 80,
+                                fontSize: 12,
+                                color: 'ffffff',
+                                backgroundColor: 'gray',
+                              }}
+                            >
+                              Reservar
+                            </Button>
+                          </TableCell>
+                        );
+                      }
                     })}
                   </TableRow>
                 );
@@ -222,6 +236,7 @@ export default function TablaMedicos({
           </TableBody>
         </Table>
       </TableContainer>
+      { !modoEspecialista && (
       <TablePagination
         rowsPerPageOptions={[]}
         component="div"
@@ -231,6 +246,7 @@ export default function TablaMedicos({
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+      )}
     </Paper>
   );
 }

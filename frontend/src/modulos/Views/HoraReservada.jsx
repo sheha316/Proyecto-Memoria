@@ -7,7 +7,7 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Fichas from '../Componentes/FichasInformacion';
 import {
-  COLOR_BASE_1, COLOR_BUTTON_1, COLOR_BUTTON_2, RUTAS_HOME,
+  COLOR_BASE_1, COLOR_BUTTON_1, COLOR_BUTTON_2, RUTAS_HOME, COLOR_BUTTON_3, COLOR_BUTTON_4,
 } from '../../constantes';
 
 function RecordatorioSeleccion(cita) {
@@ -83,8 +83,8 @@ function HoraReservada() {
           <Button
             sx={{
               textTransform: 'none',
-              backgroundColor: 'red',
-              ':hover': { backgroundColor: '#cc0000' },
+              backgroundColor: COLOR_BUTTON_3,
+              ':hover': { backgroundColor: COLOR_BUTTON_4 },
             }}
           >
             <span style={{ color: 'white' }}>CANCELAR HORA</span>

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/Logo.png';
 
 import {
-  COLOR_BASE_1, COLOR_BUTTON_1, COLOR_BUTTON_2,
+  COLOR_BASE_1, COLOR_BUTTON_1, COLOR_BUTTON_2, COLOR_BUTTON_3, COLOR_BUTTON_4,
   RUTAS_HOME,
   RUTAS_SUCURSALES,
   RUTAS_QUIENES_SOMOS,
@@ -73,6 +73,15 @@ function Header() {
             }}
           >
             <span style={{ color: 'white', fontSize: fontSizeM }}>Reservar Hora</span>
+          </Button>
+          <Button
+            variant="outlined"
+            sx={{ textTransform: 'none', backgroundColor: COLOR_BUTTON_3, ':hover': { backgroundColor: COLOR_BUTTON_4 } }}
+            onClick={() => {
+              history(RUTAS_RESERVAR_HORA);
+            }}
+          >
+            <span style={{ color: 'white', fontSize: fontSizeM }}>Cancelar Hora</span>
           </Button>
         </Stack>
       </Box>

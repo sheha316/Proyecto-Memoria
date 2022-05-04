@@ -133,15 +133,14 @@ function FichaDatosUsuario(cita) {
     >
       {FichaTitulo('Datos del Paciente')}
       {Nacionalidad !== 'Extranjero'
-        ? RecordatorioSeleccionLabel(`Rut:${Rut}`)
-        : RecordatorioSeleccionLabel(`Pasaporte:${Pasaporte}`)}
-      {RecordatorioSeleccionLabel(`Nombres:${Nombres}`)}
-      {RecordatorioSeleccionLabel(`Apellidos:${Apellidos}`)}
-      {RecordatorioSeleccionLabel(`Email:${Email}`)}
-      {RecordatorioSeleccionLabel(`Teléfono:(+56) ${Teléfono}`)}
-      {RecordatorioSeleccionLabel(`Email:${Email}`)}
-      {RecordatorioSeleccionLabel(`Previsión:${Previsión}`)}
-      {RecordatorioSeleccionLabel(`Fecha nacimiento:${Fecha_nacimiento}`)}
+        ? RecordatorioSeleccionLabel(`Rut: ${Rut}`)
+        : RecordatorioSeleccionLabel(`Pasaporte: ${Pasaporte}`)}
+      {RecordatorioSeleccionLabel(`Nombres: ${Nombres}`)}
+      {RecordatorioSeleccionLabel(`Apellidos: ${Apellidos}`)}
+      {RecordatorioSeleccionLabel(`Email: ${Email}`)}
+      {RecordatorioSeleccionLabel(`Teléfono: (+56) ${Teléfono}`)}
+      {RecordatorioSeleccionLabel(`Previsión: ${Previsión}`)}
+      {RecordatorioSeleccionLabel(`Fecha nacimiento: ${Fecha_nacimiento}`)}
     </Paper>
   );
 }
