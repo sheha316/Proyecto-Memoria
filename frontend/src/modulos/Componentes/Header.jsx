@@ -9,6 +9,7 @@ import {
   RUTAS_SUCURSALES,
   RUTAS_QUIENES_SOMOS,
   RUTAS_RESERVAR_HORA,
+  RUTAS_CANCELAR_RESERVAS,
 } from '../../constantes';
 
 function Header() {
@@ -78,7 +79,7 @@ function Header() {
             variant="outlined"
             sx={{ textTransform: 'none', backgroundColor: COLOR_BUTTON_3, ':hover': { backgroundColor: COLOR_BUTTON_4 } }}
             onClick={() => {
-              history(RUTAS_RESERVAR_HORA);
+              history(RUTAS_CANCELAR_RESERVAS);
             }}
           >
             <span style={{ color: 'white', fontSize: fontSizeM }}>Cancelar Hora</span>

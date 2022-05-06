@@ -23,7 +23,8 @@ function IngresarDatos() {
   const {
     hora, dia, medico, OpcionesDeBusquedaSeleccionada, area,
   } = useLocation().state;
-
+  console.log(hora, dia, medico, OpcionesDeBusquedaSeleccionada, area);
+  const search = OpcionesDeBusquedaSeleccionada === 'Médico Especialista' ? 'Médico Especialista' : `${OpcionesDeBusquedaSeleccionada}: ${area.especializacion}`;
   return (
     <Container>
       <Stepper
@@ -31,7 +32,7 @@ function IngresarDatos() {
         area={area}
         step={2}
         medico={medico}
-        search={`${OpcionesDeBusquedaSeleccionada}: ${area.especializacion}`}
+        search={search}
       />
       <Box sx={{ marginTop: 5, width: '100%' }}>
         <Grid
