@@ -15,8 +15,8 @@ function ObtenerHoraSegunBloque(bloque) {
     return `${textoHora}${bloque % 2 === 0 ? '00' : '30'}`;
   }
 function ObtenerMailDeRecordatorio(Nombres,Apellidos,Medico,Bloque,Fecha_cita){
-    console.log("hola22q34")
-    const date=new Date(new Date(Fecha_cita).toDateString());
+    const fechas= Fecha_cita.split("-")
+    const date=new Date(fechas[0],fechas[1],fechas[2]);
     const fecha = format(date, 'PPPPpppp', { locale: es }).split(' a las')[0];
     const imagen="cid:logo@cid"
     const mensaje=

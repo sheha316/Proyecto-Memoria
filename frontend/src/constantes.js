@@ -1,6 +1,7 @@
 // ----------------colores
 export const COLOR_BASE_1 = '#0077FF';
 export const COLOR_BASE_2 = '#5DA8FF';
+export const COLOR_BASE_3 = '#dae7f7';
 
 export const COLOR_BUTTON_1 = '#90C104';
 export const COLOR_BUTTON_2 = '#80B100';
@@ -19,6 +20,7 @@ export const RUTAS_RESERVAR_HORA_CON_MEDICO = '/reservar-hora-medico';
 export const RUTAS_INGRESAR_DATOS = '/reservar-hora-area-formulario';
 export const RUTAS_HORA_RESERVADA = '/hora-reservada';
 export const RUTAS_CANCELAR_RESERVAS = '/canelar-reserva';
+export const RUTAS_CANCELAR_RESERVAS_MIS_RESERVAS = '/canelar-mi-reserva';
 
 // ----------------direcciones Sucursales
 export const SUCURSAL_1 = 'Vitacura, El Canal 4500';

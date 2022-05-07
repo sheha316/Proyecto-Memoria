@@ -130,9 +130,9 @@ function ReservarHorasArea() {
             </Grid>
           )}
           {Object.keys(agendasMedicos).length !== 0 && fechaSeleccionada !== '' && (
-          <Grid item xs={12}>
-            {optionMedicos()}
-          </Grid>
+            <Grid item xs={12}>
+              {optionMedicos()}
+            </Grid>
           )}
         </Grid>
       </Box>

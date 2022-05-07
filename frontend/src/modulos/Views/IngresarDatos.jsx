@@ -10,7 +10,7 @@ import Formulario from '../Componentes/FormularioDatosUsuario';
 
 function RecordatorioSeleccion(medico, hora, dia, sucursal) {
   return (
-    <Box sx={{ marginTop: 4 }}>
+    <Box sx={{ marginTop: 2 }}>
       <Stack spacing={4}>
         {Fichas.FichaProfeional(medico)}
         {Fichas.FichaFecha(hora, dia)}
@@ -42,6 +42,9 @@ function IngresarDatos() {
           }}
         >
           <Grid item xs={4}>
+            <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>
+              Información de la cita
+            </FormLabel>
             {RecordatorioSeleccion(medico, hora, dia, medico.sucursal)}
           </Grid>
           <Grid item xs={6}>

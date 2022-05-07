@@ -314,15 +314,15 @@ function Formulario({ medico, hora, dia }) {
     delete valores.mesNacimiento;
     delete valores.diaNacimiento;
     const respuesta = await api.postCreateCita(valores);
-    // history(
-    //   RUTAS_HORA_RESERVADA,
-    //   {
-    //     state: {
-    //       mensaje: respuesta.message,
-    //       cita: respuesta.cita,
-    //     },
-    //   },
-    // );
+    history(
+      RUTAS_HORA_RESERVADA,
+      {
+        state: {
+          mensaje: respuesta.message,
+          cita: respuesta.cita,
+        },
+      },
+    );
   };
 
   const validationSchema = Yup.object().shape({

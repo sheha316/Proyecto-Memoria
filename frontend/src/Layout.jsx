@@ -8,7 +8,6 @@ function Layout({ component }) {
     <Box style={{ marginBottom: 50 }}>
       <Header />
       {component}
-
     </Box>
   );
 }

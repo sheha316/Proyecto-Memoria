@@ -30,10 +30,17 @@ async function postCreateCita(datos) {
   console.log('postCreateCita', response.data);
   return response.data;
 }
+async function getMisCitas(datos) {
+  console.log('getMisCitas', datos);
+  const response = await axios.get(`${baseUrl}/citas/getMisCitas`, { params: { datos } }).catch((e) => { console.log(e.message); });
+  console.log('getMisCitas', response.data);
+  return response.data;
+}
 export default {
   getMedicos,
   getSpecs,
   getAllMedicosBySpec,
   postCreateCita,
   getAgendas,
+  getMisCitas,
 };

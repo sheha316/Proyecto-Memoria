@@ -13,6 +13,7 @@ import IngresarDatos from './modulos/Views/IngresarDatos';
 import HoraReservada from './modulos/Views/HoraReservada';
 import ReservarConMedico from './modulos/Views/ReservarConMedico';
 import CancelarReserva from './modulos/Views/CancelarReserva';
+import CancelarReservaMisReservas from './modulos/Views/CancelarReservaMisReservas';
 import {
   RUTAS_HOME,
   RUTAS_SUCURSALES,
@@ -23,6 +24,7 @@ import {
   RUTAS_HORA_RESERVADA,
   RUTAS_RESERVAR_HORA_CON_MEDICO,
   RUTAS_CANCELAR_RESERVAS,
+  RUTAS_CANCELAR_RESERVAS_MIS_RESERVAS,
 } from './constantes';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -31,7 +33,7 @@ root.render(
     <BrowserRouter>
       <Routes path="/">
 
-        <Route exact path={RUTAS_HOME} element={<Layout component={<>hola</>} />} />
+        <Route exact path={RUTAS_HOME} element={<Layout component={<>aholaa</>} />} />
         <Route exact path={RUTAS_SUCURSALES} element={<Layout component={<>hola</>} />} />
         <Route exact path={RUTAS_QUIENES_SOMOS} element={<Layout component={<>hola</>} />} />
 
@@ -43,6 +45,7 @@ root.render(
 
         <Route exact path={RUTAS_HORA_RESERVADA} element={<Layout component={<HoraReservada />} />} />
         <Route exact path={RUTAS_CANCELAR_RESERVAS} element={<Layout component={<CancelarReserva />} />} />
+        <Route exact path={RUTAS_CANCELAR_RESERVAS_MIS_RESERVAS} element={<Layout component={<CancelarReservaMisReservas />} />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

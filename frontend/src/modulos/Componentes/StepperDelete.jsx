@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import {
@@ -6,41 +7,25 @@ import {
 import { useNavigate } from 'react-router-dom';
 import {
   RUTAS_RESERVAR_HORA,
-  RUTAS_RESERVAR_HORA_AREA,
-  RUTAS_RESERVAR_HORA_CON_MEDICO,
-  COLOR_BASE_1, COLOR_BASE_2, COLOR_BASE_3,
+  RUTAS_CANCELAR_RESERVAS,
+  COLOR_BASE_1,
 } from '../../constantes';
 
-function stepper({
-  step, search, OpcionesDeBusquedaSeleccionada, area, medico,
+function StepperDelete({
+  step, id,
 }) {
   const history = useNavigate();
-  let steps;
-  if (area !== 'Médico Especialista') {
-    steps = [`Buscar ${search}`, 'Seleccionar Fecha y Profesional', 'Ingresar Datos'];
-  } else {
-    steps = [`Buscar ${search}`, 'Seleccionar Fecha y Hora', 'Ingresar Datos'];
-  }
+  const steps = [`Ingresar su ${id}`, 'Seleccionar cita a Cancelar'];
+
   const handleStep = (index) => {
     if (index !== step) {
       if (index === 0) {
-        history(RUTAS_RESERVAR_HORA);
-      } else if (index === 1 && area !== 'Médico Especialista') {
-        history(RUTAS_RESERVAR_HORA_AREA, {
-          state: {
-            area,
-            OpcionesDeBusquedaSeleccionada,
-          },
-        });
-      } else if (index === 1 && area === 'Médico Especialista') {
-        history(RUTAS_RESERVAR_HORA_CON_MEDICO, {
-          state: {
-            medico: [medico],
-            OpcionesDeBusquedaSeleccionada,
-          },
-        });
+        history(RUTAS_CANCELAR_RESERVAS);
       }
     }
+  };
+  const initialValue = {
+
   };
   return (
     <Paper
@@ -58,7 +43,7 @@ function stepper({
           color: COLOR_BASE_1, fontWeight: 'bold', padding: 2, fontSize: '200%',
         }}
         >
-          Reserva de Hora
+          Cancelar Hora
         </FormLabel>
       </Box>
       <Box sx={{ textAlign: 'center', marginTop: '1%' }}>
@@ -77,4 +62,4 @@ function stepper({
   );
 }
 
-export default stepper;
+export default StepperDelete;
