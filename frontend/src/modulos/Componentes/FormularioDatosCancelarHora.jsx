@@ -1,21 +1,17 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import {
   Box, Grid, FormLabel, FormControl, RadioGroup,
   FormControlLabel, Radio, FormHelperText, InputAdornment, TextField,
   Button, Paper,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { validate, clean, format } from 'rut.js';
 import {
-  COLOR_BASE_2, COLOR_BUTTON_1, COLOR_BUTTON_2, RUTAS_CANCELAR_RESERVAS_MIS_RESERVAS,
+  COLOR_BASE_2, COLOR_BUTTON_1, COLOR_BUTTON_2,
 } from '../../constantes';
 import '../../css/NumberInputAsText.css';
-import api from '../../API/api';
 
 function NacionalidadRadio(onChange, values, touched, setId) {
   const { Nacionalidad } = values;
@@ -123,7 +119,6 @@ function TextFieldInput(id, placeholder, onChange, values, errors, touched, onBl
   );
 }
 function FormularioCancelar({ initialValues, setId, handleSubmit }) {
-  const history = useNavigate();
   const validationSchema = Yup.object().shape({
     Nacionalidad: Yup.string().required(''),
     Pasaporte: Yup.string().when('Nacionalidad', (nacionalidad) => {

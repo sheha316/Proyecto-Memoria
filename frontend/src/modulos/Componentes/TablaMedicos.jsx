@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
-/* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable no-param-reassign */
 /* eslint-disable react/prop-types */
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -26,22 +26,22 @@ import newDate from '../../utilities/newDate';
 const columns = [
   { id: 'Profesionales', label: 'Profesionales', minWidth: 100 },
   { id: '08:30', label: '08:30', minWidth: 65 },
-  { id: '09:00', label: '09:00', minWidth: 40 },
-  { id: '09:30', label: '09:30', minWidth: 40 },
-  { id: '10:00', label: '10:00', minWidth: 40 },
-  { id: '10:30', label: '10:30', minWidth: 40 },
-  { id: '11:00', label: '11:00', minWidth: 40 },
-  { id: '11:30', label: '11:30', minWidth: 40 },
-  { id: '12:00', label: '12:00', minWidth: 40 },
-  { id: '12:30', label: '12:30', minWidth: 40 },
-  { id: '14:00', label: '14:00', minWidth: 40 },
-  { id: '14:30', label: '14:30', minWidth: 40 },
-  { id: '15:00', label: '15:00', minWidth: 40 },
-  { id: '15:30', label: '15:30', minWidth: 40 },
-  { id: '16:00', label: '16:00', minWidth: 40 },
-  { id: '16:30', label: '16:30', minWidth: 40 },
-  { id: '17:00', label: '17:00', minWidth: 40 },
-  { id: '17:30', label: '17:30', minWidth: 40 },
+  { id: '09:00', label: '09:00', minWidth: 65 },
+  { id: '09:30', label: '09:30', minWidth: 65 },
+  { id: '10:00', label: '10:00', minWidth: 65 },
+  { id: '10:30', label: '10:30', minWidth: 65 },
+  { id: '11:00', label: '11:00', minWidth: 65 },
+  { id: '11:30', label: '11:30', minWidth: 65 },
+  { id: '12:00', label: '12:00', minWidth: 65 },
+  { id: '12:30', label: '12:30', minWidth: 65 },
+  { id: '14:00', label: '14:00', minWidth: 65 },
+  { id: '14:30', label: '14:30', minWidth: 65 },
+  { id: '15:00', label: '15:00', minWidth: 65 },
+  { id: '15:30', label: '15:30', minWidth: 65 },
+  { id: '16:00', label: '16:00', minWidth: 65 },
+  { id: '16:30', label: '16:30', minWidth: 65 },
+  { id: '17:00', label: '17:00', minWidth: 65 },
+  { id: '17:30', label: '17:30', minWidth: 65 },
 ];
 const BORDERLEFTONLY = {
   borderLeft: 0,
@@ -127,6 +127,7 @@ export default function TablaMedicos({
                           minWidth: column.minWidth,
                           backgroundColor: COLOR_BASE_1,
                           borderColor: 'black',
+                          fontWeight: 'bold',
                         },
                         BORDERLEFTONLY,
                         { borderTop: 1 },

@@ -1,12 +1,10 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import {
   Stepper, Step, StepButton, Box, FormLabel, Paper,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import {
-  RUTAS_RESERVAR_HORA,
   RUTAS_CANCELAR_RESERVAS,
   COLOR_BASE_1,
 } from '../../constantes';
@@ -23,9 +21,6 @@ function StepperDelete({
         history(RUTAS_CANCELAR_RESERVAS);
       }
     }
-  };
-  const initialValue = {
-
   };
   return (
     <Paper

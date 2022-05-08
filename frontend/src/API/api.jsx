@@ -18,22 +18,25 @@ async function getAllMedicosBySpec(spec) {
 }
 async function getAgendas(medicos) {
   const hoy = newDate.getActualDate();
-  console.log('getAgendas', medicos);
   const fecha = `${hoy.getFullYear()}-${hoy.getMonth() + 1}-${hoy.getDate()}`;
   const response = await axios.get(`${baseUrl}/agendas/getAgendas`, { params: { medicos, diaLocal: fecha } });
-  console.log('getAgendas', response.data);
   return response.data;
 }
 async function postCreateCita(datos) {
-  console.log('postCreateCita');
-  const response = await axios.post(`${baseUrl}/citas/postCreateCita`, datos).catch((e) => { console.log(e.message); });
-  console.log('postCreateCita', response.data);
+  const response = await axios.post(`${baseUrl}/citas/postCreateCita`, datos);
   return response.data;
 }
 async function getMisCitas(datos) {
   console.log('getMisCitas', datos);
-  const response = await axios.get(`${baseUrl}/citas/getMisCitas`, { params: { datos } }).catch((e) => { console.log(e.message); });
-  console.log('getMisCitas', response.data);
+  const response = await axios.get(`${baseUrl}/citas/getMisCitas`, { params: { datos } });
+  console.log('getMisCitas', response.data.cita);
+  return response.data.cita;
+}
+async function postSendEmailDeleteCita(datos) {
+  console.log('postSendEmailDeleteCita', datos);
+  const response = await axios.post(`${baseUrl}/citas/sendEmailDeleteCita`, datos);
+  console.log('postSendEmailDeleteCita', response.data);
+
   return response.data;
 }
 export default {
@@ -43,4 +46,5 @@ export default {
   postCreateCita,
   getAgendas,
   getMisCitas,
+  postSendEmailDeleteCita,
 };

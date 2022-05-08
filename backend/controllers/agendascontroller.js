@@ -29,7 +29,6 @@ async function getAgendas(req,res){
 		)
 		
 	}catch(e){
-		console.log("error",e)
 		res.status(500).send({message:e.message})
 	}
 }

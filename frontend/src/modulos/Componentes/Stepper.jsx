@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import {
   Stepper, Step, StepButton, Box, FormLabel, Paper,
@@ -8,7 +7,7 @@ import {
   RUTAS_RESERVAR_HORA,
   RUTAS_RESERVAR_HORA_AREA,
   RUTAS_RESERVAR_HORA_CON_MEDICO,
-  COLOR_BASE_1, COLOR_BASE_2, COLOR_BASE_3,
+  COLOR_BASE_1,
 } from '../../constantes';
 
 function stepper({

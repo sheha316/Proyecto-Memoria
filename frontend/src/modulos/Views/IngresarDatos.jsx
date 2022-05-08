@@ -7,13 +7,15 @@ import { useLocation } from 'react-router-dom';
 import Stepper from '../Componentes/Stepper';
 import Fichas from '../Componentes/FichasInformacion';
 import Formulario from '../Componentes/FormularioDatosUsuario';
+import DatesHour from '../../utilities/Dates&Hour';
 
 function RecordatorioSeleccion(medico, hora, dia, sucursal) {
+  const fecha = DatesHour.StringDateToDate(dia.toISOString().split('T')[0]);
   return (
     <Box sx={{ marginTop: 2 }}>
       <Stack spacing={4}>
         {Fichas.FichaProfeional(medico)}
-        {Fichas.FichaFecha(hora, dia)}
+        {Fichas.FichaFecha(hora, fecha)}
         {Fichas.FichaSucursal(sucursal)}
       </Stack>
     </Box>
@@ -23,7 +25,6 @@ function IngresarDatos() {
   const {
     hora, dia, medico, OpcionesDeBusquedaSeleccionada, area,
   } = useLocation().state;
-  console.log(hora, dia, medico, OpcionesDeBusquedaSeleccionada, area);
   const search = OpcionesDeBusquedaSeleccionada === 'Médico Especialista' ? 'Médico Especialista' : `${OpcionesDeBusquedaSeleccionada}: ${area.especializacion}`;
   return (
     <Container>

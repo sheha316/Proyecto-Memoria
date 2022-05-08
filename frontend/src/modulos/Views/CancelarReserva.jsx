@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -6,7 +5,6 @@ import {
 } from '@mui/material';
 import { format } from 'rut.js';
 import Stepper from '../Componentes/StepperDelete';
-import api from '../../API/api';
 import FormularioDatosCancelarHora from '../Componentes/FormularioDatosCancelarHora';
 import {
   RUTAS_CANCELAR_RESERVAS_MIS_RESERVAS,
@@ -28,7 +26,6 @@ function CancelarReserva() {
   const [identificado, setId] = useState(initialValues.Nacionalidad === 'Chileno' ? 'Rut' : 'Pasaporte');
 
   const handleSubmit = (values) => {
-    console.log(values);
     history(RUTAS_CANCELAR_RESERVAS_MIS_RESERVAS, {
       state: { values: { ...values, Rut: format(values.Rut) } },
     });

@@ -1,6 +1,6 @@
-/* eslint-disable no-shadow */
 /* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable no-shadow */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
 import React from 'react';
@@ -15,17 +15,7 @@ import { List } from 'react-virtualized';
 import { COLOR_BASE_2, COLOR_BUTTON_1, COLOR_BUTTON_2 } from '../../constantes';
 
 const WIDTHINPUT = 600;
-function getrowHeight(itemSize, a, children) {
-  const Gruped = false;
-  if (Gruped) {
-    const items = children[a.index].props.children[1].props.children.length + 2;
-    console.log(children[a.index].props.children[0].props);
-    children[a.index].props.children[1].props.children.map((elemento) => {
-      console.log(elemento.props);
-      return {};
-    });
-    return itemSize * items;
-  }
+function getrowHeight(itemSize) {
   return itemSize;
 }
 const ListboxComponent = React.forwardRef((

@@ -31,7 +31,6 @@ function ReservarHoras() {
     getData();
   }, []);
   const handleSubmitEspecialista = (values) => {
-    console.log(values);
     history(
       RUTAS_RESERVAR_HORA_CON_MEDICO,
       {

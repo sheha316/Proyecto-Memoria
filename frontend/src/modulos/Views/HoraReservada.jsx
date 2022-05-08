@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 import {
   Container, Box, FormLabel, Grid, Stack, Button,
@@ -7,18 +6,18 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Fichas from '../Componentes/FichasInformacion';
 import {
-  COLOR_BASE_1, COLOR_BUTTON_1, COLOR_BUTTON_2, RUTAS_HOME, COLOR_BUTTON_3, COLOR_BUTTON_4,
+  COLOR_BUTTON_1, COLOR_BUTTON_2, RUTAS_HOME, COLOR_BUTTON_3, COLOR_BUTTON_4,
 } from '../../constantes';
+import DatesHour from '../../utilities/Dates&Hour';
 
 function RecordatorioSeleccion(cita) {
   const { Medico, Bloque, Fecha_cita } = cita;
-  const fecha = Fecha_cita.split('-');
-  const fechaDate = new Date(fecha[0], fecha[1], fecha[2]);
+  const fecha = DatesHour.StringDateToDate(Fecha_cita);
   return (
     <Box sx={{ marginTop: 4 }}>
       <Stack spacing={4}>
         {Fichas.FichaProfeional(Medico, 0)}
-        {Fichas.FichaFecha(Bloque, fechaDate)}
+        {Fichas.FichaFecha(Bloque, fecha)}
         {Fichas.FichaSucursal(Medico.sucursal)}
       </Stack>
     </Box>
@@ -37,7 +36,7 @@ function DatosUsuario(cita) {
 
 function HoraReservada() {
   const history = useNavigate();
-  const { mensaje, cita } = useLocation().state;
+  const { cita } = useLocation().state;
   return (
     <Container>
       <Box sx={{

@@ -1,22 +1,21 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   Container, Box, FormLabel,
 } from '@mui/material';
-import { checkPropTypes } from 'prop-types';
 import Stepper from '../Componentes/StepperDelete';
 import api from '../../API/api';
-import FormularioDatosCancelarHora from '../Componentes/FormularioDatosCancelarHora';
+import TablaCitas from '../Componentes/TablaCitas';
 
 function CancelarReservaMisReservas() {
   const { values } = useLocation().state;
-  console.log(values);
   const id = values.Nacionalidad === 'Chileno' ? 'Rut' : 'Pasaporte';
-  const [misReservas, setMisReservas] = useState({});
+  const [misReservas, setMisReservas] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function getMisReservas() {
-      setMisReservas(await api.getMisCitas(values));
+      await setMisReservas(await api.getMisCitas(values));
+      setLoading(false);
     }
     getMisReservas();
   }, []);
@@ -25,10 +24,20 @@ function CancelarReservaMisReservas() {
       <Stepper step={1} id={id} />
       <Box sx={{ marginTop: 5, width: '100%' }}>
         <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>
-          Ingrese su
-          {' '}
-          {id}
+          Citas Programadas
         </FormLabel>
+        {!loading && misReservas.length > 0 && <TablaCitas citas={misReservas} />}
+        {!loading && misReservas.length < 1
+        && (
+        <Box sx={{ marginTop: 5, width: '100%' }}>
+          <FormLabel sx={{
+            color: 'black', fontWeight: 'bold', width: '100%', textAlign: 'center',
+          }}
+          >
+            No se han encontrado citas programadas para usted
+          </FormLabel>
+        </Box>
+        )}
       </Box>
 
     </Container>

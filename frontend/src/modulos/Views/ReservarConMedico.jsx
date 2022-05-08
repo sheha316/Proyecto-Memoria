@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
@@ -13,7 +12,6 @@ import Fichas from '../Componentes/FichasInformacion';
 
 function ReservarConMedico() {
   const { medico, OpcionesDeBusquedaSeleccionada } = useLocation().state;
-  console.log(medico, OpcionesDeBusquedaSeleccionada);
   const [fechaSeleccionada, setFechaSeleccionada] = useState('');
   const [agendaMedico, setAgendaMedico] = useState({});
 

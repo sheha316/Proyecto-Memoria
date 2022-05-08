@@ -1,25 +1,9 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 import React from 'react';
 import { Box, FormLabel, Paper } from '@mui/material';
-import * as dateFns from 'date-fns';
-import es from 'date-fns/locale/es';
 import { COLOR_BASE_1 } from '../../constantes';
-import newDate from '../../utilities/newDate';
+import DatesHour from '../../utilities/Dates&Hour';
 
-function ObtenerHoraSegunBloque(bloque) {
-  let horafinal = 8 + Math.floor(bloque / 2);
-  if (horafinal > 12) {
-    horafinal += 1;
-  }
-  let textoHora = '';
-  if (horafinal < 10) {
-    textoHora = `0${horafinal}:`;
-  } else {
-    textoHora = `${horafinal}:`;
-  }
-  return `${textoHora}${bloque % 2 === 0 ? '00' : '30'}`;
-}
 function RecordatorioSeleccionLabel(texto) {
   return (
     <FormLabel sx={{ color: 'black', margin: 1, marginLeft: 2 }}>{texto}</FormLabel>
@@ -87,9 +71,7 @@ function FichaProfeional(medico, tipo) {
   );
 }
 function FichaFecha(Bloque, Fecha) {
-  const horafinal = ObtenerHoraSegunBloque(Bloque);
-  const date = newDate.standarDate(new Date(Fecha));
-  const fecha = dateFns.format(date, 'PPPPpppp', { locale: es }).split(' a las')[0];
+  const horafinal = DatesHour.ObtenerHoraSegunBloque(Bloque);
   return (
     <Paper
       elevation={4}
@@ -99,7 +81,7 @@ function FichaFecha(Bloque, Fecha) {
       }}
     >
       {FichaTitulo('Fecha y Hora')}
-      {RecordatorioSeleccionLabel(`Fecha: ${fecha}`)}
+      {RecordatorioSeleccionLabel(`Fecha: ${Fecha}`)}
       {RecordatorioSeleccionLabel(`Hora: ${horafinal}`)}
     </Paper>
   );
