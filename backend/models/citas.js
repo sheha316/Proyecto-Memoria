@@ -15,6 +15,7 @@ const CitasSchema=Schema({
 	Fecha_cita:String,
 	Fecha_nacimiento:String,
 	Medico:{
+		_id:String,
 		nombre: String,
 		apellido: String,
 		genero: String,

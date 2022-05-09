@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -25,7 +26,8 @@ function CancelarReserva() {
   const initialValues = retrieveLocalWebStore();
   const [identificado, setId] = useState(initialValues.Nacionalidad === 'Chileno' ? 'Rut' : 'Pasaporte');
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
+    console.log(values);
     history(RUTAS_CANCELAR_RESERVAS_MIS_RESERVAS, {
       state: { values: { ...values, Rut: format(values.Rut) } },
     });

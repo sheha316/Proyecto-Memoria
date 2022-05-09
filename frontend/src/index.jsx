@@ -44,8 +44,10 @@ root.render(
         <Route exact path={RUTAS_INGRESAR_DATOS} element={<Layout component={<IngresarDatos />} />} />
 
         <Route exact path={RUTAS_HORA_RESERVADA} element={<Layout component={<HoraReservada />} />} />
+
         <Route exact path={RUTAS_CANCELAR_RESERVAS} element={<Layout component={<CancelarReserva />} />} />
         <Route exact path={RUTAS_CANCELAR_RESERVAS_MIS_RESERVAS} element={<Layout component={<CancelarReservaMisReservas />} />} />
+
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

@@ -21,7 +21,6 @@ import {
 } from '../../constantes';
 import '../../css/TablaMedicosStyle.css';
 import DatesHour from '../../utilities/Dates&Hour';
-import api from '../../API/api';
 
 const columns = [
   { id: 'Medico', label: 'Profesional', minWidth: 120 },
@@ -30,7 +29,7 @@ const columns = [
   { id: 'Bloque', label: 'Hora', minWidth: 60 },
   { id: 'Cancelar', label: '', minWidth: 120 },
 ];
-function TextoColumna(column, cita) {
+function TextoColumna(column, cita, handleCancelDate) {
   const { id } = column;
   if (id === 'Medico') {
     return `${cita[id].nombre} ${cita[id].apellido}`;
@@ -41,10 +40,10 @@ function TextoColumna(column, cita) {
   } if (id === 'Bloque') {
     return DatesHour.ObtenerHoraSegunBloque(cita[id]);
   } if (id === 'Cancelar') {
-    return <Button onClick={() => api.postSendEmailDeleteCita(cita)} style={{ color: 'white', backgroundColor: 'red' }}><DeleteOutlinedIcon /></Button>;
+    return <Button onClick={() => handleCancelDate(cita)} style={{ color: 'white', backgroundColor: 'red' }}><DeleteOutlinedIcon /></Button>;
   }
 }
-export default function TablaMedicos({ citas }) {
+export default function TablaMedicos({ citas, handleCancelDate }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(6);
   const handleChangePage = (event, newPage) => {
@@ -98,7 +97,7 @@ export default function TablaMedicos({ citas }) {
                       align={column.align}
                       sx={[{ width: 80, textAlign: 'center', color: TableRowIndex % 2 === 0 ? 'black' : 'white' }]}
                     >
-                      {TextoColumna(column, row)}
+                      {TextoColumna(column, row, handleCancelDate)}
                     </TableCell>
                   ))}
                 </TableRow>

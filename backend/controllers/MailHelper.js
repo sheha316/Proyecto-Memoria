@@ -32,13 +32,13 @@ function ObtenerMailDeRecordatorio(Nombres,Apellidos,Medico,Bloque,Fecha_cita){
     "<div>&nbsp;</div></div></div><p style=\'text-align: left;\' >Si quiere ver más en detalle su cita puede hacerlo en nuestra página <a href=\""+process.env.APP_HOST+"/canelar-reserva\"> Reservas.cl</a></p>"
     return mensaje;
 }
-function MailParaBorrarCita(Nombres,Apellidos,Medico,Bloque,Fecha_cita,link){
+function MailParaBorrarCita(Nombres,Apellidos,Medico,Bloque,Fecha_cita){
   const fechas= Fecha_cita.split("-")
   const date=new Date(fechas[0],fechas[1]-1,fechas[2]);
   const fecha = format(date, 'PPPPpppp', { locale: es }).split(' a las')[0];
   const imagen="cid:logo@cid"
   const mensaje=
-  "<div>Hola "+Nombres+" "+Apellidos+", este es un mail para confirmar la cancelación de la siguiente cita médica.</div><div>&nbsp;</div><div style=\"padding-left: 25%; width: 50%;\">"+
+  "<div>Hola "+Nombres+" "+Apellidos+", se ha cancelado la siguiente cita médica.</div><div>&nbsp;</div><div style=\"padding-left: 25%; width: 50%;\">"+
   "<div style=\"background-color: #ffffff; color: #ffffff; border-top-left-radius: 30px; border-top-right-radius: 30px;\">"+
   "<p style=\'margin-top:0cm;margin-right:0cm;margin-bottom:8.0pt;margin-left:0cm;line-height:107%;font-size:15px;font-family:\"Calibri\",sans-serif;text-align:center;\'>"+
   "<img width=\"353\" src=\""+imagen+"\" alt=\"Imagen que contiene Logotipo Descripción generada automáticamente\"></p>"+
@@ -48,8 +48,7 @@ function MailParaBorrarCita(Nombres,Apellidos,Medico,Bloque,Fecha_cita,link){
   "<p style=\'padding:2%;margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:\"Calibri\",sans-serif;background:#EEEEEE;'><span style='font-size:24px;font-family:\"Arial\",sans-serif;color:#222222;\'>Dirección: "+Medico.sucursal+"</span></p>"+
   "<p style=\'padding:2%;margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:\"Calibri\",sans-serif;background:#EEEEEE;'><span style='font-size:24px;font-family:\"Arial\",sans-serif;color:#222222;\'>Fecha: "+fecha+"</span></p>"+
   "<p style=\'padding:2%;margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:\"Calibri\",sans-serif;background:#EEEEEE;'><span style='font-size:24px;font-family:\"Arial\",sans-serif;color:#222222;\'>Hora: "+ObtenerHoraSegunBloque(Bloque)+"</span></p>"+
-  "<div>&nbsp;</div></div></div><p style=\'text-align: left;\' >Si desea cancelar su cita, favor de ingresar al siguiente link: <a href=\""+process.env.APP_HOST+"/canelar-reserva-esp/"+link+"\"> Reservas.cl/Cancelar-mi-Cita</a></p>"+
-  "<div>&nbsp;</div><p style=\'text-align: left;\' >Si no desea cancelar su cita, ignore este correo.</p>"
+  "<div>&nbsp;</div></div></div>"
   return mensaje;
 }
 module.exports= {ObtenerMailDeRecordatorio,MailParaBorrarCita}

@@ -19,6 +19,10 @@ function CancelarReservaMisReservas() {
     }
     getMisReservas();
   }, []);
+  const handleCancelDate = async (cita) => {
+    await api.postSendEmailDeleteCita(cita);
+    window.location.reload(false);
+  };
   return (
     <Container>
       <Stepper step={1} id={id} />
@@ -26,7 +30,8 @@ function CancelarReservaMisReservas() {
         <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>
           Citas Programadas
         </FormLabel>
-        {!loading && misReservas.length > 0 && <TablaCitas citas={misReservas} />}
+        {!loading && misReservas.length > 0
+        && <TablaCitas handleCancelDate={handleCancelDate} citas={misReservas} />}
         {!loading && misReservas.length < 1
         && (
         <Box sx={{ marginTop: 5, width: '100%' }}>

@@ -7,7 +7,6 @@ const specroutes= require('./routes/spec')
 const agendasroutes= require('./routes/agendas')
 const citasroutes= require('./routes/citas')
 
-
 const app = express()
 
 app.use(cors())

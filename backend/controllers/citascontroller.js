@@ -3,7 +3,6 @@ const citas = require('../models/citas')
 const nodemailer = require('nodemailer');
 const MailHelper= require('./MailHelper');
 
-
 function aunHayHoras(agenda){
 	for(let i=0;i<agenda.bloques.length;i++){
 		if(agenda.bloques[i]===""){
@@ -61,12 +60,12 @@ async function postCreateCita(req,res){
 			"id_medico":values.Medico._id,
 			"fecha":values.Fecha_cita
 		})
-		await sendEmailConfirmDate(newCita);
 		if(agenda.disponible && agenda.bloques[newCita.Bloque-1]===""){
 			agenda.bloques[newCita.Bloque-1]=newCita._id
 			if(!aunHayHoras(agenda)){
 				agenda.disponible=false;
 			}
+			await sendEmailConfirmDate(newCita);
 			await agenda.save()
 			await newCita.save()
 			res.status(200).send({message:"done",cita:newCita})
@@ -78,27 +77,21 @@ async function postCreateCita(req,res){
 	}
 	return 
 }
-async function deleteCita(req,res){
-	let values = req.body
+async function deleteCita(citaPaciente){
 	try{
-		const agenda=await agendas.findOne({
-			"id_medico":values.Medico._id,
-			"fecha":values.Fecha_cita
+		const cita=await citas.findOne({
+			"_id":citaPaciente._id,
 		})
-		await sendEmailConfirmDate(newCita);
-		if(agenda.disponible && agenda.bloques[newCita.Bloque-1]===""){
-			agenda.bloques[newCita.Bloque-1]=newCita._id
-			if(!aunHayHoras(agenda)){
-				agenda.disponible=false;
-			}
-			await agenda.save()
-			await newCita.save()
-			res.status(200).send({message:"done",cita:newCita})
-		}else{
-			res.status(201).send({message:"error"})
-		}
+		const agenda=await agendas.findOne({
+			"fecha":cita.Fecha_cita,
+			"id_medico":cita.Medico._id
+		})
+		agenda.bloques[cita.Bloque-1]="";
+		agenda.disponible=true;
+		await agenda.save()
+		await citas.deleteOne({ _id: cita._id });
 	}catch(e){
-		res.status(500).send({message:e.message})
+		console.log("error ",e)
 	}
 	return 
 }
@@ -109,7 +102,7 @@ async function sendEmailDeleteCita(req,res){
 		Email,
 		Bloque,
 		Fecha_cita,
-		Medico
+		Medico,
 		}=req.body
 	const transport = nodemailer.createTransport({
 		service: 'outlook',
@@ -121,7 +114,7 @@ async function sendEmailDeleteCita(req,res){
 	const options = {
 		from: `${process.env.EMAIL_ADDRESS}`,
 		to: `${Email}`,
-		subject: 'Verificación para Cancelar Cita',
+		subject: 'Cita Médica Cancelada',
 		html:MailHelper.MailParaBorrarCita(Nombres,Apellidos,Medico,Bloque,Fecha_cita),
 		attachments:[
 			{
@@ -133,6 +126,7 @@ async function sendEmailDeleteCita(req,res){
 		]
 
 	};
+	await deleteCita(req.body);
 	await transport.sendMail(options, function(error, info){
 		if (error) {
 		console.log("error :",error);
@@ -142,10 +136,11 @@ async function sendEmailDeleteCita(req,res){
 		res.status(200).send({message:"done"})
 		}
 	});
+	
 
 }
 async function getMisCitas(req,res){
-	let {Nacionalidad,Rut,Passaporte} = JSON.parse(req.query.datos);
+	let {Nacionalidad,Rut,Pasaporte,Email} = JSON.parse(req.query.datos);
 	let hoy = new Date()
 	const maxDate = (new Date(hoy.getFullYear(), hoy.getMonth() + 5, 0)).toISOString().split("T")[0]
 	hoy=hoy.toISOString().split("T")[0]
@@ -153,9 +148,10 @@ async function getMisCitas(req,res){
 		try{
 			const cita=await citas.find({
 					"Nacionalidad":Nacionalidad,
-					"Pasaporte":Passaporte,
-					"Fecha_cita":{$gt: hoy}
-				})
+					"Pasaporte":Pasaporte,
+					"Fecha_cita":{$gt: hoy},
+					"Email":Email,
+				}).sort({"Fecha_cita":1,"Bloque":1})
 			res.status(200).send({message:"done",cita})
 		}catch(e){
 			res.status(500).send({message:e.message})
@@ -166,8 +162,9 @@ async function getMisCitas(req,res){
 			const cita=await citas.find({
 					"Nacionalidad":Nacionalidad,
 					"Rut":Rut,
-					"Fecha_cita":{$gt: hoy}
-					})
+					"Fecha_cita":{$gt: hoy},
+					"Email":Email,
+					}).sort({"Fecha_cita":1,"Bloque":1})
 			res.status(200).send({message:"done",cita})
 		}catch(e){
 			res.status(500).send({message:e.message})

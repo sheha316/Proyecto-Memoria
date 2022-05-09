@@ -121,6 +121,7 @@ function TextFieldInput(id, placeholder, onChange, values, errors, touched, onBl
 function FormularioCancelar({ initialValues, setId, handleSubmit }) {
   const validationSchema = Yup.object().shape({
     Nacionalidad: Yup.string().required(''),
+    Email: Yup.string().email('Correo inválido').required('Debes ingresar un correo'),
     Pasaporte: Yup.string().when('Nacionalidad', (nacionalidad) => {
       if (nacionalidad === 'Extranjero') {
         return Yup.string().required('Debes ingresar un Pasaporte');
@@ -169,6 +170,8 @@ function FormularioCancelar({ initialValues, setId, handleSubmit }) {
                  && TextFieldInput('Rut', '10258680k', handleChange, values, errors, touched, handleBlur)}
                 {values.Nacionalidad !== 'Chileno'
                  && TextFieldInput('Pasaporte', '102586808', handleChange, values, errors, touched, handleBlur)}
+                {TextFieldInput('Email', 'ejemplo@gmail.com', handleChange, values, errors, touched, handleBlur)}
+
               </FormControl>
 
             </Box>
@@ -180,7 +183,7 @@ function FormularioCancelar({ initialValues, setId, handleSubmit }) {
                 marginTop: 2, color: 'white', alignSelf: 'flex-end', backgroundColor: COLOR_BUTTON_1, ':hover': { backgroundColor: COLOR_BUTTON_2 },
               }}
             >
-              Confirmar Reserva
+              Siguiente
             </Button>
           </Box>
 
