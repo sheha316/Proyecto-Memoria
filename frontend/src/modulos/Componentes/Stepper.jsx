@@ -15,7 +15,7 @@ function stepper({
 }) {
   const history = useNavigate();
   let steps;
-  if (area !== 'Médico Especialista') {
+  if (OpcionesDeBusquedaSeleccionada !== 'Médico Especialista') {
     steps = [`Buscar ${search}`, 'Seleccionar Fecha y Profesional', 'Ingresar Datos'];
   } else {
     steps = [`Buscar ${search}`, 'Seleccionar Fecha y Hora', 'Ingresar Datos'];

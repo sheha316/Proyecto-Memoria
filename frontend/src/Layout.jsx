@@ -5,7 +5,7 @@ import Header from './modulos/Componentes/Header';
 
 function Layout({ component }) {
   return (
-    <Box style={{ marginBottom: 50 }}>
+    <Box style={{ marginBottom: 50, minWidth: 'fit-content' }}>
       <Header />
       {component}
     </Box>

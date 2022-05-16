@@ -54,7 +54,7 @@ function ReservarHoras() {
   };
   return (
     <Container>
-      <Stepper step={0} search={`por ${OpcionesDeBusquedaSeleccionada}`} />
+      <Stepper step={0} search={`por ${OpcionesDeBusquedaSeleccionada}`} OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada} />
       <Box sx={{ marginTop: 5, width: '100%' }}>
         <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Método de Búsqueda</FormLabel>
         <RadioGroup

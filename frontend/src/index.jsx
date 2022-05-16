@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import Layout from './Layout';
-
 import ReservarHoras from './modulos/Views/ReservarHoras';
 import ReservarHorasArea from './modulos/Views/ReservarHorasArea';
 import IngresarDatos from './modulos/Views/IngresarDatos';
@@ -14,6 +13,7 @@ import HoraReservada from './modulos/Views/HoraReservada';
 import ReservarConMedico from './modulos/Views/ReservarConMedico';
 import CancelarReserva from './modulos/Views/CancelarReserva';
 import CancelarReservaMisReservas from './modulos/Views/CancelarReservaMisReservas';
+
 import {
   RUTAS_HOME,
   RUTAS_SUCURSALES,
