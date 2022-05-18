@@ -29,6 +29,7 @@
     "hoist-non-react-statics": "^3.3.2",
     "lodash.debounce": "^4.0.8",
     "loose-envify": "^1.4.0",
+    "react": "^18.1.0",
     "react-date-object": "^2.1.5",
     "react-datepicker": "^4.6.0",
     "react-icons": "^4.3.1",
@@ -78,7 +79,6 @@
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "prop-types": "^15.8.0",
-    "react": "^18.1.0",
     "react-dom": "^18.1.0"
   }
 }

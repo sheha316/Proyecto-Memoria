@@ -2,12 +2,13 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import {
-  Box, Grid, Stack, FormLabel, FormControl, RadioGroup,
+  Box, Grid, FormLabel, FormControl, RadioGroup,
   FormControlLabel, Radio, FormHelperText, InputAdornment, TextField,
   MenuItem, Select, Button, Paper,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { validate, clean, format } from 'rut.js';
@@ -17,21 +18,25 @@ import {
 import '../../css/NumberInputAsText.css';
 import api from '../../API/api';
 
-function FechaNacimiento(onChange, values, errors, touched, onBlur) {
+function FechaNacimiento(onChange, values, errors, touched, onBlur, fontSize, grid) {
   const textFieldStyle = {
-    marginTop: 1, backgroundColor: 'white', input: { color: 'black' }, borderRadius: 1, width: 81,
+    marginTop: 1,
+    backgroundColor: 'white',
+    input: { color: 'black' },
+    borderRadius: 1,
+    width: '80%',
   };
   const { diaNacimiento, mesNacimiento, añoNacimiento } = values;
   return (
-
     <Grid
       container
       style={{
         display: 'flex', justifyContent: 'space-around', alignItems: 'center',
       }}
     >
-      <Grid item xs={4}>
+      <Grid item xs={grid[0]}>
         <FormLabel sx={{
+          fontSize,
           color:
              (errors.diaNacimiento && touched.diaNacimiento)
              || (errors.mesNacimiento && touched.mesNacimiento)
@@ -42,9 +47,14 @@ function FechaNacimiento(onChange, values, errors, touched, onBlur) {
           Fecha de Nacimiento:
         </FormLabel>
       </Grid>
-      <Grid item xs={8} style={{}}>
-        <Stack direction="row" spacing={3.5}>
-          <Stack spacing={2}>
+      <Grid item xs={grid[1]}>
+        <Grid
+          container
+          style={{
+            display: 'flex', justifyContent: 'space-around', alignItems: 'center', width: '90%',
+          }}
+        >
+          <Grid item xs={4}>
             <TextField
               id="diaNacimiento"
               name="diaNacimiento"
@@ -55,11 +65,8 @@ function FechaNacimiento(onChange, values, errors, touched, onBlur) {
               value={diaNacimiento}
               sx={textFieldStyle}
             />
-            {' '}
-            <FormHelperText sx={{ color: 'yellow' }}>{(errors.diaNacimiento && touched.diaNacimiento) ? errors.diaNacimiento : ''}</FormHelperText>
-
-          </Stack>
-          <Stack spacing={2}>
+          </Grid>
+          <Grid item xs={4}>
             <TextField
               id="mesNacimiento"
               name="mesNacimiento"
@@ -70,11 +77,8 @@ function FechaNacimiento(onChange, values, errors, touched, onBlur) {
               value={mesNacimiento}
               sx={textFieldStyle}
             />
-            {' '}
-            <FormHelperText sx={{ color: 'yellow' }}>{(errors.mesNacimiento && touched.mesNacimiento) ? errors.mesNacimiento : ''}</FormHelperText>
-
-          </Stack>
-          <Stack spacing={2}>
+          </Grid>
+          <Grid item xs={4}>
             <TextField
               id="añoNacimiento"
               name="añoNacimiento"
@@ -83,17 +87,34 @@ function FechaNacimiento(onChange, values, errors, touched, onBlur) {
               onBlur={onBlur}
               placeholder="1990"
               value={añoNacimiento}
-              sx={textFieldStyle}
+              sx={[textFieldStyle, { width: '100%' }]}
             />
-            {' '}
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={4} />
+      <Grid item xs={8}>
+        <Grid
+          container
+          style={{
+            display: 'flex', justifyContent: 'space-around', alignItems: 'center', width: '100%',
+          }}
+        >
+          <Grid item xs={4}>
+            <FormHelperText sx={{ color: 'yellow' }}>{(errors.diaNacimiento && touched.diaNacimiento) ? errors.diaNacimiento : ''}</FormHelperText>
+          </Grid>
+          <Grid item xs={4}>
+            <FormHelperText sx={{ color: 'yellow' }}>{(errors.mesNacimiento && touched.mesNacimiento) ? errors.mesNacimiento : ''}</FormHelperText>
+          </Grid>
+          <Grid item xs={4}>
             <FormHelperText sx={{ color: 'yellow' }}>{(errors['añoNacimiento'] && touched['añoNacimiento']) ? errors['añoNacimiento'] : ''}</FormHelperText>
-          </Stack>
-        </Stack>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
 }
-function NacionalidadRadio(onChange, values, touched) {
+function NacionalidadRadio(onChange, values, touched, fontSize, fontSizeRadio, grid) {
   const { Nacionalidad } = values;
   return (
     <Grid
@@ -102,13 +123,13 @@ function NacionalidadRadio(onChange, values, touched) {
         display: 'flex', justifyContent: 'space-around', alignItems: 'center',
       }}
     >
-      <Grid item xs={4}>
-        <FormLabel sx={{ color: 'white' }}>
+      <Grid item xs={grid[0]}>
+        <FormLabel sx={{ fontSize, color: 'white' }}>
           Nacionalidad
           :
         </FormLabel>
       </Grid>
-      <Grid item xs={8} style={{ display: 'flex' }}>
+      <Grid item xs={grid[1]} style={{ display: 'flex' }}>
         <FormControl sx={{ width: '100%' }}>
           <RadioGroup
             row
@@ -133,7 +154,7 @@ function NacionalidadRadio(onChange, values, touched) {
                   }}
                 />
 )}
-              label="Chileno"
+              label={<span style={{ fontSize: fontSizeRadio }}>Chileno</span>}
             />
             <FormControlLabel
               sx={{ color: 'white' }}
@@ -148,7 +169,7 @@ function NacionalidadRadio(onChange, values, touched) {
                   }}
                 />
                 )}
-              label="Extranjero"
+              label={<span style={{ fontSize: fontSizeRadio }}>Extranjero</span>}
             />
           </RadioGroup>
         </FormControl>
@@ -158,7 +179,17 @@ function NacionalidadRadio(onChange, values, touched) {
     </Grid>
   );
 }
-function TextFieldInput(id, placeholder, onChange, values, errors, touched, onBlur) {
+function TextFieldInput(
+  id,
+  placeholder,
+  onChange,
+  values,
+  errors,
+  touched,
+  onBlur,
+  fontSize,
+  grid,
+) {
   return (
 
     <Grid
@@ -167,13 +198,17 @@ function TextFieldInput(id, placeholder, onChange, values, errors, touched, onBl
         display: 'flex', justifyContent: 'space-around', alignItems: 'center',
       }}
     >
-      <Grid item xs={4}>
-        <FormLabel sx={{ color: (errors[id] && touched[id]) ? 'yellow' : 'white' }}>
+      <Grid item xs={grid[0]}>
+        <FormLabel sx={{
+          fontSize,
+          color: (errors[id] && touched[id]) ? 'yellow' : 'white',
+        }}
+        >
           {id}
           :
         </FormLabel>
       </Grid>
-      <Grid item xs={8} style={{ display: 'table-column' }}>
+      <Grid item xs={grid[1]} style={{ display: 'table-column' }}>
         <TextField
           id={id}
           name={id}
@@ -184,7 +219,11 @@ function TextFieldInput(id, placeholder, onChange, values, errors, touched, onBl
           placeholder={placeholder}
           value={(id === 'Rut' && values[id].length > 0) ? format(values[id]) : values[id]}
           sx={{
-            marginTop: 1, width: 300, backgroundColor: 'white', input: { color: 'black' }, borderRadius: 1,
+            marginTop: 1,
+            width: '90%',
+            backgroundColor: 'white',
+            input: { color: 'black' },
+            borderRadius: 1,
           }}
           InputProps={{
             startAdornment: id === 'Teléfono' ? <InputAdornment position="start">+56</InputAdornment> : '',
@@ -195,7 +234,7 @@ function TextFieldInput(id, placeholder, onChange, values, errors, touched, onBl
     </Grid>
   );
 }
-function PrevisionSelector(id, onChange, values, errors, touched, onBlur) {
+function PrevisionSelector(id, onChange, values, errors, touched, onBlur, fontSize, grid) {
   const previsiones = [
     'CONVENIO',
     'CONVENIO LABORATORIOS EXTERNOS',
@@ -218,13 +257,13 @@ function PrevisionSelector(id, onChange, values, errors, touched, onBlur) {
         display: 'flex', justifyContent: 'space-around', alignItems: 'center',
       }}
     >
-      <Grid item xs={4}>
-        <FormLabel sx={{ color: (errors[id] && touched[id]) ? 'yellow' : 'white' }}>
+      <Grid item xs={grid[0]}>
+        <FormLabel sx={{ fontSize, color: (errors[id] && touched[id]) ? 'yellow' : 'white' }}>
           Previsión:
         </FormLabel>
       </Grid>
-      <Grid item xs={8} style={{ display: 'flex' }}>
-        <FormControl sx={{ width: '100%' }}>
+      <Grid item xs={grid[1]}>
+        <FormControl sx={{ width: '90%' }}>
           <Select
             id={id}
             name={id}
@@ -233,12 +272,13 @@ function PrevisionSelector(id, onChange, values, errors, touched, onBlur) {
             value={values[id]}
             onBlur={onBlur}
             displayEmpty
+            autoWidth={false}
             sx={{
               marginTop: 1,
-              width: 300,
               backgroundColor: 'white',
               input: { color: 'black' },
               borderRadius: 1,
+              fontSize: '0.9rem',
             }}
           >
             <MenuItem disabled value="">
@@ -291,7 +331,10 @@ const retrieveLocalWebStore = () => {
 };
 function Formulario({ medico, hora, dia }) {
   const history = useNavigate();
-
+  const theme = useTheme();
+  const fontSize = useMediaQuery(theme.breakpoints.down('sm')) ? '0.9rem' : '1rem';
+  const fontSizeRadio = useMediaQuery(theme.breakpoints.down('sm')) ? '0.75rem' : '1rem';
+  const grid = useMediaQuery(theme.breakpoints.up('sm')) ? [4, 8] : [4, 8];
   const handleSubmit = async (values) => {
     saveOnLocalWeb(values);
     delete medico.dates;
@@ -372,6 +415,7 @@ function Formulario({ medico, hora, dia }) {
               borderRadius: 5,
               backgroundColor: COLOR_BASE_2,
               marginTop: 1,
+              width: '100%',
             }}
           >
             <Box sx={{
@@ -380,17 +424,17 @@ function Formulario({ medico, hora, dia }) {
             >
 
               <FormControl sx={{ width: '100%' }}>
-                {NacionalidadRadio(handleChange, values, touched)}
+                {NacionalidadRadio(handleChange, values, touched, fontSize, fontSizeRadio, grid)}
                 {values.Nacionalidad === 'Chileno'
-                 && TextFieldInput('Rut', '10258680k', handleChange, values, errors, touched, handleBlur)}
+                 && TextFieldInput('Rut', '10258680k', handleChange, values, errors, touched, handleBlur, fontSize, grid)}
                 {values.Nacionalidad !== 'Chileno'
-                 && TextFieldInput('Pasaporte', '102586808', handleChange, values, errors, touched, handleBlur)}
-                {TextFieldInput('Nombres', 'Álvaro Eduardo', handleChange, values, errors, touched, handleBlur)}
-                {TextFieldInput('Apellidos', 'Gómez Sanches', handleChange, values, errors, touched, handleBlur)}
-                {TextFieldInput('Email', 'ejemplo@gmail.com', handleChange, values, errors, touched, handleBlur)}
-                {TextFieldInput('Teléfono', '123456789', handleChange, values, errors, touched, handleBlur)}
-                {PrevisionSelector('Previsión', handleChange, values, errors, touched, handleBlur)}
-                {FechaNacimiento(handleChange, values, errors, touched, handleBlur)}
+                 && TextFieldInput('Pasaporte', '102586808', handleChange, values, errors, touched, handleBlur, fontSize, grid)}
+                {TextFieldInput('Nombres', 'Álvaro Eduardo', handleChange, values, errors, touched, handleBlur, fontSize, grid)}
+                {TextFieldInput('Apellidos', 'Gómez Sanches', handleChange, values, errors, touched, handleBlur, fontSize, grid)}
+                {TextFieldInput('Email', 'ejemplo@gmail.com', handleChange, values, errors, touched, handleBlur, fontSize, grid)}
+                {TextFieldInput('Teléfono', '123456789', handleChange, values, errors, touched, handleBlur, fontSize, grid)}
+                {PrevisionSelector('Previsión', handleChange, values, errors, touched, handleBlur, fontSize, grid)}
+                {FechaNacimiento(handleChange, values, errors, touched, handleBlur, fontSize, grid)}
               </FormControl>
 
             </Box>

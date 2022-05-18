@@ -1,8 +1,11 @@
+/* eslint-disable consistent-return */
 import React from 'react';
 import {
   Container, Box,
   Grid, Stack, FormLabel, Button,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { useLocation } from 'react-router-dom';
 import Stepper from '../Componentes/Stepper';
 import Fichas from '../Componentes/FichasInformacion';
@@ -22,6 +25,8 @@ function RecordatorioSeleccion(medico, hora, dia, sucursal) {
   );
 }
 function IngresarDatos() {
+  const theme = useTheme();
+  const grid = useMediaQuery(theme.breakpoints.down('md')) ? [12, 12] : [5, 6];
   const {
     hora, dia, medico, OpcionesDeBusquedaSeleccionada, area,
   } = useLocation().state;
@@ -42,13 +47,13 @@ function IngresarDatos() {
             display: 'flex', justifyContent: 'space-around', alignItems: 'flex-start',
           }}
         >
-          <Grid item xs={4}>
+          <Grid item xs={grid[0]}>
             <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>
               Información de la cita
             </FormLabel>
             {RecordatorioSeleccion(medico, hora, dia, medico.sucursal)}
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={grid[1]} sx={grid[1] > 6 ? { marginTop: 4 } : {}}>
             <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>
               Ingrese sus datos
             </FormLabel>

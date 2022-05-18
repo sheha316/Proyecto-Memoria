@@ -14,7 +14,7 @@ import * as Yup from 'yup';
 import { List } from 'react-virtualized';
 import { COLOR_BASE_2, COLOR_BUTTON_1, COLOR_BUTTON_2 } from '../../constantes';
 
-const WIDTHINPUT = 600;
+const WIDTHINPUT = '85%';
 function getrowHeight(itemSize) {
   return itemSize;
 }

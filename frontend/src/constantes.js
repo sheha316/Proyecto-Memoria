@@ -19,6 +19,7 @@ export const RUTAS_RESERVAR_HORA_CON_MEDICO = '/reservar-hora-medico';
 
 export const RUTAS_INGRESAR_DATOS = '/reservar-hora-area-formulario';
 export const RUTAS_HORA_RESERVADA = '/hora-reservada';
+
 export const RUTAS_CANCELAR_RESERVAS = '/canelar-reserva';
 export const RUTAS_CANCELAR_RESERVAS_MIS_RESERVAS = '/canelar-mi-reserva';
 // ----------------direcciones Sucursales

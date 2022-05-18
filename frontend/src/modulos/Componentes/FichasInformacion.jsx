@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 import React from 'react';
-import { Box, FormLabel, Paper } from '@mui/material';
+import {
+  Box, FormLabel, Paper, Grid,
+} from '@mui/material';
 import { COLOR_BASE_1 } from '../../constantes';
 import DatesHour from '../../utilities/Dates&Hour';
 
@@ -31,7 +33,6 @@ function FichaProfeional(medico, tipo) {
   const {
     genero, nombre, apellido, especializacion, sucursal,
   } = medico;
-  const Maxheight = tipo === 1 ? 180 : 90;
   return (
     <Paper
       elevation={4}
@@ -41,31 +42,42 @@ function FichaProfeional(medico, tipo) {
       }}
     >
       {FichaTitulo('Profesional')}
-      <Box sx={{ display: 'inline-flex' }}>
-
-        <Paper
-          elevation={4}
-          sx={{
-            display: 'flex', marginTop: 1, marginLeft: 2, height: (Maxheight / 3) * 2,
-          }}
-        >
-
-          <img
-            style={{
-              width: (Maxheight / 3) * 2, height: (Maxheight / 3) * 2,
+      <Grid
+        container
+        style={{
+          display: 'flex', justifyContent: 'space-around', alignItems: 'center',
+        }}
+      >
+        <Grid item xs={4}>
+          <Paper
+            elevation={4}
+            sx={{
+              display: 'flex',
+              margin: 1,
+              marginLeft: 2,
+              width: '80%',
             }}
-            alt=""
-            src={genero === 'm'
-              ? 'https://img.freepik.com/foto-gratis/doctor-brazos-cruzados-sobre-fondo-blanco_1368-5790.jpg?w=2000'
-              : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIIMvIYUfgxZwSZRb3XHS1umgQjcMuaE9N9Q&usqp=CAU'}
-          />
-        </Paper>
-        <Box sx={{ display: 'grid', marginLeft: 2, padding: 1 }}>
-          {RecordatorioSeleccionLabel(`${genero === 'm' ? 'Dr:' : 'Dra:'} ${nombre} ${apellido}`)}
-          {RecordatorioSeleccionLabel(`Especialidad: ${especializacion}`)}
-          {tipo === 1 && RecordatorioSeleccionLabel(`Dirección: ${sucursal}`)}
-        </Box>
-      </Box>
+          >
+
+            <img
+              style={{
+                width: '100%', height: '100%',
+              }}
+              alt=""
+              src={genero === 'm'
+                ? 'https://img.freepik.com/foto-gratis/doctor-brazos-cruzados-sobre-fondo-blanco_1368-5790.jpg?w=2000'
+                : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIIMvIYUfgxZwSZRb3XHS1umgQjcMuaE9N9Q&usqp=CAU'}
+            />
+          </Paper>
+        </Grid>
+        <Grid item xs={8}>
+          <Box sx={{ display: 'grid' }}>
+            {RecordatorioSeleccionLabel(`${genero === 'm' ? 'Dr:' : 'Dra:'} ${nombre} ${apellido}`)}
+            {RecordatorioSeleccionLabel(`Especialidad: ${especializacion}`)}
+            {tipo === 1 && RecordatorioSeleccionLabel(`Dirección: ${sucursal}`)}
+          </Box>
+        </Grid>
+      </Grid>
 
     </Paper>
   );
@@ -111,6 +123,7 @@ function FichaDatosUsuario(cita) {
       sx={{
         display: 'grid',
         borderRadius: 5,
+        width: '100%',
       }}
     >
       {FichaTitulo('Datos del Paciente')}

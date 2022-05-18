@@ -8,12 +8,14 @@ import {
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { validate, clean, format } from 'rut.js';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 import {
   COLOR_BASE_2, COLOR_BUTTON_1, COLOR_BUTTON_2,
 } from '../../constantes';
 import '../../css/NumberInputAsText.css';
 
-function NacionalidadRadio(onChange, values, touched, setId) {
+function NacionalidadRadio(onChange, values, touched, setId, fontSize, fontSizeRadio) {
   const { Nacionalidad } = values;
   return (
     <Grid
@@ -23,7 +25,7 @@ function NacionalidadRadio(onChange, values, touched, setId) {
       }}
     >
       <Grid item xs={4}>
-        <FormLabel sx={{ color: 'white' }}>
+        <FormLabel sx={{ color: 'white', fontSize }}>
           Nacionalidad
           :
         </FormLabel>
@@ -56,7 +58,7 @@ function NacionalidadRadio(onChange, values, touched, setId) {
                   }}
                 />
 )}
-              label="Chileno"
+              label={<span style={{ fontSize: fontSizeRadio }}>Chileno</span>}
             />
             <FormControlLabel
               sx={{ color: 'white' }}
@@ -71,7 +73,7 @@ function NacionalidadRadio(onChange, values, touched, setId) {
                   }}
                 />
                 )}
-              label="Extranjero"
+              label={<span style={{ fontSize: fontSizeRadio }}>Extranjero</span>}
             />
           </RadioGroup>
         </FormControl>
@@ -81,7 +83,7 @@ function NacionalidadRadio(onChange, values, touched, setId) {
     </Grid>
   );
 }
-function TextFieldInput(id, placeholder, onChange, values, errors, touched, onBlur) {
+function TextFieldInput(id, placeholder, onChange, values, errors, touched, onBlur, fontSize) {
   return (
 
     <Grid
@@ -91,7 +93,7 @@ function TextFieldInput(id, placeholder, onChange, values, errors, touched, onBl
       }}
     >
       <Grid item xs={4}>
-        <FormLabel sx={{ color: (errors[id] && touched[id]) ? 'yellow' : 'white' }}>
+        <FormLabel sx={{ color: (errors[id] && touched[id]) ? 'yellow' : 'white', fontSize }}>
           {id}
           :
         </FormLabel>
@@ -107,7 +109,7 @@ function TextFieldInput(id, placeholder, onChange, values, errors, touched, onBl
           placeholder={placeholder}
           value={(id === 'Rut' && values[id].length > 0) ? format(values[id]) : values[id]}
           sx={{
-            marginTop: 1, width: 300, backgroundColor: 'white', input: { color: 'black' }, borderRadius: 1,
+            marginTop: 1, width: '90%', backgroundColor: 'white', input: { color: 'black' }, borderRadius: 1,
           }}
           InputProps={{
             startAdornment: id === 'Teléfono' ? <InputAdornment position="start">+56</InputAdornment> : '',
@@ -119,6 +121,9 @@ function TextFieldInput(id, placeholder, onChange, values, errors, touched, onBl
   );
 }
 function FormularioCancelar({ initialValues, setId, handleSubmit }) {
+  const theme = useTheme();
+  const fontSize = useMediaQuery(theme.breakpoints.down('sm')) ? '0.9rem' : '1rem';
+  const fontSizeRadio = useMediaQuery(theme.breakpoints.down('sm')) ? '0.75rem' : '1rem';
   const validationSchema = Yup.object().shape({
     Nacionalidad: Yup.string().required(''),
     Email: Yup.string().email('Correo inválido').required('Debes ingresar un correo'),
@@ -165,12 +170,12 @@ function FormularioCancelar({ initialValues, setId, handleSubmit }) {
             >
 
               <FormControl sx={{ width: '100%' }}>
-                {NacionalidadRadio(handleChange, values, touched, setId)}
+                {NacionalidadRadio(handleChange, values, touched, setId, fontSize, fontSizeRadio)}
                 {values.Nacionalidad === 'Chileno'
-                 && TextFieldInput('Rut', '10258680k', handleChange, values, errors, touched, handleBlur)}
+                 && TextFieldInput('Rut', '10258680k', handleChange, values, errors, touched, handleBlur, fontSize)}
                 {values.Nacionalidad !== 'Chileno'
-                 && TextFieldInput('Pasaporte', '102586808', handleChange, values, errors, touched, handleBlur)}
-                {TextFieldInput('Email', 'ejemplo@gmail.com', handleChange, values, errors, touched, handleBlur)}
+                 && TextFieldInput('Pasaporte', '102586808', handleChange, values, errors, touched, handleBlur, fontSize)}
+                {TextFieldInput('Email', 'ejemplo@gmail.com', handleChange, values, errors, touched, handleBlur, fontSize)}
 
               </FormControl>
 

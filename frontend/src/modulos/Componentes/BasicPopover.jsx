@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import Popover from '@mui/material/Popover';
@@ -6,15 +7,13 @@ import { Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import {
   COLOR_BASE_1,
-  COLOR_BASE_2,
   COLOR_BUTTON_1,
   COLOR_BUTTON_2,
-  COLOR_BUTTON_3,
   RUTAS_RESERVAR_HORA,
   RUTAS_CANCELAR_RESERVAS,
 } from '../../constantes';
 
-export default function BasicPopover() {
+export default function BasicPopover({ fontSizeM }) {
   const history = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClick = (event) => {
@@ -29,15 +28,15 @@ export default function BasicPopover() {
   const id = open ? 'simple-popover' : undefined;
 
   return (
-    <div>
+    <>
       <Button
         aria-describedby={id}
         variant="contained"
         onClick={handleClick}
-        onMouseEnter={(e) => handleClick(e)}
-        sx={{ p: 1, backgroundColor: COLOR_BUTTON_1, ':hover': { backgroundColor: COLOR_BUTTON_2 } }}
+        style={{ backgroundColor: COLOR_BUTTON_1, ':hover': { backgroundColor: COLOR_BUTTON_2 } }}
+        sx={{ textTransform: 'none' }}
       >
-        Reserva de Hora
+        <span style={{ backgroundColor: 'transparent', fontSize: fontSizeM }}>Reserva de Hora</span>
       </Button>
       <Popover
         id={id}
@@ -70,6 +69,6 @@ export default function BasicPopover() {
           </Button>
         </Stack>
       </Popover>
-    </div>
+    </>
   );
 }

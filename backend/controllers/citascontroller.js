@@ -144,12 +144,15 @@ async function getMisCitas(req,res){
 	let hoy = new Date()
 	const maxDate = (new Date(hoy.getFullYear(), hoy.getMonth() + 5, 0)).toISOString().split("T")[0]
 	hoy=hoy.toISOString().split("T")[0]
+	console.log(hoy)
+	console.log(Nacionalidad,Rut,Pasaporte,Email)
 	if(Nacionalidad==="Extranjero"){
+		console.log("Extranjero")
 		try{
 			const cita=await citas.find({
 					"Nacionalidad":Nacionalidad,
 					"Pasaporte":Pasaporte,
-					"Fecha_cita":{$gt: hoy},
+					"Fecha_cita":{$gte: hoy},
 					"Email":Email,
 				}).sort({"Fecha_cita":1,"Bloque":1})
 			res.status(200).send({message:"done",cita})
@@ -158,11 +161,12 @@ async function getMisCitas(req,res){
 		}
 		
 	}else{
+		console.log("Chileno")
 		try{
 			const cita=await citas.find({
 					"Nacionalidad":Nacionalidad,
 					"Rut":Rut,
-					"Fecha_cita":{$gt: hoy},
+					"Fecha_cita":{$gte: hoy},
 					"Email":Email,
 					}).sort({"Fecha_cita":1,"Bloque":1})
 			res.status(200).send({message:"done",cita})
