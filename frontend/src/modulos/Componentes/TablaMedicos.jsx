@@ -110,7 +110,7 @@ export default function TablaMedicos({
   };
   getAviableDates();
   return (
-    <Paper sx={{ marginTop: 1 }}>
+    <Paper>
       <TableContainer sx={{ maxHeight: 600 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
@@ -93,16 +94,23 @@ function ReservarHorasArea() {
   );
   const optionCalendario = () => (
     <Box>
+      <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Seleccione Fecha y Profesional</FormLabel>
       <Calendario
         agendasMedicos={agendasMedicos}
         fecha={fechaSeleccionada}
         setFecha={setFechaSeleccionada}
       />
+      <TablaMedicos
+        dia={fechaSeleccionada}
+        agendasMedicos={agendasMedicos}
+        medicos={medicos[sucursalSeleccionada.split(',')[0]]}
+        OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
+        area={area}
+      />
     </Box>
   );
   const optionMedicos = () => (
     <Box>
-      <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Seleccione Profesional y Hora</FormLabel>
       <TablaMedicos
         dia={fechaSeleccionada}
         agendasMedicos={agendasMedicos}
@@ -125,13 +133,14 @@ function ReservarHorasArea() {
           )}
 
           {Object.keys(agendasMedicos).length !== 0 && fechaSeleccionada !== '' && (
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               {optionCalendario()}
             </Grid>
           )}
           {Object.keys(agendasMedicos).length !== 0 && fechaSeleccionada !== '' && (
             <Grid item xs={12}>
-              {optionMedicos()}
+              {// optionMedicos()
+              }
             </Grid>
           )}
         </Grid>

@@ -14,6 +14,7 @@ import DatesHour from '../../utilities/Dates&Hour';
 
 function RecordatorioSeleccion(medico, hora, dia, sucursal) {
   const fecha = DatesHour.StringDateToDate(dia.toISOString().split('T')[0]);
+  console.log(dia, fecha);
   return (
     <Box sx={{ marginTop: 2 }}>
       <Stack spacing={4}>

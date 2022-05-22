@@ -29,9 +29,10 @@ const ListboxComponent = React.forwardRef((
   return (
     <div ref={ref}>
       <div {...other}>
+        {console.log('hola', props)}
         <List
-          height={200}
-          width={WIDTHINPUT}
+          width={900}
+          height={250}
           rowHeight={(a) => getrowHeight(itemSize, a, children)}
           overscanCount={5}
           rowRenderer={(props) => React.cloneElement(childrenaux[props.index], {
@@ -52,9 +53,9 @@ function getLabel(option, opcionBusqueda, tipo) {
     return option.nombre;
   }
   if (tipo === 0) {
-    return `${option.nombre} ${option.apellido} -- ${option.especializacion}`;
+    return `${option.nombre} ${option.apellido} ${option.especializacion}`;
   }
-  return `${option.nombre} ${option.apellido} -- ${option.especializacion}`;
+  return `${option.nombre} ${option.apellido} ${option.especializacion}`;
 }
 
 function AutocompleteForm({

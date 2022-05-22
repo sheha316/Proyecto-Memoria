@@ -78,6 +78,7 @@ async function postCreateCita(req,res){
 	return 
 }
 async function deleteCita(citaPaciente){
+	console.log(citaPaciente)
 	try{
 		const cita=await citas.findOne({
 			"_id":citaPaciente._id,
@@ -86,6 +87,7 @@ async function deleteCita(citaPaciente){
 			"fecha":cita.Fecha_cita,
 			"id_medico":cita.Medico._id
 		})
+		console.log(cita,agenda)
 		agenda.bloques[cita.Bloque-1]="";
 		agenda.disponible=true;
 		await agenda.save()
@@ -144,10 +146,7 @@ async function getMisCitas(req,res){
 	let hoy = new Date()
 	const maxDate = (new Date(hoy.getFullYear(), hoy.getMonth() + 5, 0)).toISOString().split("T")[0]
 	hoy=hoy.toISOString().split("T")[0]
-	console.log(hoy)
-	console.log(Nacionalidad,Rut,Pasaporte,Email)
 	if(Nacionalidad==="Extranjero"){
-		console.log("Extranjero")
 		try{
 			const cita=await citas.find({
 					"Nacionalidad":Nacionalidad,
@@ -161,7 +160,6 @@ async function getMisCitas(req,res){
 		}
 		
 	}else{
-		console.log("Chileno")
 		try{
 			const cita=await citas.find({
 					"Nacionalidad":Nacionalidad,

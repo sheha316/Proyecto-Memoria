@@ -15,6 +15,8 @@ import {
   Paper,
   Button,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import DeleteOutlinedIcon from '@mui/icons-material/Delete';
 import {
   COLOR_BASE_2, COLOR_BASE_1,
@@ -23,11 +25,11 @@ import '../../css/TablaMedicosStyle.css';
 import DatesHour from '../../utilities/Dates&Hour';
 
 const columns = [
-  { id: 'Medico', label: 'Profesional', minWidth: 120 },
-  { id: 'sucursal', label: 'Sucursal', minWidth: 120 },
-  { id: 'Fecha_cita', label: 'Fecha', minWidth: 120 },
-  { id: 'Bloque', label: 'Hora', minWidth: 60 },
-  { id: 'Cancelar', label: '', minWidth: 120 },
+  { id: 'Medico', label: 'Profesional', width: '20%' },
+  { id: 'sucursal', label: 'Sucursal', width: '20%' },
+  { id: 'Fecha_cita', label: 'Fecha', width: '25%' },
+  { id: 'Bloque', label: 'Hora', width: '10%' },
+  { id: 'Cancelar', label: '', width: '10%' },
 ];
 function TextoColumna(column, cita, handleCancelDate) {
   const { id } = column;
@@ -40,12 +42,20 @@ function TextoColumna(column, cita, handleCancelDate) {
   } if (id === 'Bloque') {
     return DatesHour.ObtenerHoraSegunBloque(cita[id]);
   } if (id === 'Cancelar') {
-    return <Button onClick={() => handleCancelDate(cita)} style={{ color: 'white', backgroundColor: 'red' }}><DeleteOutlinedIcon /></Button>;
+    const theme = useTheme();
+    const fontSize = useMediaQuery(theme.breakpoints.down('sm')) ? 12 : 22;
+    return (
+      <Button onClick={() => handleCancelDate(cita)} style={{ color: 'white', backgroundColor: 'red' }}>
+        <DeleteOutlinedIcon sx={{ fontSize }} />
+      </Button>
+    );
   }
 }
 export default function TablaMedicos({ citas, handleCancelDate }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(6);
+  const theme = useTheme();
+  const fontSize = useMediaQuery(theme.breakpoints.down('sm')) ? '0.6rem' : '0.85rem';
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -56,7 +66,7 @@ export default function TablaMedicos({ citas, handleCancelDate }) {
 
   return (
     <Paper sx={{ marginTop: 1 }}>
-      <TableContainer sx={{ maxHeight: 600 }}>
+      <TableContainer sx={{ maxHeight: 600, width: '100%' }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -64,16 +74,16 @@ export default function TablaMedicos({ citas, handleCancelDate }) {
                 <TableCell
                   key={column.id}
                   align={column.align}
+                  width={column.width}
                   sx={{
                     color: 'white',
-                    minWidth: column.minWidth,
                     backgroundColor: COLOR_BASE_1,
                     borderColor: 'black',
                     fontWeight: 'bold',
                   }}
                 >
                   <Box>
-                    <span style={{ display: 'flex', justifyContent: 'center' }}>{column.label}</span>
+                    <span style={{ display: 'flex', justifyContent: 'center', fontSize }}>{column.label}</span>
                   </Box>
 
                 </TableCell>
@@ -95,7 +105,7 @@ export default function TablaMedicos({ citas, handleCancelDate }) {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      sx={[{ width: 80, textAlign: 'center', color: TableRowIndex % 2 === 0 ? 'black' : 'white' }]}
+                      sx={[{ textAlign: 'center', color: TableRowIndex % 2 === 0 ? 'black' : 'white', fontSize }]}
                     >
                       {TextoColumna(column, row, handleCancelDate)}
                     </TableCell>
