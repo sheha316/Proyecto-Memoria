@@ -22,7 +22,7 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
   const minDate = newDate.getActualDate();
   const [weekDaysofDateSelected, setweekDays] = useState([]);
   minDate.setDate(now.getDate() + 1);
-  const maxDate = newDate.standarDate(new Date(minDate.getFullYear(), minDate.getMonth() + 5, 0));
+  const maxDate = newDate.standarDate(new Date(minDate.getFullYear(), minDate.getMonth() + 3, 0));
   const weekDays = ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'];
   const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   function addDaysToDate(_date, _noOfDays) {
@@ -51,7 +51,6 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
   useEffect(() => {
     const weekday = fecha.getDay();
     const aux = [{}, {}, {}, {}, {}, {}];
-    console.log('1', fecha);
     for (let i = 1; i < 7; i++) {
       if (i - weekday !== 0) {
         aux[i - 1] = addDaysToDate(fecha, i - weekday);
@@ -59,8 +58,6 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
         aux[i - 1] = fecha;
       }
     }
-    console.log('2', fecha);
-    console.log(aux);
     setweekDays(aux);
   }, [fecha]);
   const handleChange = (newValue) => {
@@ -69,6 +66,9 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
     );
   };
   const HayUnDoctorDisponible = (dateInDate) => {
+    if (dateInDate.getTime() < minDate.getTime()) {
+      return false;
+    }
     const DifferenceInTime = dateInDate.getTime() - minDate.getTime();
     const DifferenceInDays = Math.floor(DifferenceInTime / (1000 * 3600 * 24));
     for (let i = 0; i < agendasMedicos.Medicos.length; i++) {

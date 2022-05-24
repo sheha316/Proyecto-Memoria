@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import axios from 'axios';
 import newDate from '../utilities/newDate';
 
@@ -16,27 +17,34 @@ async function getAllMedicosBySpec(spec) {
   const response = await axios.get(`${baseUrl}/medicos/getAllMedicosBySpec`, { params: { spec } });
   return response.data;
 }
-async function getAgendas(medicos) {
+async function getAgendas(sucursales, medicos) {
+  console.log('init getAgendas', new Date());
   const hoy = newDate.getActualDate();
   const fecha = `${hoy.getFullYear()}-${hoy.getMonth() + 1}-${hoy.getDate()}`;
-  const response = await axios.get(`${baseUrl}/agendas/getAgendas`, { params: { medicos, diaLocal: fecha } });
-  return response.data;
+  const [s1, s2, s3, s4] = await Promise.all([
+    axios.get(`${baseUrl}/agendas/getAgendas`, { params: { medicos: medicos[sucursales[0].split(',')[0]], diaLocal: fecha } }),
+    axios.get(`${baseUrl}/agendas/getAgendas`, { params: { medicos: medicos[sucursales[1].split(',')[0]], diaLocal: fecha } }),
+    axios.get(`${baseUrl}/agendas/getAgendas`, { params: { medicos: medicos[sucursales[2].split(',')[0]], diaLocal: fecha } }),
+    axios.get(`${baseUrl}/agendas/getAgendas`, { params: { medicos: medicos[sucursales[3].split(',')[0]], diaLocal: fecha } }),
+  ]);
+  console.log('end getAgendas', new Date());
+  return {
+    [sucursales[0].split(',')[0]]: s1.data,
+    [sucursales[1].split(',')[0]]: s2.data,
+    [sucursales[2].split(',')[0]]: s3.data,
+    [sucursales[3].split(',')[0]]: s4.data,
+  };
 }
 async function postCreateCita(datos) {
   const response = await axios.post(`${baseUrl}/citas/postCreateCita`, datos);
   return response.data;
 }
 async function getMisCitas(datos) {
-  console.log('getMisCitas', datos);
   const response = await axios.get(`${baseUrl}/citas/getMisCitas`, { params: { datos } });
-  console.log('getMisCitas', response.data.cita);
   return response.data.cita;
 }
 async function postSendEmailDeleteCita(datos) {
-  console.log('postSendEmailDeleteCita', datos);
   const response = await axios.post(`${baseUrl}/citas/sendEmailDeleteCita`, datos);
-  console.log('postSendEmailDeleteCita', response.data);
-
   return response.data;
 }
 export default {

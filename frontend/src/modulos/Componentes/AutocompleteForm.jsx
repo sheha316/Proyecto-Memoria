@@ -29,7 +29,6 @@ const ListboxComponent = React.forwardRef((
   return (
     <div ref={ref}>
       <div {...other}>
-        {console.log('hola', props)}
         <List
           width={900}
           height={250}

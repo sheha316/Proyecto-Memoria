@@ -20,103 +20,98 @@ function ReservarHorasArea() {
   const [fechaSeleccionada, setFechaSeleccionada] = useState('');
   const [medicos, setMedicos] = useState({});
   const [agendasMedicos, setAgendasMedicos] = useState({});
+  const [medicosFiltrados, setMedicosFiltrados] = useState({});
+  const [agendasMedicosFiltrados, setAgendasMedicosFiltrados] = useState({});
 
   const sucursales = [SUCURSAL_1, SUCURSAL_2, SUCURSAL_3, SUCURSAL_4];
-
-  const getBaseSucursal = () => {
-    for (let i = 0; i < sucursales.length; i++) {
-      if (medicos[sucursales[i].split(',')[0]] !== undefined && medicos[sucursales[i].split(',')[0]].length !== 0) {
-        setSucursalBase(i);
-        setSucursalSeleccionada(sucursales[i]);
-        return;
-      }
+  function FiltrarDatos() {
+    if (sucursalSeleccionada === '') {
+      return;
     }
-  };
+    if (sucursalSeleccionada === 'cualquiera') {
+      setMedicosFiltrados(null);
+      setAgendasMedicosFiltrados(null);
+    } else {
+      const FirstDate = agendasMedicos[sucursalSeleccionada.split(',')[0]].primerDia.split('-');
+      setFechaSeleccionada(new Date(FirstDate[0], FirstDate[1] - 1, FirstDate[2]));
+      setMedicosFiltrados(medicos[sucursalSeleccionada.split(',')[0]]);
+      setAgendasMedicosFiltrados(agendasMedicos[sucursalSeleccionada.split(',')[0]]);
+    }
+  }
   useEffect(() => {
+    const getBaseSucursal = (medicox) => {
+      for (let i = 0; i < sucursales.length; i++) {
+        if (medicox[sucursales[i].split(',')[0]] !== undefined && medicox[sucursales[i].split(',')[0]].length !== 0) {
+          return i;
+        }
+      }
+      return 0;
+    };
     async function getData() {
-      setMedicos(await api.getAllMedicosBySpec(area.especializacion));
+      console.log('Init', new Date());
+      const medicosAux = await api.getAllMedicosBySpec(area.especializacion);
+      setMedicos(medicosAux);
+      const sucursalAux = getBaseSucursal(medicosAux);
+      const agendasAux = await api.getAgendas(sucursales, medicosAux);
+      setAgendasMedicos(agendasAux);
+      const FirstDate = agendasAux[sucursales[sucursalAux].split(',')[0]].primerDia.split('-');
+      setFechaSeleccionada(new Date(FirstDate[0], FirstDate[1] - 1, FirstDate[2]));
+      setSucursalBase(sucursalAux);
+      setSucursalSeleccionada(sucursales[sucursalAux]);
+      console.log('End', new Date());
     }
     getData();
   }, []);
   useEffect(() => {
-    async function getBaseSucursalUE() {
-      getBaseSucursal(sucursales);
-    }
-    getBaseSucursalUE();
-  }, [medicos]);
-  useEffect(() => {
-    async function getAgendasUE() {
-      if (Object.keys(medicos).length !== 0) {
-        setAgendasMedicos(await api.getAgendas(medicos[sucursalSeleccionada.split(',')[0]]));
-      }
-    }getAgendasUE();
+    FiltrarDatos();
   }, [sucursalSeleccionada]);
-  useEffect(() => {
-    if (Object.keys(agendasMedicos).length !== 0) {
-      for (let i = 0; i < agendasMedicos.agendas[0].length; i++) {
-        for (let j = 0; j < agendasMedicos.Medicos.length; j++) {
-          if (agendasMedicos.agendas[j][i].disponible) {
-            const date = newDate.getActualDate();
-            const medico = newDate.standarDate(new Date(agendasMedicos.agendas[j][i].fecha));
-            const DifferenceInTime = (medico).getTime() - date.getTime();
-            const DifferenceInDays = Math.floor(DifferenceInTime / (1000 * 3600 * 24));
-            date.setDate(date.getDate() + DifferenceInDays + 1);
-            setFechaSeleccionada(date);
-            return;
-          }
-        }
-      }
-    }
-  }, [agendasMedicos]);
-
   const optionsSucursales = () => (
-    <Box>
-      <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Seleccione Sucursal</FormLabel>
 
-      <RadioGroup
-        defaultValue={sucursales[sucursalBase]}
-        sx={{ marginTop: 1 }}
-        onChange={(e) => { setAgendasMedicos({}); setSucursalSeleccionada(e.target.value); }}
+    <RadioGroup
+      row
+      defaultValue={sucursales[sucursalBase]}
+      sx={{ marginTop: 1 }}
+      onChange={(e) => { setSucursalSeleccionada(e.target.value); }}
+    >
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
       >
+        <Grid item xs={1}> hola2</Grid>
         {sucursales.map((sucursalOptions) => (
-          <FormControlLabel
-            style={{ width: 'fit-content' }}
-            key={sucursalOptions}
-            value={sucursalOptions}
-            control={<Radio />}
-            label={sucursalOptions}
-            disabled={medicos[sucursalOptions.split(',')[0]].length === 0}
-          />
+          <Grid item xs={2}>
+            <FormControlLabel
+              style={{ width: 'fit-content' }}
+              key={sucursalOptions}
+              value={sucursalOptions}
+              control={<Radio />}
+              label={sucursalOptions}
+              disabled={medicos[sucursalOptions.split(',')[0]]?.length === 0}
+            />
+          </Grid>
         ))}
-      </RadioGroup>
+        <Grid item xs={1}> hola2</Grid>
+      </Grid>
+    </RadioGroup>
 
-    </Box>
   );
   const optionCalendario = () => (
     <Box>
       <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Seleccione Fecha y Profesional</FormLabel>
       <Calendario
-        agendasMedicos={agendasMedicos}
+        agendasMedicos={agendasMedicosFiltrados}
         fecha={fechaSeleccionada}
         setFecha={setFechaSeleccionada}
       />
       <TablaMedicos
         dia={fechaSeleccionada}
-        agendasMedicos={agendasMedicos}
-        medicos={medicos[sucursalSeleccionada.split(',')[0]]}
+        agendasMedicos={agendasMedicosFiltrados}
+        medicos={medicosFiltrados}
         OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
         area={area}
-      />
-    </Box>
-  );
-  const optionMedicos = () => (
-    <Box>
-      <TablaMedicos
-        dia={fechaSeleccionada}
-        agendasMedicos={agendasMedicos}
-        medicos={medicos[sucursalSeleccionada.split(',')[0]]}
-        OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
-        area={area}
+        sucursalSeleccionada={sucursalSeleccionada}
       />
     </Box>
   );
@@ -127,20 +122,15 @@ function ReservarHorasArea() {
         <Grid container spacing={2}>
 
           {sucursalBase !== -1 && (
-            <Grid item xs={6}>
+            <Grid item xs={12}>
+              <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Seleccione Sucursal</FormLabel>
               {optionsSucursales()}
             </Grid>
           )}
 
-          {Object.keys(agendasMedicos).length !== 0 && fechaSeleccionada !== '' && (
+          {Object.keys(medicosFiltrados).length !== 0 && Object.keys(agendasMedicos).length !== 0 && fechaSeleccionada !== '' && (
             <Grid item xs={12}>
               {optionCalendario()}
-            </Grid>
-          )}
-          {Object.keys(agendasMedicos).length !== 0 && fechaSeleccionada !== '' && (
-            <Grid item xs={12}>
-              {// optionMedicos()
-              }
             </Grid>
           )}
         </Grid>
