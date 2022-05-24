@@ -155,7 +155,7 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
         {weekDays.map((dia, index) => {
           if (index !== 0) {
             return (
-              <Grid style={{ display: 'flex', justifyContent: 'center' }} item xs={1}>
+              <Grid key={weekDays[(index)]} style={{ display: 'flex', justifyContent: 'center' }} item xs={1}>
                 <Box sx={{
                   padding: 1,
                   width: 20,
@@ -184,7 +184,7 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
             newDate.standarDate(new Date(dia)).getTime() === fecha.getTime(),
           );
           return (
-            <Grid style={{ display: 'flex', justifyContent: 'center' }} item xs={1}>
+            <Grid key={dia.getDate()} style={{ display: 'flex', justifyContent: 'center' }} item xs={1}>
               <Box
                 onMouseEnter={() => { setCursor('pointer'); }}
                 onClick={() => {

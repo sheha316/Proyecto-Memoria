@@ -81,7 +81,7 @@ function ReservarHorasArea() {
       >
         <Grid item xs={1}> hola2</Grid>
         {sucursales.map((sucursalOptions) => (
-          <Grid item xs={2}>
+          <Grid key={sucursalOptions} item xs={2}>
             <FormControlLabel
               style={{ width: 'fit-content' }}
               key={sucursalOptions}
@@ -128,7 +128,7 @@ function ReservarHorasArea() {
             </Grid>
           )}
 
-          {Object.keys(medicosFiltrados).length !== 0 && Object.keys(agendasMedicos).length !== 0 && fechaSeleccionada !== '' && (
+          {Object.keys(medicosFiltrados).length !== 0 && Object.keys(agendasMedicosFiltrados).length !== 0 && fechaSeleccionada !== '' && (
             <Grid item xs={12}>
               {optionCalendario()}
             </Grid>
