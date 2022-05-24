@@ -27,7 +27,7 @@ async function getAgendas(sucursales, medicos) {
     axios.get(`${baseUrl}/agendas/getAgendas`, { params: { medicos: medicos[sucursales[2].split(',')[0]], diaLocal: fecha } }),
     axios.get(`${baseUrl}/agendas/getAgendas`, { params: { medicos: medicos[sucursales[3].split(',')[0]], diaLocal: fecha } }),
   ]);
-  console.log('end getAgendas', new Date());
+  console.log('end getAgendas', new Date(), s1, s2, s3, s4);
   return {
     [sucursales[0].split(',')[0]]: s1.data,
     [sucursales[1].split(',')[0]]: s2.data,

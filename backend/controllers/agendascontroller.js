@@ -6,7 +6,6 @@ async function getAgendas(req,res){
 	hoy=hoy.toISOString().split("T")[0]
 	let agendasMedicos=[]
 	let Medicos=[]
-	let FirstDate=[]
 	try{
 		req.query.medicos.map(async(medicoI)=>{
 			const medico=JSON.parse(medicoI)
@@ -19,33 +18,21 @@ async function getAgendas(req,res){
 					]
 				}).sort({fecha:1}).lean().exec()
 			)
-			FirstDate.push(
-				agendas.find({
-					$and: [
-						{"fecha": {$lte: maxDate}},
-						{"fecha": {$gt: hoy}},
-						{"id_medico":medico._id},
-						{"disponible":true}
-					]
-				}).sort({fecha:1}).limit(1).lean().exec()
-			)
-			
-		})
-		const mindate=await Promise.all(FirstDate).then((fd)=>{
-				var lowest ='99999-12-25';
-				var tmp;
-				for (var i=fd.length-1; i>=0; i--) {
-					tmp = fd[i][0].fecha;
-					if (tmp < lowest) lowest = tmp;
-				}
-				return lowest
 		})
 		Promise.all(agendasMedicos).then(
-			(agendas)=>{
-				agendas.map((agenda)=>{
+			async(agendasM)=>{
+				agendasM.map((agenda)=>{
 					Medicos.push(agenda[0].id_medico)
 				})
-				res.status(200).send({agendas,Medicos,primerDia:mindate})
+				const FDATE=await agendas.find({
+						$and: [
+							{"fecha": {$lte: maxDate}},
+							{"fecha": {$gt: hoy}},
+							{"id_medico":{$in:Medicos}},
+							{"disponible":true}
+						]
+					}).sort({fecha:1}).limit(1).lean().exec()
+				res.status(200).send({agendas:agendasM,Medicos,primerDia:FDATE[0].fecha})
 			}	
 		)
 		
