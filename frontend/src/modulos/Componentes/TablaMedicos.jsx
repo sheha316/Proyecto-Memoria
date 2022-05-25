@@ -1,10 +1,16 @@
-/* eslint-disable consistent-return */
-/* eslint-disable array-callback-return */
-/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
+/* eslint-disable array-callback-return */
+/* eslint-disable consistent-return */
+/* eslint-disable max-len */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable react/destructuring-assignment */
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import {
   TableRow,
   Button,
@@ -16,6 +22,7 @@ import {
   TableBody,
   Table,
   Paper,
+  Grid,
 } from '@mui/material';
 import {
   COLOR_BASE_2, COLOR_BASE_1, COLOR_BUTTON_1, COLOR_BUTTON_2, RUTAS_INGRESAR_DATOS,
@@ -23,49 +30,101 @@ import {
 import '../../css/TablaMedicosStyle.css';
 import newDate from '../../utilities/newDate';
 
-const columns = [
-  { id: 'Profesionales', label: 'Profesionales', minWidth: 100 },
-  { id: '08:30', label: '08:30', minWidth: 65 },
-  { id: '09:00', label: '09:00', minWidth: 65 },
-  { id: '09:30', label: '09:30', minWidth: 65 },
-  { id: '10:00', label: '10:00', minWidth: 65 },
-  { id: '10:30', label: '10:30', minWidth: 65 },
-  { id: '11:00', label: '11:00', minWidth: 65 },
-  { id: '11:30', label: '11:30', minWidth: 65 },
-  { id: '12:00', label: '12:00', minWidth: 65 },
-  { id: '12:30', label: '12:30', minWidth: 65 },
-  { id: '14:00', label: '14:00', minWidth: 65 },
-  { id: '14:30', label: '14:30', minWidth: 65 },
-  { id: '15:00', label: '15:00', minWidth: 65 },
-  { id: '15:30', label: '15:30', minWidth: 65 },
-  { id: '16:00', label: '16:00', minWidth: 65 },
-  { id: '16:30', label: '16:30', minWidth: 65 },
-  { id: '17:00', label: '17:00', minWidth: 65 },
-  { id: '17:30', label: '17:30', minWidth: 65 },
-];
 const BORDERLEFTONLY = {
   borderLeft: 0,
   borderRight: 0.1,
   borderTop: 0,
-  borderBottom: 0,
+  borderBottom: 0.1,
   borderColor: 'lightgray',
 };
-const STICKYCOLUMN = (index) => {
-  let color = COLOR_BASE_1;
-  let z = 5;
-  if (index !== -1) {
-    color = index % 2 === 0 ? 'white' : COLOR_BASE_2;
-    z = 1;
-  }
-  return (
-    {
-      position: 'sticky',
-      left: 0,
-      zIndex: z,
-      backgroundColor: color,
-      fontWeight: 'bold',
-    });
+const TITLESSTYLE = {
+  color: 'white',
+  backgroundColor: COLOR_BASE_1,
+  borderColor: 'black',
+  fontWeight: 'bold',
 };
+
+const STICKYCOLUMN = {
+  position: 'sticky',
+  left: 0,
+  zIndex: 5,
+  fontWeight: 'bold',
+};
+const columns = [
+  { id: '08:30', label: '08:30' },
+  { id: '09:00', label: '09:00' },
+  { id: '09:30', label: '09:30' },
+  { id: '10:00', label: '10:00' },
+  { id: '10:30', label: '10:30' },
+  { id: '11:00', label: '11:00' },
+  { id: '11:30', label: '11:30' },
+  { id: '12:00', label: '12:00' },
+  { id: '12:30', label: '12:30' },
+  { id: '14:00', label: '14:00' },
+  { id: '14:30', label: '14:30' },
+  { id: '15:00', label: '15:00' },
+  { id: '15:30', label: '15:30' },
+  { id: '16:00', label: '16:00' },
+  { id: '16:30', label: '16:30' },
+  { id: '17:00', label: '17:00' },
+  { id: '17:30', label: '17:30' },
+];
+
+function CELDAMEDICO(medico) {
+  return (
+    <Grid
+      container
+      direction="column"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Grid item xs={8}>
+        <Paper elevation={4}>
+          <img
+            style={{
+              width: 100, height: 100,
+            }}
+            alt=""
+            src={medico.genero === 'm'
+              ? 'https://img.freepik.com/foto-gratis/doctor-brazos-cruzados-sobre-fondo-blanco_1368-5790.jpg?w=2000'
+              : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIIMvIYUfgxZwSZRb3XHS1umgQjcMuaE9N9Q&usqp=CAU'}
+          />
+        </Paper>
+      </Grid>
+      <Grid item xs={4}>
+        <span style={{ display: 'flex', justifyContent: 'center' }}>
+          {medico.nombre}
+          {' '}
+        </span>
+        <span style={{ display: 'flex', justifyContent: 'center' }}>
+          {medico.apellido}
+          {' '}
+        </span>
+      </Grid>
+    </Grid>
+  );
+}
+function BOTONRESERVA(column, MedicoIndex, IndexBloques, onReservar, disabled) {
+  return (
+    <TableCell
+      key={column._id}
+      disabled={disabled}
+      sx={[BORDERLEFTONLY, { backgroundColor: MedicoIndex % 2 === 0 ? 'white' : COLOR_BASE_2, textAlignLast: 'center' }]}
+    >
+      <Button
+        sx={{
+          color: 'white',
+          backgroundColor: disabled ? 'gray' : COLOR_BUTTON_1,
+          ':hover': { backgroundColor: COLOR_BUTTON_2 },
+        }}
+        onClick={() => onReservar(IndexBloques + 1, column)}
+      >
+        Reservar
+      </Button>
+    </TableCell>
+  );
+}
+
 function ModoEspecialista(area) {
   if (area === 'Médico Especialista') {
     return true;
@@ -74,11 +133,15 @@ function ModoEspecialista(area) {
 export default function TablaMedicos({
   medicos, dia, OpcionesDeBusquedaSeleccionada, area, agendasMedicos,
 }) {
+  const theme = useTheme();
+  const cellphone = useMediaQuery(theme.breakpoints.down('sm'));
   const modoEspecialista = ModoEspecialista(area);
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(cellphone ? 30 : 5);
   const history = useNavigate();
-  let TableRowIndex = -1;
+
+  let MedicoIndex = -1;
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -87,7 +150,7 @@ export default function TablaMedicos({
     setPage(0);
   };
   const getAviableDates = () => {
-    TableRowIndex = -1;
+    MedicoIndex = -1;
     const now = newDate.getActualDate();
     medicos.map((medico) => {
       const DifferenceInTime = dia.getTime() - now.getTime();
@@ -101,6 +164,7 @@ export default function TablaMedicos({
       return {};
     });
   };
+
   const onReservar = (hora, medico) => {
     history(RUTAS_INGRESAR_DATOS, {
       state: {
@@ -109,144 +173,99 @@ export default function TablaMedicos({
     });
   };
   getAviableDates();
+  MedicoIndex = -1;
   return (
-    <Paper>
-      <TableContainer sx={{ maxHeight: 600 }}>
+    <Paper elevation={4}>
+      <TableContainer sx={{
+        maxHeight: cellphone ? 600 : 800,
+        maxWidth: cellphone ? 450 : '100%',
+      }}
+      >
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
+            {!modoEspecialista && (
             <TableRow>
-              {columns.map((column, index) => {
-                if (!(modoEspecialista && index === 0)) {
-                  return (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      sx={[
-                        {
-                          color: 'white',
-                          minWidth: column.minWidth,
-                          backgroundColor: COLOR_BASE_1,
-                          borderColor: 'black',
-                          fontWeight: 'bold',
-                        },
-                        BORDERLEFTONLY,
-                        { borderTop: 1 },
-                        index === 0 ? STICKYCOLUMN(-1) : {}]}
-                    >
-                      <Box>
-                        <span style={{ display: 'flex', justifyContent: 'center' }}>{column.label}</span>
-                      </Box>
+              <TableCell
+                sx={[
+                  TITLESSTYLE,
+                  BORDERLEFTONLY,
+                  STICKYCOLUMN,
+                  { width: '1%', zIndex: 6 }]}
+              >
+                <span style={{ display: 'flex', justifyContent: 'center' }}>
+                  Horarios
+                </span>
 
-                    </TableCell>
-                  );
-                }
-              })}
+              </TableCell>
+              {medicos.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((column, index) => {
+                  if (column.disponible) {
+                    MedicoIndex += 1;
+                    return (
+                      <TableCell
+                        key={column._id}
+                        sx={[
+                          TITLESSTYLE,
+                          BORDERLEFTONLY,
+                          {
+                            backgroundColor: MedicoIndex % 2 === 0 ? 'white' : COLOR_BASE_2,
+                            color: MedicoIndex % 2 === 0 ? 'black' : 'white',
+                            minWidth: cellphone ? 15 : 200,
+                            maxWidth: cellphone ? 300 : 200,
+                          },
+                        ]}
+                      >
+                        {CELDAMEDICO(column)}
+                      </TableCell>
+                    );
+                  }
+                })}
             </TableRow>
+            )}
           </TableHead>
           <TableBody>
-            {medicos.length > 0 && medicos
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                if (!row.disponible) {
-                  return;
-                }
-                TableRowIndex += 1;
-                // eslint-disable-next-line consistent-return
-                return (
-                  <TableRow
-                    hover
-                    role="checkbox"
-                    tabIndex={-1}
-                    key={row._id}
-                    style={{ backgroundColor: TableRowIndex % 2 === 0 ? 'white' : COLOR_BASE_2 }}
-                  >
-                    {columns.map((column, indexColumn) => {
-                      if (indexColumn === 0) {
-                        if (!modoEspecialista) {
-                          return (
-                            <TableCell key={column.id} align={column.align} sx={[BORDERLEFTONLY, { display: 'grid' }, STICKYCOLUMN(TableRowIndex)]}>
-                              <Box sx={{
-                                display: 'flex', justifyContent: 'center', flexFlow: 'column', textAlign: 'center',
-                              }}
-                              >
-                                <Paper elevation={4} sx={{ display: 'flex', marginBottom: 1, justifyContent: 'center' }}>
-                                  <img
-                                    style={{
-                                      width: 100, height: 100,
-                                    }}
-                                    alt=""
-                                    src={row.genero === 'm'
-                                      ? 'https://img.freepik.com/foto-gratis/doctor-brazos-cruzados-sobre-fondo-blanco_1368-5790.jpg?w=2000'
-                                      : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIIMvIYUfgxZwSZRb3XHS1umgQjcMuaE9N9Q&usqp=CAU'}
-                                  />
-                                </Paper>
-                                <span style={{ color: TableRowIndex % 2 === 0 ? 'black' : 'white' }}>
-                                  {`${row.nombre}
-                            ${row.apellido}`}
-                                </span>
-                              </Box>
-                            </TableCell>
-                          );
-                        }
-                      } else if (row.dates[indexColumn - 1] === '') {
-                        return (
-                          <TableCell
-                            key={column.id}
-                            align={column.align}
-                            sx={[BORDERLEFTONLY, { height: 80 }]}
-                          >
-                            <Button
-                              sx={{
-                                width: 80,
-                                fontSize: 12,
-                                color: 'white',
-                                backgroundColor: COLOR_BUTTON_1,
-                                ':hover': { backgroundColor: COLOR_BUTTON_2 },
-                              }}
-                              onClick={() => onReservar(indexColumn, row)}
-                            >
-                              Reservar
-                            </Button>
-                          </TableCell>
-                        );
-                      } else {
-                        return (
-                          <TableCell
-                            key={column.id}
-                            align={column.align}
-                            sx={[BORDERLEFTONLY, { width: 80 }]}
-                          >
-                            <Button
-                              disabled
-                              sx={{
-                                width: 80,
-                                fontSize: 12,
-                                color: 'ffffff',
-                                backgroundColor: 'gray',
-                              }}
-                            >
-                              Reservar
-                            </Button>
-                          </TableCell>
-                        );
-                      }
-                    })}
-                  </TableRow>
-                );
-              })}
+            {columns.map((row, IndexBloques) => {
+              MedicoIndex = -1;
+              return (
+                <TableRow
+                  hover
+                  role="checkbox"
+                  tabIndex={-1}
+                  key={row.id}
+                  style={{ backgroundColor: COLOR_BASE_2 }}
+                >
+                  <TableCell sx={[TITLESSTYLE, BORDERLEFTONLY, STICKYCOLUMN, { height: 80 }]}>
+                    <span style={{ display: 'flex', justifyContent: 'center' }}>
+                      {row.label}
+                    </span>
+                  </TableCell>
+
+                  {medicos.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((column) => {
+                    if (column.disponible) {
+                      MedicoIndex += 1;
+                      return BOTONRESERVA(column, MedicoIndex, IndexBloques, onReservar, column.dates[IndexBloques] !== '');
+                    }
+                  })}
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
-      { !modoEspecialista && (
-      <TablePagination
-        rowsPerPageOptions={[]}
-        component="div"
-        count={medicos.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+
+      { !modoEspecialista
+      && (
+      <Box>
+        <TablePagination
+          rowsPerPageOptions={[]}
+          component="div"
+          count={medicos.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Box>
       )}
     </Paper>
   );

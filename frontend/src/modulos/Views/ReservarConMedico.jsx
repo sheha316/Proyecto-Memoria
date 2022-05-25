@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
-  Container, Box, FormLabel, Grid,
+  Container, Box, FormLabel, Grid, Stack,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import api from '../../API/api';
 import Stepper from '../Componentes/Stepper';
-import newDate from '../../utilities/newDate';
 import Calendario from '../Componentes/Calendario';
 import TablaMedicos from '../Componentes/TablaMedicos';
 import Fichas from '../Componentes/FichasInformacion';
@@ -14,62 +15,51 @@ function ReservarConMedico() {
   const { medico, OpcionesDeBusquedaSeleccionada } = useLocation().state;
   const [fechaSeleccionada, setFechaSeleccionada] = useState('');
   const [agendaMedico, setAgendaMedico] = useState({});
+  const theme = useTheme();
+  const cellphone = useMediaQuery(theme.breakpoints.down('md'));
 
   useEffect(() => {
     async function getAgendaMedico() {
-      setAgendaMedico(await api.getAgendas(medico));
+      const agendasAux = await api.getAgendaOfOne(medico);
+      setAgendaMedico(agendasAux);
+      const FirstDate = agendasAux.primerDia.split('-');
+      setFechaSeleccionada(new Date(FirstDate[0], FirstDate[1] - 1, FirstDate[2]));
     }
     getAgendaMedico();
   }, []);
 
-  useEffect(() => {
-    if (Object.keys(agendaMedico).length !== 0) {
-      for (let i = 0; i < agendaMedico.agendas[0].length; i++) {
-        for (let j = 0; j < agendaMedico.Medicos.length; j++) {
-          if (agendaMedico.agendas[j][i].disponible) {
-            const date = newDate.getActualDate();
-            const medicodate = newDate.standarDate(new Date(agendaMedico.agendas[j][i].fecha));
-            const DifferenceInTime = (medicodate).getTime() - date.getTime();
-            const DifferenceInDays = Math.floor(DifferenceInTime / (1000 * 3600 * 24));
-            date.setDate(date.getDate() + DifferenceInDays + 1);
-            setFechaSeleccionada(date);
-            return;
-          }
-        }
-      }
-    }
-  }, [agendaMedico]);
-
-  const optionCalendario = () => (
-    <Box>
-      <Calendario
-        agendasMedicos={agendaMedico}
-        fecha={fechaSeleccionada}
-        setFecha={setFechaSeleccionada}
-      />
-    </Box>
-  );
   return (
     <Container>
       <Stepper step={1} search={`${OpcionesDeBusquedaSeleccionada}`} medico={medico} area={OpcionesDeBusquedaSeleccionada} />
 
       <Box sx={{ marginTop: 5, width: '100%' }}>
-        {Object.keys(agendaMedico).length !== 0 && fechaSeleccionada !== '' && (
-        <Grid container spacing={0}>
-          <Grid item xs={5} sx={{ marginTop: 1 }}>
+        <Grid
+          container
+          direction="row"
+          justifyContent="space-between"
+          alignItems="flex-start"
+        >
+          {Object.keys(agendaMedico).length !== 0 && fechaSeleccionada !== '' && (
+            <Grid item xs={cellphone ? 12 : 5}>
+              <Box sx={{ marginTop: 4 }}>
+                <Stack spacing={4}>
+                  {Fichas.FichaProfeional(medico[0])}
+                  {Fichas.FichaSucursal(medico[0].sucursal)}
+                </Stack>
+              </Box>
 
-            {Fichas.FichaProfeional(medico[0], 1)}
-          </Grid>
-          <Grid item xs={1} />
-          <Grid item xs={6}>
-            {optionCalendario()}
-          </Grid>
-        </Grid>
-        )}
-        {fechaSeleccionada !== ''
+            </Grid>
+
+          )}
+          {fechaSeleccionada !== ''
         && (
-        <>
-          <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Seleccione una Hora</FormLabel>
+        <Grid item xs={cellphone ? 12 : 6} sx={{ marginTop: 2 }}>
+          <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Seleccione una Fecha y Hora</FormLabel>
+          <Calendario
+            agendasMedicos={agendaMedico}
+            fecha={fechaSeleccionada}
+            setFecha={setFechaSeleccionada}
+          />
           <TablaMedicos
             dia={fechaSeleccionada}
             agendasMedicos={agendaMedico}
@@ -77,8 +67,9 @@ function ReservarConMedico() {
             OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
             area={OpcionesDeBusquedaSeleccionada}
           />
-        </>
+        </Grid>
         )}
+        </Grid>
       </Box>
     </Container>
   );

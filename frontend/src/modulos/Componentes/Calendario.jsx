@@ -12,6 +12,8 @@ import Icon from 'react-multi-date-picker/components/icon';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import IconButton from '@mui/material/IconButton';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import newDate from '../../utilities/newDate';
 import { COLOR_BASE_1, COLOR_BASE_2, COLOR_BUTTON_2 } from '../../constantes';
 import DatesHour from '../../utilities/Dates&Hour';
@@ -22,6 +24,8 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
   const minDate = newDate.getActualDate();
   const [weekDaysofDateSelected, setweekDays] = useState([]);
   minDate.setDate(now.getDate() + 1);
+  const theme = useTheme();
+  const cellphone = useMediaQuery(theme.breakpoints.down('sm'));
   const maxDate = newDate.standarDate(new Date(minDate.getFullYear(), minDate.getMonth() + 3, 0));
   const weekDays = ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'];
   const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
@@ -46,7 +50,7 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
     if (seleccionado) {
       return COLOR_BUTTON_2;
     }
-    return COLOR_BASE_1;
+    return COLOR_BASE_2;
   }
   useEffect(() => {
     const weekday = fecha.getDay();
@@ -92,7 +96,7 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
   };
   return (
     <Box sx={{
-      backgroundColor: COLOR_BASE_2,
+      backgroundColor: COLOR_BASE_1,
       borderTopLeftRadius: 10,
       borderTopRightRadius: 10,
     }}
@@ -117,8 +121,8 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
         alignItems="center"
         sx={{ padding: 1 }}
       >
-        <Grid item xs={3} />
-        <Grid item xs={6} sx={{ textAlign: 'center' }}>
+        <Grid item xs={cellphone ? 12 : 3} />
+        <Grid item xs={cellphone ? 12 : 6} sx={{ textAlign: 'center' }}>
           <Stack
             direction="row"
             justifyContent="center"
@@ -126,14 +130,18 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
             spacing={2}
           >
 
-            <FormLabel sx={{
-              color: 'white', fontWeight: 'bold',
-            }}
-            >
-              {DatesHour.StringDateToDate(fecha.toISOString().split('T')[0])}
-            </FormLabel>
             <DatePicker
-              render={<Icon color="white" style={{ backgroundColor: COLOR_BASE_1, borderRadius: 8 }} />}
+              render={(value, openCalendar) => (
+                <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={openCalendar}>
+                  <FormLabel sx={{
+                    color: 'white', fontWeight: 'bold',
+                  }}
+                  >
+                    {DatesHour.StringDateToDate(fecha.toISOString().split('T')[0])}
+                  </FormLabel>
+                  <Icon color="white" style={{ backgroundColor: COLOR_BASE_1, borderRadius: 8 }} />
+                </Box>
+              )}
               value={fecha}
               displayWeekNumbers
               onChange={handleChange}
@@ -148,14 +156,14 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
             />
           </Stack>
         </Grid>
-        <Grid item xs={3} />
+        <Grid item xs={cellphone ? 12 : 3} />
 
-        <Grid item xs={2} />
-        <Grid item xs={1} />
+        <Grid item xs={cellphone ? 12 : 2} />
+        <Grid item xs={cellphone ? 12 : 1} />
         {weekDays.map((dia, index) => {
           if (index !== 0) {
             return (
-              <Grid key={weekDays[(index)]} style={{ display: 'flex', justifyContent: 'center' }} item xs={1}>
+              <Grid key={weekDays[(index)]} style={{ display: 'flex', justifyContent: 'center' }} item xs={cellphone ? 1.6 : 1}>
                 <Box sx={{
                   padding: 1,
                   width: 20,
@@ -171,8 +179,8 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
             );
           }
         })}
-        <Grid item xs={3} />
-        <Grid item xs={2} />
+        <Grid item xs={cellphone ? 12 : 3} />
+        <Grid item xs={cellphone ? 12 : 2} />
         <Grid style={{ display: 'flex', justifyContent: 'center' }} item xs={1}>
           <IconButton onClick={() => setFecha(addDaysToSelectedDate(fecha, -7))}>
             <ArrowBackIosNewIcon fontSize="large" sx={{ color: 'white' }} />
@@ -184,7 +192,7 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
             newDate.standarDate(new Date(dia)).getTime() === fecha.getTime(),
           );
           return (
-            <Grid key={dia.getDate()} style={{ display: 'flex', justifyContent: 'center' }} item xs={1}>
+            <Grid key={dia.getDate()} style={{ display: 'flex', justifyContent: 'center' }} item xs={cellphone ? 1.6 : 1}>
               <Box
                 onMouseEnter={() => { setCursor('pointer'); }}
                 onClick={() => {
@@ -214,13 +222,13 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
             </Grid>
           );
         })}
-        {weekDaysofDateSelected.length === 0 && <Grid item xs={6} />}
+        {weekDaysofDateSelected.length === 0 && <Grid item xs={cellphone ? 12 : 6} />}
         <Grid style={{ display: 'flex', justifyContent: 'center' }} item xs={1}>
           <IconButton onClick={() => setFecha(addDaysToSelectedDate(fecha, 7))}>
             <ArrowForwardIosIcon fontSize="large" sx={{ color: 'white' }} />
           </IconButton>
         </Grid>
-        <Grid item xs={2} />
+        <Grid item xs={cellphone ? 12 : 2} />
       </Grid>
       <Box />
     </Box>

@@ -4,6 +4,8 @@ import { useLocation } from 'react-router-dom';
 import {
   Container, Box, Radio, RadioGroup, FormLabel, FormControlLabel, Grid,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import api from '../../API/api';
 import {
   SUCURSAL_1, SUCURSAL_2, SUCURSAL_3, SUCURSAL_4,
@@ -22,7 +24,8 @@ function ReservarHorasArea() {
   const [agendasMedicos, setAgendasMedicos] = useState({});
   const [medicosFiltrados, setMedicosFiltrados] = useState({});
   const [agendasMedicosFiltrados, setAgendasMedicosFiltrados] = useState({});
-
+  const theme = useTheme();
+  const cellphone = useMediaQuery(theme.breakpoints.down('md'));
   const sucursales = [SUCURSAL_1, SUCURSAL_2, SUCURSAL_3, SUCURSAL_4];
   function FiltrarDatos() {
     if (sucursalSeleccionada === '') {
@@ -68,18 +71,17 @@ function ReservarHorasArea() {
   const optionsSucursales = () => (
 
     <RadioGroup
-      row
+      row={cellphone}
       defaultValue={sucursales[sucursalBase]}
-      sx={{ marginTop: 1 }}
+      sx={{ marginTop: 2 }}
       onChange={(e) => { setSucursalSeleccionada(e.target.value); }}
     >
       <Grid
         container
-        direction="row"
+        direction={cellphone ? 'column' : 'row'}
         justifyContent="center"
-        alignItems="center"
+        alignItems={cellphone ? 'flex-start' : 'center'}
       >
-        <Grid item xs={1}> hola2</Grid>
         {sucursales.map((sucursalOptions) => (
           <Grid key={sucursalOptions} item xs={2}>
             <FormControlLabel
@@ -87,39 +89,32 @@ function ReservarHorasArea() {
               key={sucursalOptions}
               value={sucursalOptions}
               control={<Radio />}
-              label={sucursalOptions}
+              label={<span style={{ fontSize: cellphone ? 16 : null }}>{sucursalOptions}</span>}
               disabled={medicos[sucursalOptions.split(',')[0]]?.length === 0}
             />
           </Grid>
         ))}
-        <Grid item xs={1}> hola2</Grid>
+        <FormControlLabel
+          style={{ width: 'fit-content' }}
+          value="CUALQUIERA"
+          control={<Radio />}
+          label={<span style={{ fontSize: cellphone ? 16 : null }}>CUALQUIERA</span>}
+        />
+
       </Grid>
     </RadioGroup>
 
-  );
-  const optionCalendario = () => (
-    <Box>
-      <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Seleccione Fecha y Profesional</FormLabel>
-      <Calendario
-        agendasMedicos={agendasMedicosFiltrados}
-        fecha={fechaSeleccionada}
-        setFecha={setFechaSeleccionada}
-      />
-      <TablaMedicos
-        dia={fechaSeleccionada}
-        agendasMedicos={agendasMedicosFiltrados}
-        medicos={medicosFiltrados}
-        OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
-        area={area}
-        sucursalSeleccionada={sucursalSeleccionada}
-      />
-    </Box>
   );
   return (
     <Container>
       <Stepper step={1} search={`${OpcionesDeBusquedaSeleccionada}: ${area.especializacion}`} />
       <Box sx={{ marginTop: 5, width: '100%' }}>
-        <Grid container spacing={2}>
+        <Grid
+          container
+          direction="row"
+          justifyContent="space-between"
+          alignItems="flex-start"
+        >
 
           {sucursalBase !== -1 && (
             <Grid item xs={12}>
@@ -129,8 +124,21 @@ function ReservarHorasArea() {
           )}
 
           {Object.keys(medicosFiltrados).length !== 0 && Object.keys(agendasMedicosFiltrados).length !== 0 && fechaSeleccionada !== '' && (
-            <Grid item xs={12}>
-              {optionCalendario()}
+            <Grid item sx={{ marginTop: 3 }} xs={12}>
+              <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Seleccione Fecha y Profesional</FormLabel>
+              <Calendario
+                agendasMedicos={agendasMedicosFiltrados}
+                fecha={fechaSeleccionada}
+                setFecha={setFechaSeleccionada}
+              />
+              <TablaMedicos
+                dia={fechaSeleccionada}
+                agendasMedicos={agendasMedicosFiltrados}
+                medicos={medicosFiltrados}
+                OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
+                area={area}
+                sucursalSeleccionada={sucursalSeleccionada}
+              />
             </Grid>
           )}
         </Grid>
