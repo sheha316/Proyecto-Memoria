@@ -1,7 +1,6 @@
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable consistent-return */
 /* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 import * as React from 'react';
 import {
   TableRow,

@@ -1,12 +1,9 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-param-reassign */
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable array-callback-return */
 /* eslint-disable consistent-return */
-/* eslint-disable max-len */
-/* eslint-disable no-nested-ternary */
-/* eslint-disable react/prop-types */
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
@@ -198,7 +195,7 @@ export default function TablaMedicos({
 
               </TableCell>
               {medicos.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((column, index) => {
+                .map((column) => {
                   if (column.disponible) {
                     MedicoIndex += 1;
                     return (
@@ -240,12 +237,13 @@ export default function TablaMedicos({
                     </span>
                   </TableCell>
 
-                  {medicos.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((column) => {
-                    if (column.disponible) {
-                      MedicoIndex += 1;
-                      return BOTONRESERVA(column, MedicoIndex, IndexBloques, onReservar, column.dates[IndexBloques] !== '');
-                    }
-                  })}
+                  {medicos.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((column) => {
+                      if (column.disponible) {
+                        MedicoIndex += 1;
+                        return BOTONRESERVA(column, MedicoIndex, IndexBloques, onReservar, column.dates[IndexBloques] !== '');
+                      }
+                    })}
                 </TableRow>
               );
             })}

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 import {
   Container, Box, FormLabel, Grid, Stack, Button,

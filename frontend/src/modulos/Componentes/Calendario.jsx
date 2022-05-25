@@ -1,9 +1,8 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable consistent-return */
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-import DatePicker, { Calendar } from 'react-multi-date-picker';
+import DatePicker from 'react-multi-date-picker';
 import {
   Box, FormLabel, Grid, Stack,
 } from '@mui/material/';
@@ -186,7 +185,7 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
             <ArrowBackIosNewIcon fontSize="large" sx={{ color: 'white' }} />
           </IconButton>
         </Grid>
-        {weekDaysofDateSelected.length > 0 && weekDaysofDateSelected.map((dia, index) => {
+        {weekDaysofDateSelected.length > 0 && weekDaysofDateSelected.map((dia) => {
           const colorCirculo = circleColors(
             HayUnDoctorDisponible(dia),
             newDate.standarDate(new Date(dia)).getTime() === fecha.getTime(),

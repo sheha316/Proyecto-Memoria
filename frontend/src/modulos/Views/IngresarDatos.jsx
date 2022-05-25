@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 import React from 'react';
 import {
   Container, Box,

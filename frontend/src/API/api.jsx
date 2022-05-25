@@ -36,7 +36,6 @@ async function getAgendas(sucursales, medicos) {
   };
 }
 async function getAgendaOfOne(medicos) {
-  console.log('getAgendaOfOne', new Date());
   const hoy = newDate.getActualDate();
   const fecha = `${hoy.getFullYear()}-${hoy.getMonth() + 1}-${hoy.getDate()}`;
   const response = await axios.get(`${baseUrl}/agendas/getAgendas`, { params: { medicos, diaLocal: fecha } });

@@ -78,7 +78,6 @@ async function postCreateCita(req,res){
 	return 
 }
 async function deleteCita(citaPaciente){
-	console.log(citaPaciente)
 	try{
 		const cita=await citas.findOne({
 			"_id":citaPaciente._id,
@@ -87,7 +86,6 @@ async function deleteCita(citaPaciente){
 			"fecha":cita.Fecha_cita,
 			"id_medico":cita.Medico._id
 		})
-		console.log(cita,agenda)
 		agenda.bloques[cita.Bloque-1]="";
 		agenda.disponible=true;
 		await agenda.save()
@@ -131,10 +129,8 @@ async function sendEmailDeleteCita(req,res){
 	await deleteCita(req.body);
 	await transport.sendMail(options, function(error, info){
 		if (error) {
-		console.log("error :",error);
 		res.status(201).send({message:"error"})
 		} else {
-		console.log('email enviado: ' + info.response);
 		res.status(200).send({message:"done"})
 		}
 	});

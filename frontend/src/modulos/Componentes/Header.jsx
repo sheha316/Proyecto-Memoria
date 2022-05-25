@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import {
   Box, Stack, Button, Grid,
@@ -6,7 +5,6 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-
 import BasicPopover from './BasicPopover';
 import logo from '../../assets/logo512.png';
 import {

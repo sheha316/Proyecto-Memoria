@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
@@ -11,7 +10,6 @@ import {
   SUCURSAL_1, SUCURSAL_2, SUCURSAL_3, SUCURSAL_4,
 } from '../../constantes';
 import Stepper from '../Componentes/Stepper';
-import newDate from '../../utilities/newDate';
 import Calendario from '../Componentes/Calendario';
 import TablaMedicos from '../Componentes/TablaMedicos';
 
@@ -51,7 +49,6 @@ function ReservarHorasArea() {
       return 0;
     };
     async function getData() {
-      console.log('Init', new Date());
       const medicosAux = await api.getAllMedicosBySpec(area.especializacion);
       setMedicos(medicosAux);
       const sucursalAux = getBaseSucursal(medicosAux);
@@ -61,7 +58,6 @@ function ReservarHorasArea() {
       setFechaSeleccionada(new Date(FirstDate[0], FirstDate[1] - 1, FirstDate[2]));
       setSucursalBase(sucursalAux);
       setSucursalSeleccionada(sucursales[sucursalAux]);
-      console.log('End', new Date());
     }
     getData();
   }, []);

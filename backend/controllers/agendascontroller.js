@@ -7,6 +7,7 @@ async function getAgendas(req,res){
 	let agendasMedicos=[]
 	let Medicos=[]
 	try{
+		if(req.query.medicos?.length>0){
 		req.query.medicos.map(async(medicoI)=>{
 			const medico=JSON.parse(medicoI)
 			agendasMedicos.push(
@@ -35,7 +36,10 @@ async function getAgendas(req,res){
 				res.status(200).send({agendas:agendasM,Medicos,primerDia:FDATE[0].fecha})
 			}	
 		)
-		
+		}
+		else{
+			res.status(200).send({agendas:agendasMedicos,Medicos,primerDia:'2025-10-03'})
+		}
 	}catch(e){
 		res.status(500).send({message:e.message})
 	}
