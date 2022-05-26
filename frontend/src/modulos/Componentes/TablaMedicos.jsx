@@ -4,15 +4,13 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
-import * as React from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {
   TableRow,
   Button,
-  TablePagination,
-  Box,
   TableHead,
   TableContainer,
   TableCell,
@@ -133,19 +131,9 @@ export default function TablaMedicos({
   const theme = useTheme();
   const cellphone = useMediaQuery(theme.breakpoints.down('sm'));
   const modoEspecialista = ModoEspecialista(area);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(cellphone ? 30 : 5);
   const history = useNavigate();
-
   let MedicoIndex = -1;
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
   const getAviableDates = () => {
     MedicoIndex = -1;
     const now = newDate.getActualDate();
@@ -194,7 +182,7 @@ export default function TablaMedicos({
                 </span>
 
               </TableCell>
-              {medicos.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              {medicos
                 .map((column) => {
                   if (column.disponible) {
                     MedicoIndex += 1;
@@ -237,7 +225,7 @@ export default function TablaMedicos({
                     </span>
                   </TableCell>
 
-                  {medicos.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  {medicos
                     .map((column) => {
                       if (column.disponible) {
                         MedicoIndex += 1;
@@ -250,21 +238,6 @@ export default function TablaMedicos({
           </TableBody>
         </Table>
       </TableContainer>
-
-      { !modoEspecialista
-      && (
-      <Box>
-        <TablePagination
-          rowsPerPageOptions={[]}
-          component="div"
-          count={medicos.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Box>
-      )}
     </Paper>
   );
 }

@@ -10,7 +10,10 @@ import ReservarHoras from './modulos/Views/ReservarHoras';
 import ReservarHorasArea from './modulos/Views/ReservarHorasArea';
 import IngresarDatos from './modulos/Views/IngresarDatos';
 import HoraReservada from './modulos/Views/HoraReservada';
+import QuienesSomos from './modulos/Views/QuienesSomos';
+import Sucursales from './modulos/Views/Sucursales';
 import ReservarConMedico from './modulos/Views/ReservarConMedico';
+import Home from './modulos/Views/Home';
 import CancelarReserva from './modulos/Views/CancelarReserva';
 import CancelarReservaMisReservas from './modulos/Views/CancelarReservaMisReservas';
 
@@ -33,9 +36,9 @@ root.render(
     <BrowserRouter>
       <Routes path="/">
 
-        <Route exact path={RUTAS_HOME} element={<Layout component={<>aholaa</>} />} />
-        <Route exact path={RUTAS_SUCURSALES} element={<Layout component={<>hola</>} />} />
-        <Route exact path={RUTAS_QUIENES_SOMOS} element={<Layout component={<>hola</>} />} />
+        <Route exact path={RUTAS_HOME} element={<Layout component={<Home />} />} />
+        <Route exact path={RUTAS_SUCURSALES} element={<Layout component={<Sucursales />} />} />
+        <Route exact path={RUTAS_QUIENES_SOMOS} element={<Layout component={<QuienesSomos />} />} />
 
         <Route exact path={RUTAS_RESERVAR_HORA} element={<Layout component={<ReservarHoras />} />} />
         <Route exact path={RUTAS_RESERVAR_HORA_AREA} element={<Layout component={<ReservarHorasArea />} />} />

@@ -22,7 +22,7 @@ function ObtenerMailDeRecordatorio(Nombres,Apellidos,Medico,Bloque,Fecha_cita){
     "<div>Hola "+Nombres+" "+Apellidos+", esto es un recordatorio para su cita.</div><div>&nbsp;</div><div style=\"padding-left: 10%; width: 80%;\">"+
     "<div style=\"background-color: #ffffff; color: #ffffff; border-top-left-radius: 30px; border-top-right-radius: 30px;\">"+
     "<p style=\'margin-top:0cm;margin-right:0cm;margin-bottom:8.0pt;margin-left:0cm;line-height:107%;font-size:15px;font-family:\"Calibri\",sans-serif;text-align:center;\'>"+
-    "<img width=\"353\" src=\""+imagen+"\" alt=\"Logo\"></p>"+
+    "<img width=\"100%\" src=\""+imagen+"\" alt=\"Logo\"></p>"+
     "<p style=\'padding:2%;border-top-left-radius:20px;border-top-right-radius:20px;margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:\"Calibri\",sans-serif;text-align:center;background:#0077FF;\'><span style='font-size:24px;font-family:\"Arial\",sans-serif;color:white;\'>Informaci&oacute;n De la cita</span></p>"+
     "<p style=\'padding:2%;margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:\"Calibri\",sans-serif;background:#EEEEEE;'><span style='font-size:24px;font-family:\"Arial\",sans-serif;color:#222222;\'>Médico: "+Medico.nombre+" "+Medico.apellido+"</span></p>"+
     "<p style=\'padding:2%;margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:\"Calibri\",sans-serif;background:#EEEEEE;'><span style='font-size:24px;font-family:\"Arial\",sans-serif;color:#222222;\'>Especialidad: "+Medico.especializacion+"</span></p>"+
@@ -41,7 +41,7 @@ function MailParaBorrarCita(Nombres,Apellidos,Medico,Bloque,Fecha_cita){
   "<div>Hola "+Nombres+" "+Apellidos+", se ha cancelado la siguiente cita médica.</div><div>&nbsp;</div><div style=\"padding-left: 10%; width: 80%;\">"+
   "<div style=\"background-color: #ffffff; color: #ffffff; border-top-left-radius: 30px; border-top-right-radius: 30px;\">"+
   "<p style=\'margin-top:0cm;margin-right:0cm;margin-bottom:8.0pt;margin-left:0cm;line-height:107%;font-size:15px;font-family:\"Calibri\",sans-serif;text-align:center;\'>"+
-  "<img width=\"353\" src=\""+imagen+"\" alt=\"Logo\"></p>"+
+  "<img width=\"100%\" src=\""+imagen+"\" alt=\"Logo\"></p>"+
   "<p style=\'padding:2%;border-top-left-radius:20px;border-top-right-radius:20px;margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:\"Calibri\",sans-serif;text-align:center;background:#0077FF;\'><span style='font-size:24px;font-family:\"Arial\",sans-serif;color:white;\'>Informaci&oacute;n De la cita</span></p>"+
   "<p style=\'padding:2%;margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:\"Calibri\",sans-serif;background:#EEEEEE;'><span style='font-size:24px;font-family:\"Arial\",sans-serif;color:#222222;\'>Médico: "+Medico.nombre+" "+Medico.apellido+"</span></p>"+
   "<p style=\'padding:2%;margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:\"Calibri\",sans-serif;background:#EEEEEE;'><span style='font-size:24px;font-family:\"Arial\",sans-serif;color:#222222;\'>Especialidad: "+Medico.especializacion+"</span></p>"+

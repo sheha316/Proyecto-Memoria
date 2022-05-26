@@ -142,7 +142,6 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
                 </Box>
               )}
               value={fecha}
-              displayWeekNumbers
               onChange={handleChange}
               weekDays={weekDays}
               months={months}

@@ -29,9 +29,35 @@ function ReservarHorasArea() {
     if (sucursalSeleccionada === '') {
       return;
     }
-    if (sucursalSeleccionada === 'cualquiera') {
-      setMedicosFiltrados(null);
-      setAgendasMedicosFiltrados(null);
+    if (sucursalSeleccionada === 'Todas Las Sucursales') {
+      setMedicosFiltrados(
+        medicos[SUCURSAL_1.split(',')[0]]
+          .concat(
+            medicos[SUCURSAL_2.split(',')[0]],
+            medicos[SUCURSAL_3.split(',')[0]],
+            medicos[SUCURSAL_4.split(',')[0]],
+          ),
+      );
+      setAgendasMedicosFiltrados({
+        Medicos: agendasMedicos[SUCURSAL_1.split(',')[0]].Medicos
+          .concat(
+            agendasMedicos[SUCURSAL_2.split(',')[0]].Medicos,
+            agendasMedicos[SUCURSAL_3.split(',')[0]].Medicos,
+            agendasMedicos[SUCURSAL_4.split(',')[0]].Medicos,
+          ),
+        agendas: agendasMedicos[SUCURSAL_1.split(',')[0]].agendas
+          .concat(
+            agendasMedicos[SUCURSAL_2.split(',')[0]].agendas,
+            agendasMedicos[SUCURSAL_3.split(',')[0]].agendas,
+            agendasMedicos[SUCURSAL_4.split(',')[0]].agendas,
+          ),
+        primerDia: Math.min(agendasMedicos[SUCURSAL_1.split(',')[0]].primerDia
+          .concat(
+            agendasMedicos[SUCURSAL_2.split(',')[0]].primerDia,
+            agendasMedicos[SUCURSAL_3.split(',')[0]].primerDia,
+            agendasMedicos[SUCURSAL_4.split(',')[0]].primerDia,
+          )),
+      });
     } else {
       const FirstDate = agendasMedicos[sucursalSeleccionada.split(',')[0]].primerDia.split('-');
       setFechaSeleccionada(new Date(FirstDate[0], FirstDate[1] - 1, FirstDate[2]));
@@ -92,9 +118,9 @@ function ReservarHorasArea() {
         ))}
         <FormControlLabel
           style={{ width: 'fit-content' }}
-          value="CUALQUIERA"
+          value="Todas Las Sucursales"
           control={<Radio />}
-          label={<span style={{ fontSize: cellphone ? 16 : null }}>CUALQUIERA</span>}
+          label={<span style={{ fontSize: cellphone ? 16 : null }}>Todas Las Sucursales</span>}
         />
 
       </Grid>
@@ -133,7 +159,6 @@ function ReservarHorasArea() {
                 medicos={medicosFiltrados}
                 OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
                 area={area}
-                sucursalSeleccionada={sucursalSeleccionada}
               />
             </Grid>
           )}

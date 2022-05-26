@@ -1,42 +1,13 @@
 div.rmdp-day.rmdp-disabled > span{
     background-color: #d0d0d0;
     color: #ffffff;
-    border-radius: 100%;
-    font-size:medium;
-    font-family: "Roboto","Helvetica","Arial",sans-serif;
-    padding: 0px;
 }
 
 div.rmdp-day > span.sd{
     background-color: #5DA8FF;
     color: #ffffff;
-    border-radius: 100%;
-    font-size:medium;
-    font-family: "Roboto","Helvetica","Arial",sans-serif;
 }
 div.rmdp-day.rmdp-selected > span.sd{
     background-color: #90C104;
     color: #ffffff;
-    border-radius: 100%;
-    font-size:medium;
-    font-family: "Roboto","Helvetica","Arial",sans-serif;
-}
-div.rmdp-wrapper.rmdp-shadow{
-    width:70%;
-}
-div.rmdp-calendar{
-    width:-webkit-fill-available;
-}
-div.rmdp-day-picker > div{
-    width:-webkit-fill-available;
-}
-div.rmdp-week{
-    width:-webkit-fill-available;
-    justify-content:space-around
-}
-div.rmdp-header-values > span{
-    font-family: "Roboto","Helvetica","Arial",sans-serif;
-}
-div.rmdp-day-picker  > div{
-    font-family: "Roboto","Helvetica","Arial",sans-serif;
 }
