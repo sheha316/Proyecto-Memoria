@@ -66,7 +66,6 @@ function AutocompleteForm({
   let validationSchema;
   let initialValues;
   let id;
-  const groupBy = 'profesion';
   if (opcionBusqueda === 'Área Médica') {
     validationSchema = Yup.object().shape({
       areaSeleccionada: Yup.object().shape({
@@ -125,11 +124,6 @@ function AutocompleteForm({
                     {getLabel(option, opcionBusqueda, 0)}
                   </Box>
                 )}
-                groupBy={(option) => {
-                  if (opcionBusqueda === 'Área Médica') {
-                    return `--${option[groupBy]}--`;
-                  }
-                }}
                 getOptionLabel={(option) => getLabel(option, opcionBusqueda, 1)}
                 onChange={(e, value) => {
                   setFieldValue(

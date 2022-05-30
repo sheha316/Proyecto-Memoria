@@ -74,8 +74,8 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
     }
     const DifferenceInTime = dateInDate.getTime() - minDate.getTime();
     const DifferenceInDays = Math.floor(DifferenceInTime / (1000 * 3600 * 24));
-    for (let i = 0; i < agendasMedicos.Medicos.length; i++) {
-      if (agendasMedicos.agendas[i][DifferenceInDays].disponible) {
+    for (let i = 0; i < agendasMedicos.length; i++) {
+      if (agendasMedicos[i].agenda[DifferenceInDays].disponible) {
         return true;
       }
     }
@@ -100,19 +100,6 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
       borderTopRightRadius: 10,
     }}
     >
-      {/* <Calendar
-          value={fecha}
-          displayWeekNumbers
-          onChange={handleChange}
-          weekDays={weekDays}
-          months={months}
-          minDate={minDate}
-          maxDate={maxDate}
-          disableYearPicker
-          weekStartDayIndex={1}
-          numberOfMonths={1}
-          mapDays={({ date }) => isDisableDate(date)}
-        /> */}
       <Grid
         container
         direction="row"
