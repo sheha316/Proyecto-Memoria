@@ -1,9 +1,12 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable camelcase */
 import React from 'react';
 import {
-  Box, FormLabel, Paper, Grid,
+  Box, FormLabel, Paper, Grid, Button,
 } from '@mui/material';
-import { COLOR_BASE_1 } from '../../constantes';
+import {
+  COLOR_BASE_1, COLOR_BUTTON_1, COLOR_BASE_2, COLOR_BUTTON_2,
+} from '../../constantes';
 import DatesHour from '../../utilities/Dates&Hour';
 
 function RecordatorioSeleccionLabel(texto) {
@@ -15,7 +18,7 @@ function FichaTitulo(texto) {
   return (
     <Box sx={{ display: 'grid' }}>
       <FormLabel sx={{
-        color: 'White',
+        color: 'white',
         backgroundColor: COLOR_BASE_1,
         borderRadius: 5,
         borderBottomLeftRadius: 0,
@@ -139,9 +142,155 @@ function FichaDatosUsuario(cita) {
     </Paper>
   );
 }
+function FichaTituloAgenda(texto) {
+  return (
+    <Box sx={{ display: 'grid' }}>
+      <FormLabel sx={{
+        color: 'white',
+        backgroundColor: COLOR_BASE_2,
+        borderRadius: 5,
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
+        padding: 2,
+        fontWeight: 'bold',
+      }}
+      >
+        {texto}
+      </FormLabel>
+    </Box>
+  );
+}
+function BotonesReserva(id, bloques, grid, onReservar, medico) {
+  function GetHour(index) {
+    let hora = Math.floor(index / 2) + 8;
+    if (hora < 10) {
+      return `0${hora}`;
+    }
+    if (hora >= 13) {
+      hora += 1;
+    }
+    return `${hora}`;
+  }
+  return (
+    <Grid
+      container
+      direction="row"
+      justifyContent="flex-start"
+      alignItems="center"
+    >
+      {bloques.map((bloque, index) => {
+        const Disabled = bloque !== '';
+        const hour = `${GetHour(index + 1)}:${index % 2 !== 0 ? '00' : '30'}`;
+        return (
+          <Grid key={`${id}_${hour}`} item xs={grid[2]} sx={{ marginTop: 1, marginLeft: 1 }}>
+            <Button
+              disabled={Disabled}
+              onClick={() => onReservar(index + 1, medico)}
+              sx={{
+                color: 'white',
+                backgroundColor: Disabled ? '#d0d0d0' : COLOR_BUTTON_1,
+                ':hover': { backgroundColor: COLOR_BUTTON_2 },
+              }}
+            >
+              {hour}
+            </Button>
+          </Grid>
+        );
+      })}
+    </Grid>
+  );
+}
+function LabelAgenda(label, texto) {
+  return (
+    <>
+      <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>
+        {label}
+        {' '}
+      </FormLabel>
+      <FormLabel sx={{ color: 'black' }}>{texto}</FormLabel>
+    </>
+  );
+}
+function FichaMedicoAgenda(agenda, tablet, cellphone, onReservar) {
+  const medico = {
+    nombre: agenda.nombre,
+    apellido: agenda.apellido,
+    genero: agenda.genero,
+    profesion: agenda.profesion,
+    sucursal: agenda.sucursal,
+    especializacion: agenda.especializacion,
+    _id: agenda.id_medico,
+  };
+  let grid;
+  if (cellphone) {
+    grid = [3.5, 8.5, 3];
+  } else if (tablet) {
+    grid = [3.5, 8.5, 3];
+  } else {
+    grid = [3, 9, 1.8];
+  }
+
+  return (
+    <Paper
+      elevation={4}
+      sx={{
+        display: 'grid',
+        borderRadius: 5,
+        width: '100%',
+      }}
+    >
+      {FichaTituloAgenda(`${agenda.nombre} ${agenda.apellido}`)}
+      <Grid
+        container
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="center"
+        sx={{ p: 1 }}
+      >
+        <Grid item xs={grid[0]} sx={{ marginBottom: 1 }}>
+          <Paper elevation={4}>
+            <img
+              style={{
+                width: '100%',
+              }}
+              alt=""
+              src={agenda.genero === 'm'
+                ? 'https://img.freepik.com/foto-gratis/doctor-brazos-cruzados-sobre-fondo-blanco_1368-5790.jpg?w=2000'
+                : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIIMvIYUfgxZwSZRb3XHS1umgQjcMuaE9N9Q&usqp=CAU'}
+            />
+          </Paper>
+        </Grid>
+
+        <Grid item xs={grid[1]} sx={{ textAlign: 'left' }}>
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="stretch"
+          >
+            <Grid item xs={10}>
+              {LabelAgenda('Sucursal:', agenda.sucursal)}
+            </Grid>
+            <Grid item xs={10}>
+              {LabelAgenda('Especialidad:', agenda.especializacion)}
+            </Grid>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={12}>
+          {LabelAgenda('Horarios:')}
+        </Grid>
+        <Grid item xs={12}>
+          {BotonesReserva(agenda.id_medico, agenda.bloques, grid, onReservar, medico)}
+        </Grid>
+      </Grid>
+    </Paper>
+  );
+}
 export default {
   FichaProfeional,
   FichaFecha,
   FichaSucursal,
   FichaDatosUsuario,
+  FichaMedicoAgenda,
 };

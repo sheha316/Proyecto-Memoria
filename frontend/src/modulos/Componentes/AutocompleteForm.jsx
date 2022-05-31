@@ -26,6 +26,7 @@ const ListboxComponent = React.forwardRef((
   const childrenaux = children[0].props.children[1].props.children;
   const itemCount = Array.isArray(childrenaux) ? childrenaux.length : 0;
   const itemSize = 36;
+
   return (
     <div ref={ref}>
       <div {...other}>
@@ -65,7 +66,7 @@ function AutocompleteForm({
 }) {
   let validationSchema;
   let initialValues;
-  let id;
+  let id; const groupBy = 'profesion';
   if (opcionBusqueda === 'Área Médica') {
     validationSchema = Yup.object().shape({
       areaSeleccionada: Yup.object().shape({
@@ -119,6 +120,11 @@ function AutocompleteForm({
                 name={id}
                 ListboxComponent={opcionBusqueda === 'Área Médica' ? '' : ListboxComponent}
                 options={opciones}
+                groupBy={(option) => {
+                  if (opcionBusqueda === '') {
+                    return `--${option[groupBy]}--`;
+                  }
+                }}
                 renderOption={(props, option) => (
                   <Box component="li" {...props} key={option._id}>
                     {getLabel(option, opcionBusqueda, 0)}

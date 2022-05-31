@@ -14,6 +14,7 @@ import {
 import DatesHour from '../../utilities/Dates&Hour';
 
 function RecordatorioSeleccion(cita) {
+  console.log('hola', cita);
   const { Medico, Bloque, Fecha_cita } = cita;
   const fecha = DatesHour.StringDateToDate(Fecha_cita);
   return (

@@ -1,8 +1,8 @@
 const agendas = require('../models/agendas')
   
-async function getAgendas2(req,res){
+async function getAgendas(req,res){
 	let hoy = new Date(req.query.diaLocal)
-	const maxDate = (new Date(hoy.getFullYear(), hoy.getMonth() + 3, 0)).toISOString().split("T")[0]
+	const maxDate = (new Date(hoy.getFullYear(), hoy.getMonth() + process.env.MAXMESES, 0)).toISOString().split("T")[0]
 	hoy=hoy.toISOString().split("T")[0]
 	const aggAgendas = [
 		{
@@ -112,15 +112,9 @@ async function getAgendas2(req,res){
 	}
 }
 
-async function getAgendas(req,res){
-	const prueba=true;
-	if(prueba){
-		await getAgendas2(req,res)
-		return;
-	}
-	
+async function getAgenda(req,res){
 	let hoy = new Date(req.query.diaLocal)
-	const maxDate = (new Date(hoy.getFullYear(), hoy.getMonth() + 3, 0)).toISOString().split("T")[0]
+	const maxDate = (new Date(hoy.getFullYear(), hoy.getMonth() + process.env.MAXMESES, 0)).toISOString().split("T")[0]
 	hoy=hoy.toISOString().split("T")[0]
 	let agendasMedicos=[]
 	let Medicos=[]
@@ -164,4 +158,4 @@ async function getAgendas(req,res){
 }
 
 
-module.exports= {getAgendas}
+module.exports= {getAgendas,getAgenda}

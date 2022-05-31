@@ -17,7 +17,9 @@ import newDate from '../../utilities/newDate';
 import { COLOR_BASE_1, COLOR_BASE_2, COLOR_BUTTON_2 } from '../../constantes';
 import DatesHour from '../../utilities/Dates&Hour';
 
+const MAXMESES = process.env.REACT_APP_MAXMESES;
 function Calendario({ agendasMedicos, fecha, setFecha }) {
+  console.log('hola?', MAXMESES);
   const [cursor, setCursor] = useState('crosshair');
   const now = newDate.getActualDate();
   const minDate = newDate.getActualDate();
@@ -25,7 +27,13 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
   minDate.setDate(now.getDate() + 1);
   const theme = useTheme();
   const cellphone = useMediaQuery(theme.breakpoints.down('sm'));
-  const maxDate = newDate.standarDate(new Date(minDate.getFullYear(), minDate.getMonth() + 3, 0));
+  const maxDate = newDate.standarDate(new Date(
+    minDate.getFullYear(),
+    minDate.getMonth() + MAXMESES - 1,
+    0,
+  ));
+  console.log(maxDate);
+
   const weekDays = ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'];
   const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   function addDaysToDate(_date, _noOfDays) {
@@ -69,11 +77,12 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
     );
   };
   const HayUnDoctorDisponible = (dateInDate) => {
-    if (dateInDate.getTime() < minDate.getTime()) {
+    if (dateInDate.getTime() < minDate.getTime() || dateInDate.getTime() > maxDate.getTime()) {
       return false;
     }
     const DifferenceInTime = dateInDate.getTime() - minDate.getTime();
     const DifferenceInDays = Math.floor(DifferenceInTime / (1000 * 3600 * 24));
+    console.log(agendasMedicos, DifferenceInDays, dateInDate, maxDate);
     for (let i = 0; i < agendasMedicos.length; i++) {
       if (agendasMedicos[i].agenda[DifferenceInDays].disponible) {
         return true;
@@ -118,10 +127,25 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
 
             <DatePicker
               render={(value, openCalendar) => (
-                <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={openCalendar}>
-                  <FormLabel sx={{
-                    color: 'white', fontWeight: 'bold',
+                <Box
+                  onMouseEnter={() => { setCursor('pointer'); }}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    cursor,
+                    borderStyle: 'outset',
+                    borderRadius: 5,
+                    borderColor: 'white',
+                    padding: 5,
                   }}
+                  onClick={openCalendar}
+                >
+                  <FormLabel
+                    onMouseEnter={() => { setCursor('pointer'); }}
+                    sx={{
+                      color: 'white', fontWeight: 'bold', cursor,
+                    }}
                   >
                     {DatesHour.StringDateToDate(fecha.toISOString().split('T')[0])}
                   </FormLabel>

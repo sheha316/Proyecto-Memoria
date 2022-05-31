@@ -11,6 +11,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import api from '../../API/api';
 import {
   SUCURSAL_1, SUCURSAL_2, SUCURSAL_3, SUCURSAL_4,
+  COLOR_BASE_1, COLOR_BASE_2,
 } from '../../constantes';
 import Stepper from '../Componentes/Stepper';
 import Calendario from '../Componentes/Calendario';
@@ -132,8 +133,26 @@ function ReservarHorasArea() {
           )}
 
           { agendasMedicosFiltrados !== '' && fechaSeleccionada !== '' && (
-            <Grid item sx={{ marginTop: 3 }} xs={12}>
-              <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Seleccione Fecha y Profesional</FormLabel>
+          <>
+            <FormLabel sx={{
+              color: 'black',
+              fontWeight: 'bold',
+              marginTop: 3,
+            }}
+            >
+              Seleccione Fecha y Profesional
+            </FormLabel>
+            <Grid
+              item
+              sx={{
+                backgroundColor: 'gray',
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+                marginTop: 1,
+              }}
+              xs={12}
+            >
+
               <Calendario
                 agendasMedicos={agendasMedicosFiltrados}
                 fecha={fechaSeleccionada}
@@ -146,6 +165,7 @@ function ReservarHorasArea() {
                 area={area}
               />
             </Grid>
+          </>
           )}
         </Grid>
       </Box>

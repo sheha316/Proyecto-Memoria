@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
@@ -27,7 +28,6 @@ function ReservarConMedico() {
     }
     getAgendaMedico();
   }, []);
-
   return (
     <Container>
       <Stepper step={1} search={`${OpcionesDeBusquedaSeleccionada}`} medico={medico} area={OpcionesDeBusquedaSeleccionada} />
@@ -39,7 +39,7 @@ function ReservarConMedico() {
           justifyContent="space-between"
           alignItems="flex-start"
         >
-          {Object.keys(agendaMedico).length !== 0 && fechaSeleccionada !== '' && (
+          {/*           {Object.keys(agendaMedico).length !== 0 && fechaSeleccionada !== '' && (
             <Grid item xs={cellphone ? 12 : 5}>
               <Box sx={{ marginTop: 4 }}>
                 <Stack spacing={4}>
@@ -50,24 +50,41 @@ function ReservarConMedico() {
 
             </Grid>
 
-          )}
+          )} */}
           {fechaSeleccionada !== ''
         && (
-        <Grid item xs={cellphone ? 12 : 6} sx={{ marginTop: 2 }}>
-          <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Seleccione una Fecha y Hora</FormLabel>
-          <Calendario
-            agendasMedicos={agendaMedico}
-            fecha={fechaSeleccionada}
-            setFecha={setFechaSeleccionada}
-          />
-          <TablaMedicos
-            dia={fechaSeleccionada}
-            agendasMedicos={agendaMedico}
-            medicos={medico}
-            OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
-            area={OpcionesDeBusquedaSeleccionada}
-          />
-        </Grid>
+        <>
+          <FormLabel sx={{
+            color: 'black',
+            fontWeight: 'bold',
+            marginTop: 3,
+          }}
+          >
+            Seleccione Fecha y Profesional
+          </FormLabel>
+          <Grid
+            item
+            sx={{
+              backgroundColor: 'gray',
+              borderTopLeftRadius: 10,
+              borderTopRightRadius: 10,
+              marginTop: 1,
+            }}
+            xs={12}
+          >
+            <Calendario
+              agendasMedicos={[{ agenda: agendaMedico.agendas[0] }]}
+              fecha={fechaSeleccionada}
+              setFecha={setFechaSeleccionada}
+            />
+            <TablaMedicos
+              dia={fechaSeleccionada}
+              agendasMedicos={[{ agenda: agendaMedico.agendas[0] }]}
+              OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
+              area={OpcionesDeBusquedaSeleccionada}
+            />
+          </Grid>
+        </>
         )}
         </Grid>
       </Box>

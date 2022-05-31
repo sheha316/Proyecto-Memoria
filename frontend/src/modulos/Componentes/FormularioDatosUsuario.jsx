@@ -339,6 +339,7 @@ function Formulario({ medico, hora, dia }) {
     saveOnLocalWeb(values);
     delete medico.dates;
     delete medico.disponible;
+
     const valores = {
       ...values,
       Bloque: hora,
