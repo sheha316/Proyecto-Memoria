@@ -8,13 +8,14 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import api from '../../API/api';
 import Stepper from '../Componentes/Stepper';
-import Calendario from '../Componentes/Calendario';
-import TablaMedicos from '../Componentes/TablaMedicos';
 import Fichas from '../Componentes/FichasInformacion';
+import MostrarCalendarioyMedicos from '../Componentes/MostrarCalendarioyMedicos';
 
 function ReservarConMedico() {
   const { medico, OpcionesDeBusquedaSeleccionada } = useLocation().state;
   const [fechaSeleccionada, setFechaSeleccionada] = useState('');
+  const [firstDay, setfirstDay] = useState();
+  const [lastDay, setlastDay] = useState();
   const [agendaMedico, setAgendaMedico] = useState({});
   const theme = useTheme();
   const cellphone = useMediaQuery(theme.breakpoints.down('md'));
@@ -23,7 +24,10 @@ function ReservarConMedico() {
     async function getAgendaMedico() {
       const agendasAux = await api.getAgendaOfOne(medico);
       setAgendaMedico(agendasAux);
-      const FirstDate = agendasAux.primerDia.split('-');
+      const FirstDate = agendasAux.FirstDay.split('-');
+      const LastDay = agendasAux.LastDay.split('-');
+      setlastDay(new Date(LastDay[0], LastDay[1] - 1, LastDay[2]));
+      setfirstDay(new Date(FirstDate[0], FirstDate[1] - 1, FirstDate[2]));
       setFechaSeleccionada(new Date(FirstDate[0], FirstDate[1] - 1, FirstDate[2]));
     }
     getAgendaMedico();
@@ -51,41 +55,16 @@ function ReservarConMedico() {
             </Grid>
 
           )} */}
-          {fechaSeleccionada !== ''
-        && (
-        <>
-          <FormLabel sx={{
-            color: 'black',
-            fontWeight: 'bold',
-            marginTop: 3,
-          }}
-          >
-            Seleccione Fecha y Profesional
-          </FormLabel>
-          <Grid
-            item
-            sx={{
-              backgroundColor: 'gray',
-              borderTopLeftRadius: 10,
-              borderTopRightRadius: 10,
-              marginTop: 1,
-            }}
-            xs={12}
-          >
-            <Calendario
-              agendasMedicos={[{ agenda: agendaMedico.agendas[0] }]}
-              fecha={fechaSeleccionada}
-              setFecha={setFechaSeleccionada}
-            />
-            <TablaMedicos
-              dia={fechaSeleccionada}
-              agendasMedicos={[{ agenda: agendaMedico.agendas[0] }]}
-              OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
-              area={OpcionesDeBusquedaSeleccionada}
-            />
-          </Grid>
-        </>
-        )}
+          <MostrarCalendarioyMedicos
+            agendasMedicos={[{ agenda: agendaMedico.agenda }]}
+            area={OpcionesDeBusquedaSeleccionada}
+            fecha={fechaSeleccionada}
+            setFecha={setFechaSeleccionada}
+            FirstDay={firstDay}
+            LastDay={lastDay}
+            OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
+            Title="Seleccione Fecha y Horario"
+          />
         </Grid>
       </Box>
     </Container>

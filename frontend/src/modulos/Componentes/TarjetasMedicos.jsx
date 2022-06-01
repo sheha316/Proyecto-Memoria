@@ -1,17 +1,14 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable consistent-return */
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {
-  Button,
-  Paper,
   Grid,
 } from '@mui/material';
-import { RUTAS_INGRESAR_DATOS, COLOR_BASE_2 } from '../../constantes';
+import { RUTAS_INGRESAR_DATOS } from '../../constantes';
 import '../../css/TablaMedicosStyle.css';
 import newDate from '../../utilities/newDate';
 import fichas from './FichasInformacion';

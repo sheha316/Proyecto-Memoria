@@ -1,8 +1,8 @@
 const agendas = require('../models/agendas')
-  
+const MAXMESES=3
 async function getAgendas(req,res){
 	let hoy = new Date(req.query.diaLocal)
-	const maxDate = (new Date(hoy.getFullYear(), hoy.getMonth() + process.env.MAXMESES, 0)).toISOString().split("T")[0]
+	const maxDate = (new Date(hoy.getFullYear(), hoy.getMonth() + MAXMESES, 0)).toISOString().split("T")[0]
 	hoy=hoy.toISOString().split("T")[0]
 	const aggAgendas = [
 		{
@@ -97,16 +97,65 @@ async function getAgendas(req,res){
 		  }
 		}
 	  ];
+	  const LastDayarg = [
+		{
+		  '$match': {
+			'$and': [
+			  {
+				'especializacion': req.query.area
+			  }, {
+				'fecha': {
+				  '$lte': maxDate
+				}
+			  }, {
+				'fecha': {
+				  '$gt': hoy
+				}
+			  }, {
+				'disponible': true
+			  }
+			]
+		  }
+		}, {
+		  '$sort': {
+			'fecha': -1
+		  }
+		}, {
+		  '$group': {
+			'_id': '$sucursal', 
+			'fecha': {
+			  '$first': '$fecha'
+			}
+		  }
+		}, {
+		  '$sort': {
+			'_id': 1
+		  }
+		}
+	  ];
 	try{
 		const MedicosAgendas= agendas.aggregate(aggAgendas)
 		const FirstDaySucursales= await agendas.aggregate(aggFirstDay)
-		let firstDate='9999-99-99'
-		for(let i=0;i<FirstDaySucursales.length;i++){
+		const LastDaySucursales= await agendas.aggregate(LastDayarg)
+		
+		let firstDate=FirstDaySucursales[0].fecha;
+		let lastDate=LastDaySucursales[0].fecha;;
+		for(let i=1;i<FirstDaySucursales.length;i++){
 			if(firstDate>FirstDaySucursales[i].fecha){
 				firstDate=FirstDaySucursales[i].fecha;
 			}
 		}
-		res.status(200).send({agendas:await MedicosAgendas,FirstDay:FirstDaySucursales,FirstDayAll:firstDate})
+		for(let i=1;i<LastDaySucursales.length;i++){
+			if(lastDate<LastDaySucursales[i].fecha){
+				lastDate=LastDaySucursales[i].fecha;
+			}
+		}
+		res.status(200).send({agendas:
+			await MedicosAgendas,
+			FirstDay:FirstDaySucursales,
+			FirstDayAll:firstDate,
+			LastDay:LastDaySucursales,
+			LastDayAll:lastDate,})
 	}catch(e){
 		res.status(500).send({message:e.message})
 	}
@@ -114,45 +163,51 @@ async function getAgendas(req,res){
 
 async function getAgenda(req,res){
 	let hoy = new Date(req.query.diaLocal)
-	const maxDate = (new Date(hoy.getFullYear(), hoy.getMonth() + process.env.MAXMESES, 0)).toISOString().split("T")[0]
+	const maxDate = (new Date(hoy.getFullYear(), hoy.getMonth() + MAXMESES, 0)).toISOString().split("T")[0]
 	hoy=hoy.toISOString().split("T")[0]
-	let agendasMedicos=[]
-	let Medicos=[]
+	let agenda;
+	const medico=JSON.parse(req.query.medicos[0])
+	const filter = {
+		'$and': [ {
+			'id_medico': medico._id
+		  }, {
+			'fecha': {
+			  '$lte': maxDate
+			}
+		  }, {
+			'fecha': {
+			  '$gt': hoy
+			}
+		  }, {
+			'disponible': true
+		  }
+		]
+	  };
+	  let sort = {
+		'fecha': 1
+	  };
+	  const limit = 1;
+	  
 	try{
-		if(req.query.medicos?.length>0){
-		req.query.medicos.map(async(medicoI)=>{
-			const medico=JSON.parse(medicoI)
-			agendasMedicos.push(
-				agendas.find({
+		agenda=await agendas.find({
 					$and: [
 						{"fecha": {$lte: maxDate}},
 						{"fecha": {$gt: hoy}},
 						{"id_medico":medico._id},
 					]
 				}).sort({fecha:1}).lean().exec()
-			)
+		const FirstDay=await agendas.find(filter).sort(sort).limit(limit)
+		sort = {
+			'fecha': -1
+		};
+		const LastDay=await agendas.find(filter).sort(sort).limit(limit)
+		res.status(200).send({
+			agenda:agenda,
+			FirstDay:FirstDay[0].fecha,
+			LastDay:LastDay[0].fecha,
 		})
-		Promise.all(agendasMedicos).then(
-			async(agendasM)=>{
-				agendasM.map((agenda)=>{
-					Medicos.push(agenda[0].id_medico)
-				})
-				const FDATE=await agendas.find({
-						$and: [
-							{"fecha": {$lte: maxDate}},
-							{"fecha": {$gt: hoy}},
-							{"id_medico":{$in:Medicos}},
-							{"disponible":true}
-						]
-					}).sort({fecha:1}).limit(1).lean().exec()
-				res.status(200).send({agendas:agendasM,Medicos,primerDia:FDATE[0].fecha})
-			}	
-		)
-		}
-		else{
-			res.status(200).send({agendas:agendasMedicos,Medicos,primerDia:'2025-10-03'})
-		}
 	}catch(e){
+		console.log(e.message)
 		res.status(500).send({message:e.message})
 	}
 }

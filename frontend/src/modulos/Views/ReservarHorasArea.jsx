@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable max-len */
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -11,17 +9,17 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import api from '../../API/api';
 import {
   SUCURSAL_1, SUCURSAL_2, SUCURSAL_3, SUCURSAL_4,
-  COLOR_BASE_1, COLOR_BASE_2,
 } from '../../constantes';
 import Stepper from '../Componentes/Stepper';
-import Calendario from '../Componentes/Calendario';
-import TablaMedicos from '../Componentes/TablaMedicos';
+import MostrarCalendarioyMedicos from '../Componentes/MostrarCalendarioyMedicos';
 
 function ReservarHorasArea() {
   const { OpcionesDeBusquedaSeleccionada, area } = useLocation().state;
   const [sucursalSeleccionada, setSucursalSeleccionada] = useState('');
   const [fechaSeleccionada, setFechaSeleccionada] = useState('');
   const [agendasMedicos, setAgendasMedicos] = useState({});
+  const [firstDay, setfirstDay] = useState();
+  const [lastDay, setlastDay] = useState();
   const [sucursalesHabilitadas, setSucursalesHabilitadas] = useState({});
   const [agendasMedicosFiltrados, setAgendasMedicosFiltrados] = useState('');
   const theme = useTheme();
@@ -35,19 +33,24 @@ function ReservarHorasArea() {
     if (sucursalSeleccionada === TODASLASSUCURSALES) {
       let aux = [];
       const FirstDate = agendasMedicos.FirstDayAll.split('-');
-      console.log(FirstDate);
+      const LastDate = agendasMedicos.LastDayAll.split('-');
       for (let i = 0; i < agendasMedicos.agendas.length; i++) {
         aux = aux.concat(agendasMedicos.agendas[i].medicos);
       }
       setAgendasMedicosFiltrados(aux);
+      setfirstDay(new Date(FirstDate[0], FirstDate[1] - 1, FirstDate[2]));
+      setlastDay(new Date(LastDate[0], LastDate[1] - 1, LastDate[2]));
       setFechaSeleccionada(new Date(FirstDate[0], FirstDate[1] - 1, FirstDate[2]));
     } else {
       let FirstDate;
+      let LastDate;
       for (let i = 0; i < agendasMedicos.FirstDay.length; i++) {
         if (sucursalSeleccionada === agendasMedicos.FirstDay[i]._id) {
           FirstDate = agendasMedicos.FirstDay[i].fecha.split('-');
-          console.log(agendasMedicos.agendas[i].medicos);
+          LastDate = agendasMedicos.LastDay[i].fecha.split('-');
           setAgendasMedicosFiltrados(agendasMedicos.agendas[i].medicos);
+          setfirstDay(new Date(FirstDate[0], FirstDate[1] - 1, FirstDate[2]));
+          setlastDay(new Date(LastDate[0], LastDate[1] - 1, LastDate[2]));
           setFechaSeleccionada(new Date(FirstDate[0], FirstDate[1] - 1, FirstDate[2]));
           i = agendasMedicos.FirstDay.length;
         }
@@ -60,7 +63,7 @@ function ReservarHorasArea() {
       const FirstDate = agendasAux.FirstDayAll.split('-');
       setAgendasMedicos(agendasAux);
       setFechaSeleccionada(new Date(FirstDate[0], FirstDate[1] - 1, FirstDate[2]));
-      setSucursalSeleccionada(SUCURSAL_1);
+      setSucursalSeleccionada(TODASLASSUCURSALES);
 
       const aux = {
         [SUCURSAL_1]: 0,
@@ -131,42 +134,16 @@ function ReservarHorasArea() {
               {optionsSucursales()}
             </Grid>
           )}
-
-          { agendasMedicosFiltrados !== '' && fechaSeleccionada !== '' && (
-          <>
-            <FormLabel sx={{
-              color: 'black',
-              fontWeight: 'bold',
-              marginTop: 3,
-            }}
-            >
-              Seleccione Fecha y Profesional
-            </FormLabel>
-            <Grid
-              item
-              sx={{
-                backgroundColor: 'gray',
-                borderTopLeftRadius: 10,
-                borderTopRightRadius: 10,
-                marginTop: 1,
-              }}
-              xs={12}
-            >
-
-              <Calendario
-                agendasMedicos={agendasMedicosFiltrados}
-                fecha={fechaSeleccionada}
-                setFecha={setFechaSeleccionada}
-              />
-              <TablaMedicos
-                dia={fechaSeleccionada}
-                agendasMedicos={agendasMedicosFiltrados}
-                OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
-                area={area}
-              />
-            </Grid>
-          </>
-          )}
+          <MostrarCalendarioyMedicos
+            agendasMedicos={agendasMedicosFiltrados}
+            area={area}
+            fecha={fechaSeleccionada}
+            setFecha={setFechaSeleccionada}
+            FirstDay={firstDay}
+            LastDay={lastDay}
+            OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
+            Title="Seleccione Fecha y Profesional"
+          />
         </Grid>
       </Box>
     </Container>

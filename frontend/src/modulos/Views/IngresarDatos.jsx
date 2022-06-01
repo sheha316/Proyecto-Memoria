@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Container, Box,
+  // eslint-disable-next-line no-unused-vars
   Grid, Stack, FormLabel, Button,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -61,13 +62,13 @@ function IngresarDatos() {
 
         </Grid>
       </Box>
-      <Button
+      {/* <Button
         onClick={() => {
           localStorage.clear();
         }}
       >
         algo
-      </Button>
+      </Button> */}
     </Container>
   );
 }

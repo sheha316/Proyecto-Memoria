@@ -17,23 +17,15 @@ import newDate from '../../utilities/newDate';
 import { COLOR_BASE_1, COLOR_BASE_2, COLOR_BUTTON_2 } from '../../constantes';
 import DatesHour from '../../utilities/Dates&Hour';
 
-const MAXMESES = process.env.REACT_APP_MAXMESES;
-function Calendario({ agendasMedicos, fecha, setFecha }) {
-  console.log('hola?', MAXMESES);
+function Calendario({
+  agendasMedicos, fecha, setFecha, FirstDay, LastDay,
+}) {
   const [cursor, setCursor] = useState('crosshair');
-  const now = newDate.getActualDate();
-  const minDate = newDate.getActualDate();
+  const minDate = FirstDay;
+  const maxDate = LastDay;
   const [weekDaysofDateSelected, setweekDays] = useState([]);
-  minDate.setDate(now.getDate() + 1);
   const theme = useTheme();
   const cellphone = useMediaQuery(theme.breakpoints.down('sm'));
-  const maxDate = newDate.standarDate(new Date(
-    minDate.getFullYear(),
-    minDate.getMonth() + MAXMESES - 1,
-    0,
-  ));
-  console.log(maxDate);
-
   const weekDays = ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'];
   const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   function addDaysToDate(_date, _noOfDays) {
@@ -82,7 +74,6 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
     }
     const DifferenceInTime = dateInDate.getTime() - minDate.getTime();
     const DifferenceInDays = Math.floor(DifferenceInTime / (1000 * 3600 * 24));
-    console.log(agendasMedicos, DifferenceInDays, dateInDate, maxDate);
     for (let i = 0; i < agendasMedicos.length; i++) {
       if (agendasMedicos[i].agenda[DifferenceInDays].disponible) {
         return true;
@@ -107,6 +98,9 @@ function Calendario({ agendasMedicos, fecha, setFecha }) {
       backgroundColor: COLOR_BASE_1,
       borderTopLeftRadius: 10,
       borderTopRightRadius: 10,
+      position: 'sticky',
+      top: 0,
+      zIndex: 10,
     }}
     >
       <Grid

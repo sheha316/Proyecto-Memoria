@@ -114,7 +114,7 @@ async function sendEmailDeleteCita(req,res){
 	const options = {
 		from: `${process.env.EMAIL_ADDRESS}`,
 		to: `${Email}`,
-		subject: 'Cita Médica Cancelada',
+		subject: 'Reserva Cancelada',
 		html:MailHelper.MailParaBorrarCita(Nombres,Apellidos,Medico,Bloque,Fecha_cita),
 		attachments:[
 			{

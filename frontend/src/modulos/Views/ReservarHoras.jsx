@@ -1,11 +1,11 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Container, Box, Radio, RadioGroup, FormLabel, FormControlLabel,
+  Container, Box, Radio, RadioGroup, FormLabel, FormControlLabel, Button,
 } from '@mui/material';
 import {
-  RUTAS_RESERVAR_HORA_AREA, RUTAS_RESERVAR_HORA_CON_MEDICO,
+  RUTAS_RESERVAR_HORA_AREA, RUTAS_RESERVAR_HORA_CON_MEDICO, RUTAS_CANCELAR_RESERVAS,
 } from '../../constantes';
 import Stepper from '../Componentes/Stepper';
 import api from '../../API/api';
@@ -20,7 +20,9 @@ function ReservarHoras() {
   const [areaMedica, setAreaMedica] = useState([]);
   const [medicos, setMedicos] = useState([]);
 
+  // eslint-disable-next-line no-unused-vars
   const [AreaSeleccionada, setAreaSeleccionada] = useState({});
+  // eslint-disable-next-line no-unused-vars
   const [medicoSeleccionado, setMedicoSeleccionado] = useState({});
 
   useEffect(() => {
@@ -51,6 +53,9 @@ function ReservarHoras() {
         },
       },
     );
+  };
+  const ToCancelarHora = () => {
+    history(RUTAS_CANCELAR_RESERVAS);
   };
   return (
     <Container>
@@ -102,6 +107,11 @@ function ReservarHoras() {
            seter={setMedicoSeleccionado}
          />
          )}
+        <Button
+          onClick={ToCancelarHora}
+        >
+          Hola
+        </Button>
       </Box>
     </Container>
   );
