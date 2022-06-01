@@ -1,12 +1,17 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { Grid, FormLabel } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Calendario from './Calendario';
 import TarjetasMedicos from './TarjetasMedicos';
 
 function MostrarCalendarioyMedicos({
   agendasMedicos, area, fecha, setFecha, FirstDay, LastDay, Title, OpcionesDeBusquedaSeleccionada,
 }) {
+  const theme = useTheme();
+  const imgWidth = useMediaQuery(theme.breakpoints.down('sm')) ? '80%' : '';
+
   return (
     <>
       { agendasMedicos !== '' && fecha !== '' && (
@@ -55,7 +60,7 @@ function MostrarCalendarioyMedicos({
         }}
         xs={12}
       >
-        <img src="https://thumbs.gfycat.com/PepperyMediumBrahmancow-size_restricted.gif" alt="" />
+        <img style={{ width: imgWidth }} src="https://thumbs.gfycat.com/PepperyMediumBrahmancow-size_restricted.gif" alt="" />
       </Grid>
       )}
     </>
