@@ -108,9 +108,13 @@ function ReservarHoras() {
          />
          )}
         <Button
+          style={{
+            color: 'red',
+            textDecoration: 'underline',
+          }}
           onClick={ToCancelarHora}
         >
-          Hola
+          ¿Cancelar Hora?
         </Button>
       </Box>
     </Container>

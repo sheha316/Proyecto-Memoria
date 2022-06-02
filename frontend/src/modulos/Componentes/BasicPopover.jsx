@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import Popover from '@mui/material/Popover';
@@ -31,13 +32,13 @@ export default function BasicPopover({ fontSizeM }) {
       <Button
         aria-describedby={id}
         variant="contained"
-        onClick={handleClick}
+        onClick={() => history(RUTAS_RESERVAR_HORA)}
         style={{ backgroundColor: COLOR_BUTTON_1, ':hover': { backgroundColor: COLOR_BUTTON_2 } }}
         sx={{ textTransform: 'none' }}
       >
         <span style={{ backgroundColor: 'transparent', fontSize: fontSizeM }}>Reserva de Hora</span>
       </Button>
-      <Popover
+      {/* <Popover
         id={id}
         open={open}
         anchorEl={anchorEl}
@@ -67,7 +68,7 @@ export default function BasicPopover({ fontSizeM }) {
             Cancelar una Hora
           </Button>
         </Stack>
-      </Popover>
+      </Popover> */}
     </>
   );
 }

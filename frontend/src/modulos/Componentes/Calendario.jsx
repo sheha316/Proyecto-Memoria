@@ -72,7 +72,9 @@ function Calendario({
     if (dateInDate.getTime() < minDate.getTime() || dateInDate.getTime() > maxDate.getTime()) {
       return false;
     }
-    const DifferenceInTime = dateInDate.getTime() - minDate.getTime();
+    const date = newDate.getActualDate();
+    date.setDate(date.getDate() + 1);
+    const DifferenceInTime = dateInDate.getTime() - date.getTime();
     const DifferenceInDays = Math.floor(DifferenceInTime / (1000 * 3600 * 24));
     for (let i = 0; i < agendasMedicos.length; i++) {
       if (agendasMedicos[i].agenda[DifferenceInDays].disponible) {

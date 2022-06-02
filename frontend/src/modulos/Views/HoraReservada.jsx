@@ -46,7 +46,8 @@ function HoraReservada() {
     <Container>
       <Box sx={{
         display: 'flex',
-        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
       }}
       >
         <FormLabel
@@ -59,6 +60,16 @@ function HoraReservada() {
           }}
         >
           ¡Su hora ha sido reservada con éxito!
+        </FormLabel>
+        <FormLabel
+          sx={{
+            fontWeight: 'bold',
+            borderRadius: 3,
+            padding: 2,
+            fontSize: 18,
+          }}
+        >
+          Se enviara un correo con la informacion de la cita
         </FormLabel>
       </Box>
       <Box sx={{ width: '100%' }}>

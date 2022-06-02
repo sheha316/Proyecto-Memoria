@@ -18,9 +18,11 @@ async function getAllMedicosBySpec(spec) {
   return response.data;
 }
 async function getAgendas(area) {
+  console.log('getAgendas init ');
   const hoy = newDate.getActualDate();
   const fecha = `${hoy.getFullYear()}-${hoy.getMonth() + 1}-${hoy.getDate()}`;
   const response = await axios.get(`${baseUrl}/agendas/getAgendas`, { params: { area, diaLocal: fecha } });
+  console.log('getAgendas end ', response.data);
   return response.data;
 }
 async function getAgendaOfOne(medicos) {
