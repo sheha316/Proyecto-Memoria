@@ -18,7 +18,8 @@ function CancelarReservaMisReservas() {
   const [misReservas, setMisReservas] = useState([]);
   const [loading, setLoading] = useState(true);
   const theme = useTheme();
-  const widthModal = useMediaQuery(theme.breakpoints.down('sm')) ? '70%' : 400;
+  const cellphone = useMediaQuery(theme.breakpoints.down('sm'));
+  const widthModal = cellphone ? '70%' : 400;
   const [open, setOpen] = useState(false);
   const [cita, setCita] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -119,7 +120,13 @@ function CancelarReservaMisReservas() {
           Citas Programadas
         </FormLabel>
         {!loading && misReservas.length > 0
-        && <TablaCitas handleCancelDate={handleCancelDate} citas={misReservas} />}
+        && (
+        <TablaCitas
+          handleCancelDate={handleCancelDate}
+          citas={misReservas}
+          cellphone={cellphone}
+        />
+        )}
         {!loading && misReservas.length < 1
         && (
         <Box sx={{ marginTop: 5, width: '100%' }}>

@@ -16,7 +16,7 @@ import ReservarConMedico from './modulos/Views/ReservarConMedico';
 import Home from './modulos/Views/Home';
 import CancelarReserva from './modulos/Views/CancelarReserva';
 import CancelarReservaMisReservas from './modulos/Views/CancelarReservaMisReservas';
-
+import ScrollToTop from './ScrollToTop';
 import {
   RUTAS_HOME,
   RUTAS_SUCURSALES,
@@ -34,6 +34,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+      <ScrollToTop />
       <Routes path="/">
 
         <Route exact path={RUTAS_HOME} element={<Layout component={<Home />} />} />

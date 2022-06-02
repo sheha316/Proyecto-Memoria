@@ -14,8 +14,6 @@ import {
   Paper,
   Button,
 } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import DeleteOutlinedIcon from '@mui/icons-material/Delete';
 import {
   COLOR_BASE_2, COLOR_BASE_1,
@@ -30,7 +28,7 @@ const columns = [
   { id: 'Bloque', label: 'Hora', width: '10%' },
   { id: 'Cancelar', label: '', width: '10%' },
 ];
-function TextoColumna(column, cita, handleCancelDate) {
+function TextoColumna(column, cita, handleCancelDate, cellphone) {
   const { id } = column;
   if (id === 'Medico') {
     return `${cita[id].nombre} ${cita[id].apellido}`;
@@ -41,8 +39,7 @@ function TextoColumna(column, cita, handleCancelDate) {
   } if (id === 'Bloque') {
     return DatesHour.ObtenerHoraSegunBloque(cita[id]);
   } if (id === 'Cancelar') {
-    const theme = useTheme();
-    const fontSize = useMediaQuery(theme.breakpoints.down('sm')) ? 12 : 22;
+    const fontSize = cellphone ? 12 : 22;
     return (
       <Button onClick={() => handleCancelDate(cita)} style={{ color: 'white', backgroundColor: 'red' }}>
         <DeleteOutlinedIcon sx={{ fontSize }} />
@@ -50,11 +47,10 @@ function TextoColumna(column, cita, handleCancelDate) {
     );
   }
 }
-export default function TablaMedicos({ citas, handleCancelDate }) {
+export default function TablaMedicos({ citas, handleCancelDate, cellphone }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(6);
-  const theme = useTheme();
-  const fontSize = useMediaQuery(theme.breakpoints.down('sm')) ? '0.6rem' : '0.85rem';
+  const fontSize = cellphone ? '0.6rem' : '0.85rem';
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -106,7 +102,7 @@ export default function TablaMedicos({ citas, handleCancelDate }) {
                       align={column.align}
                       sx={[{ textAlign: 'center', color: TableRowIndex % 2 === 0 ? 'black' : 'white', fontSize }]}
                     >
-                      {TextoColumna(column, row, handleCancelDate)}
+                      {TextoColumna(column, row, handleCancelDate, cellphone)}
                     </TableCell>
                   ))}
                 </TableRow>
