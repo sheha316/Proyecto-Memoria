@@ -186,25 +186,19 @@ async function getAgenda(req,res){
 	  let sort = {
 		'fecha': 1
 	  };
-	  const limit = 1;
-	  
 	try{
-		agenda=await agendas.find({
+		agenda=agendas.find({
 					$and: [
 						{"fecha": {$lte: maxDate}},
 						{"fecha": {$gt: hoy}},
 						{"id_medico":medico._id},
 					]
-				}).sort({fecha:1}).lean().exec()
-		const FirstDay=await agendas.find(filter).sort(sort).limit(limit)
-		sort = {
-			'fecha': -1
-		};
-		const LastDay=await agendas.find(filter).sort(sort).limit(limit)
+				}).sort(sort).lean().exec()
+		const Days=await agendas.find(filter).sort(sort)
 		res.status(200).send({
-			agenda:agenda,
-			FirstDay:FirstDay[0].fecha,
-			LastDay:LastDay[0].fecha,
+			agenda:await agenda,
+			FirstDay: Days[0].fecha,
+			LastDay:Days[Days.length-1].fecha,
 		})
 	}catch(e){
 		console.log(e.message)

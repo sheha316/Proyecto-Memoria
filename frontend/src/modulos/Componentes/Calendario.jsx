@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-multi-date-picker';
 import {
-  Box, FormLabel, Grid, Stack,
+  Box, FormLabel, Grid, Stack, Button,
 } from '@mui/material/';
 import '../../css/CalendarStyle.css';
 import Icon from 'react-multi-date-picker/components/icon';
@@ -123,30 +123,16 @@ function Calendario({
 
             <DatePicker
               render={(value, openCalendar) => (
-                <Box
+                <Button
                   onMouseEnter={() => { setCursor('pointer'); }}
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    cursor,
-                    borderStyle: 'outset',
-                    borderRadius: 5,
-                    borderColor: 'white',
-                    padding: 5,
-                  }}
+                  variant="outlined"
+                  color="success"
+                  style={{ color: 'white' }}
                   onClick={openCalendar}
                 >
-                  <FormLabel
-                    onMouseEnter={() => { setCursor('pointer'); }}
-                    sx={{
-                      color: 'white', fontWeight: 'bold', cursor,
-                    }}
-                  >
-                    {DatesHour.StringDateToDate(fecha.toISOString().split('T')[0])}
-                  </FormLabel>
+                  {DatesHour.StringDateToDate(fecha.toISOString().split('T')[0])}
                   <Icon color="white" style={{ backgroundColor: primary, borderRadius: 8 }} />
-                </Box>
+                </Button>
               )}
               value={fecha}
               onChange={handleChange}
