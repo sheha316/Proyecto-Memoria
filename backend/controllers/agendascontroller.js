@@ -156,7 +156,7 @@ async function getAgenda(req,res){
 						{"id_medico":medico._id},
 					]
 				}).sort(sort).lean().exec()
-		const Days=awaitagendas.find(filter).sort(sort)
+		const Days=await agendas.find(filter).sort(sort)
 		res.status(200).send({
 			agenda:await agenda,
 			FirstDay: Days[0].fecha,
