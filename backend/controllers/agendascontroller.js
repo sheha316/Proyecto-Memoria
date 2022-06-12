@@ -61,7 +61,7 @@ async function getAgendas(req,res){
 			}
 		}
 	  ];
-	  const aggFirstDay = [
+	  const aggtDaysDisponibles = [
 		{
 		  '$match': {
 			'$and': [
@@ -87,44 +87,11 @@ async function getAgendas(req,res){
 		}, {
 		  '$group': {
 			'_id': '$sucursal', 
-			'fecha': {
-			  '$first': '$fecha'
-			}
-		  }
-		}, {
-		  '$sort': {
-			'_id': 1
-		  }
-		}
-	  ];
-	  const LastDayarg = [
-		{
-		  '$match': {
-			'$and': [
-			  {
-				'especializacion': req.query.area
-			  }, {
-				'fecha': {
-				  '$lte': maxDate
-				}
-			  }, {
-				'fecha': {
-				  '$gt': hoy
-				}
-			  }, {
-				'disponible': true
-			  }
-			]
-		  }
-		}, {
-		  '$sort': {
-			'fecha': -1
-		  }
-		}, {
-		  '$group': {
-			'_id': '$sucursal', 
-			'fecha': {
-			  '$first': '$fecha'
+			'FirstDay': {
+				'$first': '$fecha'
+			}, 
+			'LastDay': {
+				'$last': '$fecha'
 			}
 		  }
 		}, {
@@ -135,26 +102,21 @@ async function getAgendas(req,res){
 	  ];
 	try{
 		const MedicosAgendas= agendas.aggregate(aggAgendas)
-		const FirstDaySucursales= await agendas.aggregate(aggFirstDay)
-		const LastDaySucursales= await agendas.aggregate(LastDayarg)
-		
-		let firstDate=FirstDaySucursales[0].fecha;
-		let lastDate=LastDaySucursales[0].fecha;;
-		for(let i=1;i<FirstDaySucursales.length;i++){
-			if(firstDate>FirstDaySucursales[i].fecha){
-				firstDate=FirstDaySucursales[i].fecha;
+		const diasDisponibles= await agendas.aggregate(aggtDaysDisponibles)
+		let firstDate=diasDisponibles[0].FirstDay;
+		let lastDate=diasDisponibles[0].LastDay;
+		for(let i=1;i<diasDisponibles.length;i++){
+			if(firstDate>diasDisponibles[i].FirstDay){
+				firstDate=diasDisponibles[i].FirstDay;
 			}
-		}
-		for(let i=1;i<LastDaySucursales.length;i++){
-			if(lastDate<LastDaySucursales[i].fecha){
-				lastDate=LastDaySucursales[i].fecha;
+			if(lastDate<diasDisponibles[i].LastDay){
+				lastDate=diasDisponibles[i].LastDay;
 			}
 		}
 		res.status(200).send({agendas:
 			await MedicosAgendas,
-			FirstDay:FirstDaySucursales,
+			diasDisponibles:diasDisponibles,
 			FirstDayAll:firstDate,
-			LastDay:LastDaySucursales,
 			LastDayAll:lastDate,})
 	}catch(e){
 		res.status(500).send({message:e.message})
@@ -194,7 +156,7 @@ async function getAgenda(req,res){
 						{"id_medico":medico._id},
 					]
 				}).sort(sort).lean().exec()
-		const Days=await agendas.find(filter).sort(sort)
+		const Days=awaitagendas.find(filter).sort(sort)
 		res.status(200).send({
 			agenda:await agenda,
 			FirstDay: Days[0].fecha,

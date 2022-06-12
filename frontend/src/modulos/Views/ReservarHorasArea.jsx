@@ -44,15 +44,15 @@ function ReservarHorasArea() {
     } else {
       let FirstDate;
       let LastDate;
-      for (let i = 0; i < agendasMedicos.FirstDay.length; i++) {
-        if (sucursalSeleccionada === agendasMedicos.FirstDay[i]._id) {
-          FirstDate = agendasMedicos.FirstDay[i].fecha.split('-');
-          LastDate = agendasMedicos.LastDay[i].fecha.split('-');
+      for (let i = 0; i < agendasMedicos.diasDisponibles.length; i++) {
+        if (sucursalSeleccionada === agendasMedicos.diasDisponibles[i]._id) {
+          FirstDate = agendasMedicos.diasDisponibles[i].FirstDay.split('-');
+          LastDate = agendasMedicos.diasDisponibles[i].LastDay.split('-');
           setAgendasMedicosFiltrados(agendasMedicos.agendas[i].medicos);
           setfirstDay(new Date(FirstDate[0], FirstDate[1] - 1, FirstDate[2]));
           setlastDay(new Date(LastDate[0], LastDate[1] - 1, LastDate[2]));
           setFechaSeleccionada(new Date(FirstDate[0], FirstDate[1] - 1, FirstDate[2]));
-          i = agendasMedicos.FirstDay.length;
+          i = agendasMedicos.diasDisponibles.length;
         }
       }
     }
@@ -71,8 +71,8 @@ function ReservarHorasArea() {
         [SUCURSAL_3]: 0,
         [SUCURSAL_4]: 0,
       };
-      for (let i = 0; i < agendasAux.FirstDay.length; i++) {
-        aux[agendasAux.FirstDay[i]._id] = 1;
+      for (let i = 0; i < agendasAux.diasDisponibles.length; i++) {
+        aux[agendasAux.diasDisponibles[i]._id] = 1;
       }
       setSucursalesHabilitadas(aux);
     }
