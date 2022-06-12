@@ -6,7 +6,7 @@ import React from 'react';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {
-  COLOR_BASE_1,
+  primary,
 } from '../../constantes';
 import NewsCards from '../Componentes/NewsCards';
 import imagen1 from '../../assets/new-1.jpg';
@@ -23,7 +23,7 @@ function Home() {
     <Container>
       <FormLabel
         sx={{
-          color: COLOR_BASE_1,
+          color: primary,
           fontWeight: 'bold',
           borderRadius: 3,
           padding: 2,

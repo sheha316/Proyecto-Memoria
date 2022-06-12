@@ -7,7 +7,7 @@ import {
   RUTAS_RESERVAR_HORA,
   RUTAS_RESERVAR_HORA_AREA,
   RUTAS_RESERVAR_HORA_CON_MEDICO,
-  COLOR_BASE_1,
+  primary,
 } from '../../constantes';
 
 function stepper({
@@ -49,12 +49,12 @@ function stepper({
         marginTop: 1,
         borderRadius: 2,
         border: 1,
-        borderColor: COLOR_BASE_1,
+        borderColor: primary,
       }}
     >
       <Box sx={{ textAlign: 'center', marginTop: '1%' }}>
         <FormLabel style={{
-          color: COLOR_BASE_1, fontWeight: 'bold', padding: 2, fontSize: '200%',
+          color: primary, fontWeight: 'bold', padding: 2, fontSize: '200%',
         }}
         >
           Reserva de Hora
@@ -65,7 +65,7 @@ function stepper({
           {steps.map((label, index) => (
 
             <Step key={label}>
-              <StepButton color="inherit" onClick={() => handleStep(index)}>
+              <StepButton color="primary" onClick={() => handleStep(index)}>
                 {label}
               </StepButton>
             </Step>

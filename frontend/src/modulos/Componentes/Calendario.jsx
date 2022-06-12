@@ -14,7 +14,7 @@ import IconButton from '@mui/material/IconButton';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import newDate from '../../utilities/newDate';
-import { COLOR_BASE_1, COLOR_BASE_2, COLOR_BUTTON_2 } from '../../constantes';
+import { primary, secondary, success } from '../../constantes';
 import DatesHour from '../../utilities/Dates&Hour';
 
 function Calendario({
@@ -47,9 +47,9 @@ function Calendario({
       return 'gray';
     }
     if (seleccionado) {
-      return COLOR_BUTTON_2;
+      return success;
     }
-    return COLOR_BASE_2;
+    return secondary;
   }
   useEffect(() => {
     const weekday = fecha.getDay();
@@ -97,7 +97,7 @@ function Calendario({
   };
   return (
     <Box sx={{
-      backgroundColor: COLOR_BASE_1,
+      backgroundColor: primary,
       borderTopLeftRadius: 10,
       borderTopRightRadius: 10,
       position: 'sticky',
@@ -145,7 +145,7 @@ function Calendario({
                   >
                     {DatesHour.StringDateToDate(fecha.toISOString().split('T')[0])}
                   </FormLabel>
-                  <Icon color="white" style={{ backgroundColor: COLOR_BASE_1, borderRadius: 8 }} />
+                  <Icon color="white" style={{ backgroundColor: primary, borderRadius: 8 }} />
                 </Box>
               )}
               value={fecha}

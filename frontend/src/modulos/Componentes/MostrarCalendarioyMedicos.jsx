@@ -5,6 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Calendario from './Calendario';
 import TarjetasMedicos from './TarjetasMedicos';
+import loadingGif from '../../assets/loading.gif';
 
 function MostrarCalendarioyMedicos({
   agendasMedicos, area, fecha, setFecha, FirstDay, LastDay, Title, OpcionesDeBusquedaSeleccionada,
@@ -60,7 +61,7 @@ function MostrarCalendarioyMedicos({
         }}
         xs={12}
       >
-        <img style={{ width: imgWidth }} src="https://thumbs.gfycat.com/PepperyMediumBrahmancow-size_restricted.gif" alt="" />
+        <img style={{ width: imgWidth }} src={loadingGif} alt="" />
       </Grid>
       )}
     </>

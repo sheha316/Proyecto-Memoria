@@ -6,8 +6,8 @@ import React from 'react';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {
-  COLOR_BASE_1,
-  COLOR_BASE_2,
+  primary,
+  secondary,
 } from '../../constantes';
 import logo from '../../assets/logo512.png';
 
@@ -22,7 +22,7 @@ function tarjetita(Titulo, descripcion) {
       >
         <FormLabel
           sx={{
-            color: COLOR_BASE_1,
+            color: primary,
             fontWeight: 'bold',
             borderRadius: 3,
             padding: 2,
@@ -58,7 +58,7 @@ function QuienesSomos() {
       >
         <FormLabel
           sx={{
-            color: COLOR_BASE_1,
+            color: primary,
             fontWeight: 'bold',
             borderRadius: 3,
             padding: 2,
@@ -68,7 +68,7 @@ function QuienesSomos() {
           Quiénes Somos
         </FormLabel>
       </Box>
-      <Box sx={{ width: '100%', backgroundColor: COLOR_BASE_2 }}>
+      <Box sx={{ width: '100%', backgroundColor: secondary }}>
         <Grid
           container
           direction="row"
@@ -147,7 +147,7 @@ function QuienesSomos() {
       >
         <FormLabel
           sx={{
-            color: COLOR_BASE_1,
+            color: primary,
             fontWeight: 'bold',
             padding: 2,
             fontSize: 25,

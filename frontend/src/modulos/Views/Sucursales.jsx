@@ -6,8 +6,8 @@ import React from 'react';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {
-  COLOR_BASE_1,
-  COLOR_BASE_2,
+  primary,
+  secondary,
 } from '../../constantes';
 import sucursal1 from '../../assets/sucursal-1.jpg';
 import sucursal2 from '../../assets/sucursal-2.jpg';
@@ -81,7 +81,7 @@ function Sucursales() {
       >
         <FormLabel
           sx={{
-            color: COLOR_BASE_1,
+            color: primary,
             fontWeight: 'bold',
             borderRadius: 3,
             padding: 2,
@@ -104,7 +104,7 @@ function Sucursales() {
         </FormLabel>
       </Container>
       <Box sx={{ width: '100%' }} style={{ marginTop: 20 }}>
-        <Box sx={{ backgroundColor: COLOR_BASE_2, padding }}>
+        <Box sx={{ backgroundColor: secondary, padding }}>
           {INFOPERSUCURSAL(
             sucursal1,
             'El edificio principal está ubicado en Vitacura y, además de ofrecer servicios clínicos, '
@@ -128,7 +128,7 @@ function Sucursales() {
             'Ñuñoa, Antonio Varas 3250',
           )}
         </Box>
-        <Box sx={{ backgroundColor: COLOR_BASE_2, padding }}>
+        <Box sx={{ backgroundColor: secondary, padding }}>
           {INFOPERSUCURSAL(
             sucursal3,
             'El edificio principal está ubicado en Macul y, además de ofrecer servicios clínicos, '

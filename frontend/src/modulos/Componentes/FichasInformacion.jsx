@@ -5,7 +5,7 @@ import {
   Box, FormLabel, Paper, Grid, Button,
 } from '@mui/material';
 import {
-  COLOR_BASE_1, COLOR_BUTTON_1, COLOR_BASE_2, COLOR_BUTTON_2,
+  primary, secondary,
 } from '../../constantes';
 import DatesHour from '../../utilities/Dates&Hour';
 
@@ -19,7 +19,7 @@ function FichaTitulo(texto) {
     <Box sx={{ display: 'grid' }}>
       <FormLabel sx={{
         color: 'white',
-        backgroundColor: COLOR_BASE_1,
+        backgroundColor: primary,
         borderRadius: 5,
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
@@ -147,7 +147,7 @@ function FichaTituloAgenda(texto) {
     <Box sx={{ display: 'grid' }}>
       <FormLabel sx={{
         color: 'white',
-        backgroundColor: COLOR_BASE_2,
+        backgroundColor: secondary,
         borderRadius: 5,
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
@@ -185,12 +185,9 @@ function BotonesReserva(id, bloques, grid, onReservar, medico) {
           <Grid key={`${id}_${hour}`} item xs={grid[2]} sx={{ marginTop: 1, marginLeft: 1 }}>
             <Button
               disabled={Disabled}
+              variant="contained"
               onClick={() => onReservar(index + 1, medico)}
-              sx={{
-                color: 'white',
-                backgroundColor: Disabled ? '#d0d0d0' : COLOR_BUTTON_1,
-                ':hover': { backgroundColor: COLOR_BUTTON_2 },
-              }}
+              color="success"
             >
               {hour}
             </Button>

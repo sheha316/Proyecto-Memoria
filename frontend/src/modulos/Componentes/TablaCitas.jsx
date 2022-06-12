@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
@@ -16,7 +17,7 @@ import {
 } from '@mui/material';
 import DeleteOutlinedIcon from '@mui/icons-material/Delete';
 import {
-  COLOR_BASE_2, COLOR_BASE_1,
+  secondary,
 } from '../../constantes';
 import '../../css/TablaMedicosStyle.css';
 import DatesHour from '../../utilities/Dates&Hour';
@@ -72,7 +73,7 @@ export default function TablaMedicos({ citas, handleCancelDate, cellphone }) {
                   width={column.width}
                   sx={{
                     color: 'white',
-                    backgroundColor: COLOR_BASE_1,
+                    backgroundColor: secondary,
                     borderColor: 'black',
                     fontWeight: 'bold',
                   }}
@@ -94,7 +95,10 @@ export default function TablaMedicos({ citas, handleCancelDate, cellphone }) {
                   role="checkbox"
                   tabIndex={-1}
                   key={row._id}
-                  style={{ backgroundColor: TableRowIndex % 2 === 0 ? 'white' : COLOR_BASE_2 }}
+                  style={{
+                    backgroundColor:
+                    TableRowIndex % 2 === 0 ? 'white' : secondary,
+                  }}
                 >
                   {columns.map((column) => (
                     <TableCell

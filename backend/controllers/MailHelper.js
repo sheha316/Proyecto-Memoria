@@ -1,5 +1,8 @@
 const {format} = require('date-fns')
 const es = require('date-fns/locale/es')
+const primary = '#0B7A75';
+const secondary = '#3cb371';
+const padding="0.5%"
 function ObtenerHoraSegunBloque(bloque) {
     let horafinal = 8 + Math.floor(bloque / 2);
     if (horafinal > 12) {
@@ -13,42 +16,41 @@ function ObtenerHoraSegunBloque(bloque) {
     }
     return `${textoHora}${bloque % 2 === 0 ? '00' : '30'}`;
   }
+function getMensaje(Nombres,Apellidos,Medico,fecha,Bloque,texto){
+  const imagen="cid:logo@cid"
+  return ( 
+  "<div>Hola "+Nombres+" "+Apellidos+texto+"</div>"+
+  "<div>&nbsp;</div>"+
+  "<div style=\"padding-left: 10%; width: 75%;\">"+
+  "<div style=\"text-align-last: center;\">"+
+  "<img width=\"15%\" src=\""+imagen+"\" alt=\"Logo\"/>"+
+  "<span style=\'display: block;font-size:48px;color:"+primary+";\'> Reservas.cl </span></div>"+
+  "<div style=\'margin-top:1%;padding:"+padding+";font-size:24px;font-family:\"Arial\",sans-serif;background:"+secondary+";border-radius: 30px 30px 0 0;\'>"+
+  "<p  style=\'text-align:center;background:"+secondary+";\'>"+
+  "<span style=\'color:white;\'>Informaci&oacute;n de la cita</span></p></div>"+
+  "<div style=\'background:#EEEEEE;padding:"+padding+";font-size:24px;font-family:\"Arial\",sans-serif;\'>"+
+  "<p><span style=\'color:#222222;\'>Médico: "+Medico.nombre+" "+Medico.apellido+"</span></p>"+
+  "<p><span style=\'color:#222222;\'>Especialidad: "+Medico.especializacion+"</span></p>"+
+  "<p><span style=\'color:#222222;\'>Dirección: "+Medico.sucursal+"</span></p>"+
+  "<p><span style=\'color:#222222;\'>Fecha: "+fecha+"</span></p>"+
+  "<p><span style=\'color:#222222;\'>Hora: "+ObtenerHoraSegunBloque(Bloque)+"</span></p>"+
+  "</div></div>"+
+  "<p style=\'text-align: left;\' >Si quiere ver sus citas puede hacerlo en nuestra página <a href=\"https://reservas.inf.santiago.usm.cl/cancelar-reserva\">Reservas.cl</a></p>"
+  )
+}
 function ObtenerMailDeRecordatorio(Nombres,Apellidos,Medico,Bloque,Fecha_cita){
     const fechas= Fecha_cita.split("-")
     const date=new Date(fechas[0],fechas[1]-1,fechas[2]);
     const fecha = format(date, 'PPPPpppp', { locale: es }).split(' a las')[0];
-    const imagen="cid:logo@cid"
-    const mensaje=
-    "<div>Hola "+Nombres+" "+Apellidos+", esto es un recordatorio para su cita.</div><div>&nbsp;</div><div style=\"padding-left: 10%; width: 80%;\">"+
-    "<div style=\"background-color: #ffffff; color: #ffffff; border-top-left-radius: 30px; border-top-right-radius: 30px;\">"+
-    "<p style=\'margin-top:0cm;margin-right:0cm;margin-bottom:8.0pt;margin-left:0cm;line-height:107%;font-size:15px;font-family:\"Calibri\",sans-serif;text-align:center;\'>"+
-    "<img width=\"50%\" src=\""+imagen+"\" alt=\"Logo\"></p>"+
-    "<p style=\'padding:2%;border-top-left-radius:20px;border-top-right-radius:20px;margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:\"Calibri\",sans-serif;text-align:center;background:#0077FF;\'><span style='font-size:24px;font-family:\"Arial\",sans-serif;color:white;\'>Informaci&oacute;n De la cita</span></p>"+
-    "<p style=\'padding:2%;margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:\"Calibri\",sans-serif;background:#EEEEEE;'><span style='font-size:24px;font-family:\"Arial\",sans-serif;color:#222222;\'>Médico: "+Medico.nombre+" "+Medico.apellido+"</span></p>"+
-    "<p style=\'padding:2%;margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:\"Calibri\",sans-serif;background:#EEEEEE;'><span style='font-size:24px;font-family:\"Arial\",sans-serif;color:#222222;\'>Especialidad: "+Medico.especializacion+"</span></p>"+
-    "<p style=\'padding:2%;margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:\"Calibri\",sans-serif;background:#EEEEEE;'><span style='font-size:24px;font-family:\"Arial\",sans-serif;color:#222222;\'>Dirección: "+Medico.sucursal+"</span></p>"+
-    "<p style=\'padding:2%;margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:\"Calibri\",sans-serif;background:#EEEEEE;'><span style='font-size:24px;font-family:\"Arial\",sans-serif;color:#222222;\'>Fecha: "+fecha+"</span></p>"+
-    "<p style=\'padding:2%;margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:\"Calibri\",sans-serif;background:#EEEEEE;'><span style='font-size:24px;font-family:\"Arial\",sans-serif;color:#222222;\'>Hora: "+ObtenerHoraSegunBloque(Bloque)+"</span></p>"+
-    "<div>&nbsp;</div></div></div><p style=\'text-align: left;\' >Si quiere ver más en detalle su cita puede hacerlo en nuestra página <a href=\""+process.env.APP_HOST+"/canelar-reserva\"> Reservas.cl</a></p>"
+    const mensaje=getMensaje(Nombres,Apellidos,Medico,fecha,Bloque,", esto es un recordatorio para su cita.")
     return mensaje;
 }
 function MailParaBorrarCita(Nombres,Apellidos,Medico,Bloque,Fecha_cita){
   const fechas= Fecha_cita.split("-")
   const date=new Date(fechas[0],fechas[1]-1,fechas[2]);
   const fecha = format(date, 'PPPPpppp', { locale: es }).split(' a las')[0];
-  const imagen="cid:logo@cid"
-  const mensaje=
-  "<div>Hola "+Nombres+" "+Apellidos+", se ha cancelado la siguiente cita médica.</div><div>&nbsp;</div><div style=\"padding-left: 10%; width: 80%;\">"+
-  "<div style=\"background-color: #ffffff; color: #ffffff; border-top-left-radius: 30px; border-top-right-radius: 30px;\">"+
-  "<p style=\'margin-top:0cm;margin-right:0cm;margin-bottom:8.0pt;margin-left:0cm;line-height:107%;font-size:15px;font-family:\"Calibri\",sans-serif;text-align:center;\'>"+
-  "<img width=\"50%\" src=\""+imagen+"\" alt=\"Logo\"></p>"+
-  "<p style=\'padding:2%;border-top-left-radius:20px;border-top-right-radius:20px;margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:\"Calibri\",sans-serif;text-align:center;background:#0077FF;\'><span style='font-size:24px;font-family:\"Arial\",sans-serif;color:white;\'>Informaci&oacute;n De la cita</span></p>"+
-  "<p style=\'padding:2%;margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:\"Calibri\",sans-serif;background:#EEEEEE;'><span style='font-size:24px;font-family:\"Arial\",sans-serif;color:#222222;\'>Médico: "+Medico.nombre+" "+Medico.apellido+"</span></p>"+
-  "<p style=\'padding:2%;margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:\"Calibri\",sans-serif;background:#EEEEEE;'><span style='font-size:24px;font-family:\"Arial\",sans-serif;color:#222222;\'>Especialidad: "+Medico.especializacion+"</span></p>"+
-  "<p style=\'padding:2%;margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:\"Calibri\",sans-serif;background:#EEEEEE;'><span style='font-size:24px;font-family:\"Arial\",sans-serif;color:#222222;\'>Dirección: "+Medico.sucursal+"</span></p>"+
-  "<p style=\'padding:2%;margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:\"Calibri\",sans-serif;background:#EEEEEE;'><span style='font-size:24px;font-family:\"Arial\",sans-serif;color:#222222;\'>Fecha: "+fecha+"</span></p>"+
-  "<p style=\'padding:2%;margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:normal;font-size:15px;font-family:\"Calibri\",sans-serif;background:#EEEEEE;'><span style='font-size:24px;font-family:\"Arial\",sans-serif;color:#222222;\'>Hora: "+ObtenerHoraSegunBloque(Bloque)+"</span></p>"+
-  "<div>&nbsp;</div></div></div>"
+  const mensaje=getMensaje(Nombres,Apellidos,Medico,fecha,Bloque,", se ha cancelado la siguiente cita médica.")
   return mensaje;
 }
+
 module.exports= {ObtenerMailDeRecordatorio,MailParaBorrarCita}

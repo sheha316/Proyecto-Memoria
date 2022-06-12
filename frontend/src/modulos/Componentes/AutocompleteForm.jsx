@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-shadow */
@@ -9,10 +10,13 @@ import {
   Paper, FormControl, FormLabel,
   TextField, FormHelperText, Autocomplete,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { List } from 'react-virtualized';
-import { COLOR_BASE_2, COLOR_BUTTON_1, COLOR_BUTTON_2 } from '../../constantes';
+import {
+  RUTAS_CANCELAR_RESERVAS, secondary,
+} from '../../constantes';
 
 const WIDTHINPUT = '85%';
 function getrowHeight(itemSize) {
@@ -64,6 +68,7 @@ function AutocompleteForm({
   opciones,
   seter,
 }) {
+  const history = useNavigate();
   let validationSchema;
   let initialValues;
   let id; const groupBy = 'profesion';
@@ -87,6 +92,9 @@ function AutocompleteForm({
     initialValues = { medicoSeleccionado: { nombre: '', apellido: '', especializacion: '' } };
     id = 'medicoSeleccionado';
   }
+  const ToCancelarHora = () => {
+    history(RUTAS_CANCELAR_RESERVAS);
+  };
   return (
     <Formik
       initialValues={initialValues}
@@ -106,7 +114,7 @@ function AutocompleteForm({
           <Paper
             elevation={4}
             sx={{
-              backgroundColor: COLOR_BASE_2, padding: 5, marginTop: 1, borderRadius: 5,
+              backgroundColor: secondary, padding: 5, marginTop: 1, borderRadius: 5,
             }}
           >
             <FormControl warning={errors[id] && touched[id]} sx={{ width: '100%' }}>
@@ -171,11 +179,25 @@ function AutocompleteForm({
             </FormControl>
 
           </Paper>
-          <Box sx={{ display: 'flex', justifyContent: 'end' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Button
+              variant="outlined"
+              color="secondary"
+              style={{
+                marginTop: 2,
+                alignSelf: 'flex-end',
+              }}
+              onClick={ToCancelarHora}
+            >
+              ¿Cancelar Hora?
+            </Button>
+            <Button
+              variant="contained"
               type="submit"
+              color="success"
               sx={{
-                marginTop: 2, color: 'white', alignSelf: 'flex-end', backgroundColor: COLOR_BUTTON_1, ':hover': { backgroundColor: COLOR_BUTTON_2 },
+                marginTop: 2,
+                alignSelf: 'flex-end',
               }}
             >
               Siguiente

@@ -13,10 +13,6 @@ async function getSpecs() {
   const response = await axios.get(`${baseUrl}/spec/obtenerSpecs`);
   return response.data.response;
 }
-async function getAllMedicosBySpec(spec) {
-  const response = await axios.get(`${baseUrl}/medicos/getAllMedicosBySpec`, { params: { spec } });
-  return response.data;
-}
 async function getAgendas(area) {
   console.log('getAgendas init ');
   const hoy = newDate.getActualDate();
@@ -46,7 +42,6 @@ async function postSendEmailDeleteCita(datos) {
 export default {
   getMedicos,
   getSpecs,
-  getAllMedicosBySpec,
   postCreateCita,
   getAgendas,
   getMisCitas,

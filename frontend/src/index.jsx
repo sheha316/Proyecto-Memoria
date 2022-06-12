@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom/client';
 import {
   BrowserRouter, Route, Routes,
 } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material';
+import { createTheme } from '@mui/material/styles';
 import reportWebVitals from './reportWebVitals';
 import Layout from './Layout';
 import ReservarHoras from './modulos/Views/ReservarHoras';
@@ -28,32 +30,47 @@ import {
   RUTAS_RESERVAR_HORA_CON_MEDICO,
   RUTAS_CANCELAR_RESERVAS,
   RUTAS_CANCELAR_RESERVAS_MIS_RESERVAS,
+  primary,
+  secondary,
+  success,
+  error,
 } from './constantes';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const theme = createTheme({
+  palette: {
+    primary: { main: primary },
+    secondary: { main: secondary },
+    success: { main: success, contrastText: 'white' },
+    error: { main: error },
+  },
+});
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <ScrollToTop />
-      <Routes path="/">
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
 
-        <Route exact path={RUTAS_HOME} element={<Layout component={<Home />} />} />
-        <Route exact path={RUTAS_SUCURSALES} element={<Layout component={<Sucursales />} />} />
-        <Route exact path={RUTAS_QUIENES_SOMOS} element={<Layout component={<QuienesSomos />} />} />
+        <ScrollToTop />
+        <Routes path="/">
 
-        <Route exact path={RUTAS_RESERVAR_HORA} element={<Layout component={<ReservarHoras />} />} />
-        <Route exact path={RUTAS_RESERVAR_HORA_AREA} element={<Layout component={<ReservarHorasArea />} />} />
-        <Route exact path={RUTAS_RESERVAR_HORA_CON_MEDICO} element={<Layout component={<ReservarConMedico />} />} />
+          <Route exact path={RUTAS_HOME} element={<Layout component={<Home />} />} />
+          <Route exact path={RUTAS_SUCURSALES} element={<Layout component={<Sucursales />} />} />
+          <Route exact path={RUTAS_QUIENES_SOMOS} element={<Layout component={<QuienesSomos />} />} />
 
-        <Route exact path={RUTAS_INGRESAR_DATOS} element={<Layout component={<IngresarDatos />} />} />
+          <Route exact path={RUTAS_RESERVAR_HORA} element={<Layout component={<ReservarHoras />} />} />
+          <Route exact path={RUTAS_RESERVAR_HORA_AREA} element={<Layout component={<ReservarHorasArea />} />} />
+          <Route exact path={RUTAS_RESERVAR_HORA_CON_MEDICO} element={<Layout component={<ReservarConMedico />} />} />
 
-        <Route exact path={RUTAS_HORA_RESERVADA} element={<Layout component={<HoraReservada />} />} />
+          <Route exact path={RUTAS_INGRESAR_DATOS} element={<Layout component={<IngresarDatos />} />} />
 
-        <Route exact path={RUTAS_CANCELAR_RESERVAS} element={<Layout component={<CancelarReserva />} />} />
-        <Route exact path={RUTAS_CANCELAR_RESERVAS_MIS_RESERVAS} element={<Layout component={<CancelarReservaMisReservas />} />} />
+          <Route exact path={RUTAS_HORA_RESERVADA} element={<Layout component={<HoraReservada />} />} />
 
-      </Routes>
-    </BrowserRouter>
+          <Route exact path={RUTAS_CANCELAR_RESERVAS} element={<Layout component={<CancelarReserva />} />} />
+          <Route exact path={RUTAS_CANCELAR_RESERVAS_MIS_RESERVAS} element={<Layout component={<CancelarReservaMisReservas />} />} />
+
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>,
 );
 

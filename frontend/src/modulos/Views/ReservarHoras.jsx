@@ -2,20 +2,25 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Container, Box, Radio, RadioGroup, FormLabel, FormControlLabel, Button,
+  Container, Box, Radio, RadioGroup, FormLabel, FormControlLabel,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import {
-  RUTAS_RESERVAR_HORA_AREA, RUTAS_RESERVAR_HORA_CON_MEDICO, RUTAS_CANCELAR_RESERVAS,
+  RUTAS_RESERVAR_HORA_AREA, RUTAS_RESERVAR_HORA_CON_MEDICO,
 } from '../../constantes';
 import Stepper from '../Componentes/Stepper';
 import api from '../../API/api';
 import AutocompleteForm from '../Componentes/AutocompleteForm';
+import loadingGif from '../../assets/loading.gif';
 
 function ReservarHoras() {
   const history = useNavigate();
   const OpcionesDeBusqueda = ['Área Médica', 'Médico Especialista'];
   const [OpcionesDeBusquedaSeleccionada,
     setOpcionesDeBusquedaSeleccionada] = useState(OpcionesDeBusqueda[0]);
+  const theme = useTheme();
+  const imgWidth = useMediaQuery(theme.breakpoints.down('sm')) ? '80%' : '';
 
   const [areaMedica, setAreaMedica] = useState([]);
   const [medicos, setMedicos] = useState([]);
@@ -54,9 +59,7 @@ function ReservarHoras() {
       },
     );
   };
-  const ToCancelarHora = () => {
-    history(RUTAS_CANCELAR_RESERVAS);
-  };
+
   return (
     <Container>
       <Stepper step={0} search={`por ${OpcionesDeBusquedaSeleccionada}`} OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada} />
@@ -87,35 +90,51 @@ function ReservarHoras() {
           {' '}
           {OpcionesDeBusquedaSeleccionada}
         </FormLabel>
-
         {OpcionesDeBusqueda[0] === OpcionesDeBusquedaSeleccionada
-         && areaMedica.length > 0 && (
-         <AutocompleteForm
-           handleSubmit={handleSubmitAreaMedica}
-           opcionBusqueda={OpcionesDeBusquedaSeleccionada}
-           opciones={areaMedica}
-           seter={setAreaSeleccionada}
-         />
-        )}
-        {OpcionesDeBusqueda[1] === OpcionesDeBusquedaSeleccionada
-         && medicos.length > 0
-         && (
-         <AutocompleteForm
-           handleSubmit={handleSubmitEspecialista}
-           opcionBusqueda={OpcionesDeBusquedaSeleccionada}
-           opciones={medicos}
-           seter={setMedicoSeleccionado}
-         />
+         && (areaMedica.length > 0
+           ? (
+             <AutocompleteForm
+               handleSubmit={handleSubmitAreaMedica}
+               opcionBusqueda={OpcionesDeBusquedaSeleccionada}
+               opciones={areaMedica}
+               seter={setAreaSeleccionada}
+             />
+           )
+           : (
+             <Box
+               sx={{
+                 textAlignLast: 'center',
+                 marginTop: 1,
+               }}
+             >
+               <img style={{ width: imgWidth }} src={loadingGif} alt="" />
+             </Box>
+           )
          )}
-        <Button
-          style={{
-            color: 'red',
-            textDecoration: 'underline',
-          }}
-          onClick={ToCancelarHora}
-        >
-          ¿Cancelar Hora?
-        </Button>
+        {OpcionesDeBusqueda[1] === OpcionesDeBusquedaSeleccionada
+         && (medicos.length > 0
+           ? (
+             <AutocompleteForm
+               handleSubmit={handleSubmitEspecialista}
+               opcionBusqueda={OpcionesDeBusquedaSeleccionada}
+               opciones={medicos}
+               seter={setMedicoSeleccionado}
+             />
+           )
+
+           : (
+             <Box
+               sx={{
+                 textAlignLast: 'center',
+                 marginTop: 1,
+               }}
+             >
+               <img style={{ width: imgWidth }} src={loadingGif} alt="" />
+             </Box>
+           )
+
+         )}
+
       </Box>
     </Container>
   );

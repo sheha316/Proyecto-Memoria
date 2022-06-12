@@ -11,7 +11,7 @@ import { validate, clean, format } from 'rut.js';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import {
-  COLOR_BASE_2, COLOR_BUTTON_1, COLOR_BUTTON_2,
+  secondary,
 } from '../../constantes';
 import '../../css/NumberInputAsText.css';
 
@@ -160,7 +160,7 @@ function FormularioCancelar({ initialValues, setId, handleSubmit }) {
             sx={{
               display: 'grid',
               borderRadius: 5,
-              backgroundColor: COLOR_BASE_2,
+              backgroundColor: secondary,
               marginTop: 1,
             }}
           >
@@ -184,8 +184,11 @@ function FormularioCancelar({ initialValues, setId, handleSubmit }) {
           <Box sx={{ display: 'flex', justifyContent: 'end' }}>
             <Button
               type="submit"
+              variant="contained"
+              color="success"
               sx={{
-                marginTop: 2, color: 'white', alignSelf: 'flex-end', backgroundColor: COLOR_BUTTON_1, ':hover': { backgroundColor: COLOR_BUTTON_2 },
+                marginTop: 2,
+                alignSelf: 'flex-end',
               }}
             >
               Siguiente

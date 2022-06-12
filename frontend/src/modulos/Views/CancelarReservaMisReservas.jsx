@@ -10,7 +10,6 @@ import Stepper from '../Componentes/StepperDelete';
 import api from '../../API/api';
 import TablaCitas from '../Componentes/TablaCitas';
 import DatesHour from '../../utilities/Dates&Hour';
-import { COLOR_BUTTON_4 } from '../../constantes';
 
 function CancelarReservaMisReservas() {
   const { values } = useLocation().state;
@@ -95,6 +94,8 @@ function CancelarReservaMisReservas() {
               </Typography>
               <Box style={{ justifyContent: 'space-around', display: 'flex' }}>
                 <Button
+                  variant="outlined"
+                  color="secondary"
                   sx={{
                     marginTop: 2,
                   }}
@@ -105,8 +106,10 @@ function CancelarReservaMisReservas() {
                 <LoadingButton
                   onClick={() => { setIsLoading(true); cancelarCitaBackend(); }}
                   loading={isLoading}
+                  color="error"
+                  variant="contained"
                   sx={{
-                    marginTop: 2, color: 'white', backgroundColor: 'red', ':hover': { backgroundColor: COLOR_BUTTON_4 },
+                    marginTop: 2, color: 'white',
                   }}
                 >
                   Cancelar Hora

@@ -8,7 +8,7 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Fichas from '../Componentes/FichasInformacion';
 import {
-  COLOR_BUTTON_1, COLOR_BUTTON_2, RUTAS_HOME, COLOR_BUTTON_3, COLOR_BUTTON_4,
+  RUTAS_HOME,
   RUTAS_CANCELAR_RESERVAS,
 } from '../../constantes';
 import DatesHour from '../../utilities/Dates&Hour';
@@ -96,10 +96,11 @@ function HoraReservada() {
         }}
         >
           <Button
-            sx={{
-              textTransform: 'none',
-              backgroundColor: COLOR_BUTTON_3,
-              ':hover': { backgroundColor: COLOR_BUTTON_4 },
+            variant="outlined"
+            color="secondary"
+            style={{
+              marginTop: 2,
+              alignSelf: 'flex-end',
             }}
             onClick={
               () => {
@@ -107,15 +108,11 @@ function HoraReservada() {
               }
             }
           >
-            <span style={{ color: 'white' }}>CANCELAR HORA</span>
+            ¿Cancelar Hora?
           </Button>
-
           <Button
-            sx={{
-              textTransform: 'none',
-              backgroundColor: COLOR_BUTTON_1,
-              ':hover': { backgroundColor: COLOR_BUTTON_2 },
-            }}
+            color="success"
+            variant="contained"
             onClick={
               () => {
                 history(RUTAS_HOME);

@@ -8,7 +8,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import BasicPopover from './BasicPopover';
 import logo from '../../assets/logo512.png';
 import {
-  COLOR_BASE_1,
+  primary,
   RUTAS_HOME,
   RUTAS_SUCURSALES,
   RUTAS_QUIENES_SOMOS,
@@ -18,7 +18,7 @@ function Header() {
   const theme = useTheme();
   const cellphone = useMediaQuery(theme.breakpoints.down('sm'));
   const midWindow = useMediaQuery(theme.breakpoints.down('md'));
-  const colorDeFondo = COLOR_BASE_1;
+  const colorDeFondo = primary;
   let fontSizeL = 34;
   let fontSizeM = 18;
   let imgStyle = { width: '80px', height: '80px' };
