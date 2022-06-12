@@ -47,5 +47,6 @@ div.rmdp-day.rmdp-selected > span.sd{
 }
 .rmdp-day.rmdp-selected span:not(.highlight) {
     background-color: var(--SUCCESS);
-    color: #ffffff;
+    box-shadow: 0 0 3px #8798ad;
+    color: #fff;
 }
