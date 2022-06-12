@@ -41,3 +41,11 @@ div.rmdp-day.rmdp-selected > span.sd{
     background-color: var(--SUCCESS);
     color: #ffffff;
 }
+.rmdp-ym .rmdp-day >span {
+    background-color: var(--SECONDARY);
+    color: #ffffff;
+}
+.rmdp-day.rmdp-selected span:not(.highlight) {
+    background-color: var(--SUCCESS);
+    color: #ffffff;
+}

@@ -9,7 +9,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import Fichas from '../Componentes/FichasInformacion';
 import {
   RUTAS_HOME,
-  RUTAS_CANCELAR_RESERVAS,
+  RUTAS_CANCELAR_RESERVAS, success,
 } from '../../constantes';
 import DatesHour from '../../utilities/Dates&Hour';
 
@@ -52,7 +52,7 @@ function HoraReservada() {
       >
         <FormLabel
           sx={{
-            color: 'green',
+            color: success,
             fontWeight: 'bold',
             borderRadius: 3,
             padding: 2,
@@ -69,7 +69,7 @@ function HoraReservada() {
             fontSize: 18,
           }}
         >
-          Se enviara un correo con la informacion de la cita
+          Se enviará un correo con la información de la cita
         </FormLabel>
       </Box>
       <Box sx={{ width: '100%' }}>
