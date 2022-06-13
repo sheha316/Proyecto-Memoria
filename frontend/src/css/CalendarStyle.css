@@ -52,11 +52,14 @@ div.rmdp-day.rmdp-selected > span.sd{
     color: var(--PRIMARY)!important;
 }
 /* #estiloFlechas */
-.rmdp-arrow {
-    border-color: var(--PRIMARY);
+.rmdp-arrow-container {
+    border-color: var(--PRIMARY)!important;
 }
 /* #estiloFlechas-hover */
 .rmdp-arrow-container:hover{
-    background-color: var(--PRIMARY);
-    border-color:#fff;
+    background-color: var(--PRIMARY)!important;
+    border-color:#fff!important;
+}
+.rmdp-arrow-container.disabled{
+    background-color: transparent!important;
 }
