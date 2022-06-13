@@ -27,6 +27,7 @@ export default function BasicPopover({ fontSizeM }) {
     <Button
       variant="contained"
       color="success"
+      style={{ fontSize: fontSizeM }}
       onClick={() => history(RUTAS_RESERVAR_HORA)}
     >
       Reserva de Hora
