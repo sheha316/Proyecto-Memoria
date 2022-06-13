@@ -122,7 +122,7 @@ function Calendario({
           >
 
             <DatePicker
-              className="green"
+              className="custom-calendar"
               render={(value, openCalendar) => (
                 <Button
                   onMouseEnter={() => { setCursor('pointer'); }}
@@ -136,6 +136,12 @@ function Calendario({
                 </Button>
               )}
               value={fecha}
+              style={{
+                'div.rmdp-day.rmdp-disabled > span': {
+                  'background-color': '#d0d0d0',
+                  color: '#ffffff',
+                },
+              }}
               onChange={handleChange}
               weekDays={weekDays}
               months={months}

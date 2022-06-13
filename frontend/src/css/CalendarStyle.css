@@ -4,6 +4,11 @@
 --SECONDARY: #3cb371;
 --SUCCESS: #ef8b1e;
 }
+.custom-calendar.rmdp-wrapper,
+.rmdp-container .custom-calendar{
+    background-color: #ffffff;
+}
+
 /* #estiloDias-Disabled */
 div.rmdp-day.rmdp-disabled > span{
     background-color: #d0d0d0;
