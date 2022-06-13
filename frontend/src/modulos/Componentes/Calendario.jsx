@@ -122,6 +122,7 @@ function Calendario({
           >
 
             <DatePicker
+              className="green"
               render={(value, openCalendar) => (
                 <Button
                   onMouseEnter={() => { setCursor('pointer'); }}
