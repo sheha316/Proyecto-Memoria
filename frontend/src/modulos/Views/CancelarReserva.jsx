@@ -37,7 +37,8 @@ function CancelarReserva() {
         <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>
           Ingrese su
           {' '}
-          {identificado}
+          {identificado === 'Rut' ? 'RUT' : identificado}
+          {' e Email con el que realizó la reserva'}
         </FormLabel>
 
         <FormularioDatosCancelarHora

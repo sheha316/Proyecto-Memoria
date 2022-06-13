@@ -94,7 +94,7 @@ function TextFieldInput(id, placeholder, onChange, values, errors, touched, onBl
     >
       <Grid item xs={4}>
         <FormLabel sx={{ color: (errors[id] && touched[id]) ? 'yellow' : 'white', fontSize }}>
-          {id}
+          {id === 'Rut' ? 'RUT' : id}
           :
         </FormLabel>
       </Grid>

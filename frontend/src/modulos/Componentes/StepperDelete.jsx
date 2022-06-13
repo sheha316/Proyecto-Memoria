@@ -13,7 +13,8 @@ function StepperDelete({
   step, id,
 }) {
   const history = useNavigate();
-  const steps = [`Ingresar su ${id}`, 'Seleccionar cita a Cancelar'];
+  const rutFix = id === 'Rut' ? 'RUT' : id;
+  const steps = [`Ingresar su ${rutFix} e Email `, 'Seleccionar Cita a Cancelar'];
 
   const handleStep = (index) => {
     if (index !== step) {

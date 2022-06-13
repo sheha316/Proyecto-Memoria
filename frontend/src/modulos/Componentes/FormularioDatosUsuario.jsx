@@ -204,7 +204,7 @@ function TextFieldInput(
           color: (errors[id] && touched[id]) ? 'yellow' : 'white',
         }}
         >
-          {id}
+          {id === 'Rut' ? 'RUT' : id}
           :
         </FormLabel>
       </Grid>
