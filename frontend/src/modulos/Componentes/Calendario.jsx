@@ -136,12 +136,6 @@ function Calendario({
                 </Button>
               )}
               value={fecha}
-              style={{
-                'div.rmdp-day.rmdp-disabled > span': {
-                  'background-color': '#d0d0d0',
-                  color: '#ffffff',
-                },
-              }}
               onChange={handleChange}
               weekDays={weekDays}
               months={months}

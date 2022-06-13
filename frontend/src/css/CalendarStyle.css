@@ -6,50 +6,50 @@
 }
 .custom-calendar.rmdp-wrapper,
 .rmdp-container .custom-calendar{
-    background-color: #ffffff;
+    background-color: #ffffff!important;
 }
 
 /* #estiloDias-Disabled */
 div.rmdp-day.rmdp-disabled > span{
-    background-color: #d0d0d0;
-    color: #ffffff;
+    background-color: #d0d0d0!important;
+    color: #ffffff!important;
 }
 /* #estiloDias-Aviable */
 div.rmdp-day> span.sd{
-    background-color: var(--SECONDARY);
-    color: #ffffff;
+    background-color: var(--SECONDARY)!important;
+    color: #ffffff!important;
 }
 /* #estiloDias-Selected */
 div.rmdp-day.rmdp-selected > span.sd{
-    background-color: var(--SUCCESS);
-    color: #ffffff;
+    background-color: var(--SUCCESS)!important;
+    color: #ffffff!important;
 }
 /* #estiloDias-hover */
 .rmdp-day:not(.rmdp-disabled):not(.rmdp-day-hidden) span:hover {
-    background-color: var(--PRIMARY);
-    color: #fff;
+    background-color: var(--PRIMARY)!important;
+    color: #fff!important;
 }
 /* #estiloMeses-Aviable */
 .rmdp-ym .rmdp-day>span {
-    background-color: var(--SECONDARY);
-    color: #fff;
-    box-shadow: 0 0 3px #8798ad;
+    background-color: var(--SECONDARY)!important;
+    color: #fff!important;
+    box-shadow: 0 0 3px #8798ad!important;
 }
 /* #estiloMeses-Selected */
 .rmdp-day.rmdp-selected > span{
-    background-color: var(--SUCCESS);
-    color: #fff;
-    box-shadow: 0 0 3px #8798ad;
+    background-color: var(--SUCCESS)!important;
+    color: #fff!important;
+    box-shadow: 0 0 3px #8798ad!important;
 }
 /* #estiloMeses-Selected */
 .rmdp-day.rmdp-selected span:not(.highlight){
-    background-color: var(--SUCCESS);
-    color: #fff;
-    box-shadow: 0 0 3px #8798ad;
+    background-color: var(--SUCCESS)!important;
+    color: #fff!important;
+    box-shadow: 0 0 3px #8798ad!important;
 }
 /* #estiloDiasSemana*/
 .rmdp-day span, .rmdp-week-day {
-    color: var(--PRIMARY);
+    color: var(--PRIMARY)!important;
 }
 /* #estiloFlechas */
 .rmdp-arrow {
@@ -58,4 +58,5 @@ div.rmdp-day.rmdp-selected > span.sd{
 /* #estiloFlechas-hover */
 .rmdp-arrow-container:hover{
     background-color: var(--PRIMARY);
+    border-color:#fff;
 }
