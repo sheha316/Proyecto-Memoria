@@ -128,7 +128,7 @@ function Calendario({
                   onMouseEnter={() => { setCursor('pointer'); }}
                   variant="outlined"
                   color="success"
-                  style={{ color: 'white' }}
+                  style={{ color: 'white', fontWeight: 'bold' }}
                   onClick={openCalendar}
                 >
                   {DatesHour.StringDateToDate(fecha.toISOString().split('T')[0])}

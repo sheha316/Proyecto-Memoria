@@ -7,8 +7,8 @@
 import React from 'react';
 import {
   Button, Box,
-  Paper, FormControl, FormLabel,
-  TextField, FormHelperText, Autocomplete,
+  Paper, FormControl, FormLabel, Grid,
+  TextField, FormHelperText, Autocomplete, RadioGroup, FormControlLabel, Radio,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
@@ -65,7 +65,9 @@ function getLabel(option, opcionBusqueda, tipo) {
 function AutocompleteForm({
   handleSubmit,
   opcionBusqueda,
+  setOpcionBusqueda,
   opciones,
+  OpcionesDeBusqueda,
   seter,
 }) {
   const history = useNavigate();
@@ -75,10 +77,8 @@ function AutocompleteForm({
   if (opcionBusqueda === 'Área Médica') {
     validationSchema = Yup.object().shape({
       areaSeleccionada: Yup.object().shape({
-        especializacion: Yup.string()
-          .required('Debes seleccionar un área médica'),
-        profesion: Yup.string()
-          .required('Debes seleccionar un área médica'),
+        especializacion: Yup.string().required('Debes seleccionar un área médica'),
+        profesion: Yup.string().required('Debes seleccionar un área médica'),
       })
         .required('Debes seleccionar un área médica')
         .nullable(),
@@ -87,7 +87,13 @@ function AutocompleteForm({
     id = 'areaSeleccionada';
   } else {
     validationSchema = Yup.object().shape({
-      medicoSeleccionado: Yup.object().required('Debes seleccionar un medico').nullable(),
+      medicoSeleccionado: Yup.object().shape(
+        {
+          nombre: Yup.string().required('Debes seleccionar un medico'),
+          apellido: Yup.string().required('Debes seleccionar un medico'),
+          especializacion: Yup.string().required('Debes seleccionar un medico'),
+        },
+      ).required('Debes seleccionar un área médica').nullable(),
     });
     initialValues = { medicoSeleccionado: { nombre: '', apellido: '', especializacion: '' } };
     id = 'medicoSeleccionado';
@@ -117,8 +123,57 @@ function AutocompleteForm({
               backgroundColor: secondary, padding: 5, marginTop: 1, borderRadius: 5,
             }}
           >
+
+            <Grid
+              container
+              spacing={3}
+              direction="row"
+              justifyContent="flex-start"
+              alignItems="center"
+              sx={{ marginBottom: 2 }}
+            >
+              <Grid item>
+                <FormLabel sx={{ color: 'white', fontWeight: 'bold' }}>
+                  Buscar por:
+                </FormLabel>
+              </Grid>
+              <Grid item>
+                <RadioGroup
+                  row
+                  defaultValue={OpcionesDeBusqueda[0]}
+                  onChange={(e) => setOpcionBusqueda(e.target.value)}
+                >
+                  <FormControlLabel
+                    value={OpcionesDeBusqueda[0]}
+                    sx={{ color: 'white' }}
+                    control={(
+                      <Radio sx={{
+                        '&, &.Mui-checked': {
+                          color: 'white',
+                        },
+                      }}
+                      />
+)}
+                    label={OpcionesDeBusqueda[0]}
+                  />
+                  <FormControlLabel
+                    value={OpcionesDeBusqueda[1]}
+                    sx={{ color: 'white' }}
+                    control={(
+                      <Radio sx={{
+                        '&, &.Mui-checked': {
+                          color: 'white',
+                        },
+                      }}
+                      />
+)}
+                    label={OpcionesDeBusqueda[1]}
+                  />
+                </RadioGroup>
+              </Grid>
+            </Grid>
             <FormControl warning={errors[id] && touched[id]} sx={{ width: '100%' }}>
-              <FormLabel sx={{ color: (errors[id] && touched[id]) ? 'yellow' : 'white' }}>
+              <FormLabel sx={{ color: (errors[id] && touched[id]) ? 'yellow' : 'white', fontWeight: 'bold' }}>
                 Seleccione
                 {' '}
                 {opcionBusqueda}
@@ -165,7 +220,6 @@ function AutocompleteForm({
                     {...params}
                   />
                 )}
-
               />
               <FormHelperText xs={{ color: 'yellow' }}>
                 {(errors[id] && touched[id])

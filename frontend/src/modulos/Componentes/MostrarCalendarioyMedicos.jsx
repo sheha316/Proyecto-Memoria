@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Grid, FormLabel } from '@mui/material';
+import { Grid, FormLabel, Paper } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Calendario from './Calendario';
@@ -16,41 +16,41 @@ function MostrarCalendarioyMedicos({
   return (
     <>
       { agendasMedicos !== '' && fecha !== '' && (
-      <>
-        <FormLabel sx={{
-          color: 'black',
-          fontWeight: 'bold',
-          marginTop: 3,
-        }}
-        >
-          {Title}
-        </FormLabel>
-        <Grid
-          item
-          sx={{
-            backgroundColor: '#c5c5c5',
-            borderTopLeftRadius: 10,
-            borderTopRightRadius: 10,
-            marginTop: 1,
+        <>
+          <FormLabel sx={{
+            color: 'black',
+            fontWeight: 'bold',
+            marginTop: 3,
           }}
-          xs={12}
-        >
-
-          <Calendario
-            agendasMedicos={agendasMedicos}
-            fecha={fecha}
-            setFecha={setFecha}
-            FirstDay={FirstDay}
-            LastDay={LastDay}
-          />
-          <TarjetasMedicos
-            dia={fecha}
-            agendasMedicos={agendasMedicos}
-            OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
-            area={area}
-          />
-        </Grid>
-      </>
+          >
+            {Title}
+          </FormLabel>
+          <Paper
+            elevation={4}
+            sx={{
+              backgroundColor: '#c5c5c5',
+              borderTopLeftRadius: 10,
+              borderTopRightRadius: 10,
+              marginTop: 1,
+            }}
+          >
+            <Grid item xs={12}>
+              <Calendario
+                agendasMedicos={agendasMedicos}
+                fecha={fecha}
+                setFecha={setFecha}
+                FirstDay={FirstDay}
+                LastDay={LastDay}
+              />
+              <TarjetasMedicos
+                dia={fecha}
+                agendasMedicos={agendasMedicos}
+                OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
+                area={area}
+              />
+            </Grid>
+          </Paper>
+        </>
       )}
       {(agendasMedicos === '' || fecha === '') && (
       <Grid

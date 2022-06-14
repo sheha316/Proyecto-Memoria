@@ -2,12 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
-  Container, Box, Radio, RadioGroup, FormLabel, FormControlLabel, Grid,
+  Container, Box, Radio, RadioGroup, FormLabel, FormControlLabel, Grid, Paper,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import api from '../../API/api';
 import {
+  success,
   SUCURSAL_1, SUCURSAL_2, SUCURSAL_3, SUCURSAL_4,
 } from '../../constantes';
 import Stepper from '../Componentes/Stepper';
@@ -82,39 +83,59 @@ function ReservarHorasArea() {
     FiltrarDatos();
   }, [sucursalSeleccionada]);
   const optionsSucursales = () => (
-    <RadioGroup
-      row={cellphone}
-      defaultValue={TODASLASSUCURSALES}
-      sx={{ marginTop: 2 }}
-      onChange={(e) => { setSucursalSeleccionada(e.target.value); }}
+    <Paper
+      elevation={4}
+      sx={{
+        backgroundColor: success, padding: 2, borderRadius: 5, color: 'white',
+      }}
     >
-      <Grid
-        container
-        direction={cellphone ? 'column' : 'row'}
-        justifyContent="center"
-        alignItems={cellphone ? 'flex-start' : 'center'}
+      <RadioGroup
+        row={cellphone}
+        defaultValue={TODASLASSUCURSALES}
+        onChange={(e) => { setSucursalSeleccionada(e.target.value); }}
       >
-        {sucursales.map((sucursalOptions) => (
-          <Grid key={sucursalOptions} item xs={2}>
-            <FormControlLabel
-              style={{ width: 'fit-content' }}
-              key={sucursalOptions}
-              value={sucursalOptions}
-              control={<Radio />}
-              label={<span style={{ fontSize: cellphone ? 16 : null }}>{sucursalOptions}</span>}
-              disabled={sucursalesHabilitadas[sucursalOptions] === 0}
-            />
-          </Grid>
-        ))}
-        <FormControlLabel
-          style={{ width: 'fit-content' }}
-          value={TODASLASSUCURSALES}
-          control={<Radio />}
-          label={<span style={{ fontSize: cellphone ? 16 : null }}>{TODASLASSUCURSALES}</span>}
-        />
+        <Grid
+          container
+          direction={cellphone ? 'column' : 'row'}
+          justifyContent="center"
+          alignItems={cellphone ? 'flex-start' : 'center'}
+        >
+          {sucursales.map((sucursalOptions) => (
+            <Grid key={sucursalOptions} item xs={2}>
+              <FormControlLabel
+                style={{ width: 'fit-content' }}
+                key={sucursalOptions}
+                value={sucursalOptions}
+                control={(
+                  <Radio sx={{
+                    '&, &.Mui-checked': {
+                      color: 'white',
+                    },
+                  }}
+                  />
+)}
+                label={<span style={{ fontSize: cellphone ? 16 : null }}>{sucursalOptions}</span>}
+                disabled={sucursalesHabilitadas[sucursalOptions] === 0}
+              />
+            </Grid>
+          ))}
+          <FormControlLabel
+            style={{ width: 'fit-content' }}
+            value={TODASLASSUCURSALES}
+            control={(
+              <Radio sx={{
+                '&, &.Mui-checked': {
+                  color: 'white',
+                },
+              }}
+              />
+)}
+            label={<span style={{ fontSize: cellphone ? 16 : null }}>{TODASLASSUCURSALES}</span>}
+          />
 
-      </Grid>
-    </RadioGroup>
+        </Grid>
+      </RadioGroup>
+    </Paper>
 
   );
   return (

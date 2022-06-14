@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -64,7 +65,7 @@ function ReservarHoras() {
     <Container>
       <Stepper step={0} search={`por ${OpcionesDeBusquedaSeleccionada}`} OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada} />
       <Box sx={{ marginTop: 5, width: '100%' }}>
-        <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Método de Búsqueda</FormLabel>
+        {/* <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Método de Búsqueda</FormLabel>
         <RadioGroup
           row
           sx={{ marginBottom: 2 }}
@@ -83,58 +84,43 @@ function ReservarHoras() {
             control={<Radio />}
             label={OpcionesDeBusqueda[1]}
           />
-        </RadioGroup>
+        </RadioGroup> */}
 
         <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>
-          Buscar por
-          {' '}
-          {OpcionesDeBusquedaSeleccionada}
+          Metodo de Busqueda
         </FormLabel>
-        {OpcionesDeBusqueda[0] === OpcionesDeBusquedaSeleccionada
-         && (areaMedica.length > 0
-           ? (
-             <AutocompleteForm
-               handleSubmit={handleSubmitAreaMedica}
-               opcionBusqueda={OpcionesDeBusquedaSeleccionada}
-               opciones={areaMedica}
-               seter={setAreaSeleccionada}
-             />
-           )
-           : (
-             <Box
-               sx={{
-                 textAlignLast: 'center',
-                 marginTop: 1,
-               }}
-             >
-               <img style={{ width: imgWidth }} src={loadingGif} alt="" />
-             </Box>
-           )
-         )}
-        {OpcionesDeBusqueda[1] === OpcionesDeBusquedaSeleccionada
-         && (medicos.length > 0
-           ? (
-             <AutocompleteForm
-               handleSubmit={handleSubmitEspecialista}
-               opcionBusqueda={OpcionesDeBusquedaSeleccionada}
-               opciones={medicos}
-               seter={setMedicoSeleccionado}
-             />
-           )
-
-           : (
-             <Box
-               sx={{
-                 textAlignLast: 'center',
-                 marginTop: 1,
-               }}
-             >
-               <img style={{ width: imgWidth }} src={loadingGif} alt="" />
-             </Box>
-           )
-
-         )}
-
+        {(areaMedica.length > 0 && medicos.length > 0)
+          ? (
+            <AutocompleteForm
+              OpcionesDeBusqueda={OpcionesDeBusqueda}
+              handleSubmit={
+                OpcionesDeBusqueda[0] === OpcionesDeBusquedaSeleccionada
+                  ? handleSubmitAreaMedica : handleSubmitEspecialista
+}
+              opcionBusqueda={OpcionesDeBusquedaSeleccionada}
+              setOpcionBusqueda={
+                setOpcionesDeBusquedaSeleccionada
+}
+              opciones={
+                OpcionesDeBusqueda[0] === OpcionesDeBusquedaSeleccionada
+                  ? areaMedica : medicos
+}
+              seter={
+                OpcionesDeBusqueda[0] === OpcionesDeBusquedaSeleccionada
+                  ? setAreaSeleccionada : setMedicoSeleccionado
+}
+            />
+          )
+          : (
+            <Box
+              sx={{
+                textAlignLast: 'center',
+                marginTop: 1,
+              }}
+            >
+              <img style={{ width: imgWidth }} src={loadingGif} alt="" />
+            </Box>
+          )}
       </Box>
     </Container>
   );

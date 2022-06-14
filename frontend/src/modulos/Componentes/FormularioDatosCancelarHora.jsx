@@ -25,7 +25,7 @@ function NacionalidadRadio(onChange, values, touched, setId, fontSize, fontSizeR
       }}
     >
       <Grid item xs={4}>
-        <FormLabel sx={{ color: 'white', fontSize }}>
+        <FormLabel sx={{ color: 'white', fontSize, fontWeight: 'bold' }}>
           Nacionalidad
           :
         </FormLabel>
@@ -93,7 +93,7 @@ function TextFieldInput(id, placeholder, onChange, values, errors, touched, onBl
       }}
     >
       <Grid item xs={4}>
-        <FormLabel sx={{ color: (errors[id] && touched[id]) ? 'yellow' : 'white', fontSize }}>
+        <FormLabel sx={{ color: (errors[id] && touched[id]) ? 'yellow' : 'white', fontSize, fontWeight: 'bold' }}>
           {id === 'Rut' ? 'RUT' : id}
           :
         </FormLabel>

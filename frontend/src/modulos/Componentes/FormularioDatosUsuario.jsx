@@ -37,6 +37,7 @@ function FechaNacimiento(onChange, values, errors, touched, onBlur, fontSize, gr
       <Grid item xs={grid[0]}>
         <FormLabel sx={{
           fontSize,
+          fontWeight: 'bold',
           color:
              (errors.diaNacimiento && touched.diaNacimiento)
              || (errors.mesNacimiento && touched.mesNacimiento)
@@ -124,7 +125,7 @@ function NacionalidadRadio(onChange, values, touched, fontSize, fontSizeRadio, g
       }}
     >
       <Grid item xs={grid[0]}>
-        <FormLabel sx={{ fontSize, color: 'white' }}>
+        <FormLabel sx={{ fontSize, color: 'white', fontWeight: 'bold' }}>
           Nacionalidad
           :
         </FormLabel>
@@ -202,6 +203,7 @@ function TextFieldInput(
         <FormLabel sx={{
           fontSize,
           color: (errors[id] && touched[id]) ? 'yellow' : 'white',
+          fontWeight: 'bold',
         }}
         >
           {id === 'Rut' ? 'RUT' : id}
@@ -258,7 +260,7 @@ function PrevisionSelector(id, onChange, values, errors, touched, onBlur, fontSi
       }}
     >
       <Grid item xs={grid[0]}>
-        <FormLabel sx={{ fontSize, color: (errors[id] && touched[id]) ? 'yellow' : 'white' }}>
+        <FormLabel sx={{ fontSize, color: (errors[id] && touched[id]) ? 'yellow' : 'white', fontWeight: 'bold' }}>
           Previsión:
         </FormLabel>
       </Grid>
