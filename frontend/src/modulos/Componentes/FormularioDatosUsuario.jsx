@@ -133,7 +133,6 @@ function NacionalidadRadio(onChange, values, touched, fontSize, fontSizeRadio, g
       <Grid item xs={grid[1]} style={{ display: 'flex' }}>
         <FormControl sx={{ width: '100%' }}>
           <RadioGroup
-            row
             sx={{ marginBottom: 2 }}
             id="Nacionalidad"
             name="Nacionalidad"

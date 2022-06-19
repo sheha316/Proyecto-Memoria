@@ -15,7 +15,15 @@ import {
 } from '../../constantes';
 import '../../css/NumberInputAsText.css';
 
-function NacionalidadRadio(onChange, values, touched, setId, fontSize, fontSizeRadio) {
+function NacionalidadRadio(
+  onChange,
+  values,
+  touched,
+  setId,
+  fontSize,
+  fontSizeRadio,
+  gridXs,
+) {
   const { Nacionalidad } = values;
   return (
     <Grid
@@ -24,16 +32,15 @@ function NacionalidadRadio(onChange, values, touched, setId, fontSize, fontSizeR
         display: 'flex', justifyContent: 'space-around', alignItems: 'center',
       }}
     >
-      <Grid item xs={4}>
+      <Grid item xs={gridXs[0]}>
         <FormLabel sx={{ color: 'white', fontSize, fontWeight: 'bold' }}>
           Nacionalidad
           :
         </FormLabel>
       </Grid>
-      <Grid item xs={8} style={{ display: 'flex' }}>
+      <Grid item xs={gridXs[1]} style={{ display: 'flex' }}>
         <FormControl sx={{ width: '100%' }}>
           <RadioGroup
-            row
             sx={{ marginBottom: 2 }}
             id="Nacionalidad"
             name="Nacionalidad"
@@ -83,7 +90,17 @@ function NacionalidadRadio(onChange, values, touched, setId, fontSize, fontSizeR
     </Grid>
   );
 }
-function TextFieldInput(id, placeholder, onChange, values, errors, touched, onBlur, fontSize) {
+function TextFieldInput(
+  id,
+  placeholder,
+  onChange,
+  values,
+  errors,
+  touched,
+  onBlur,
+  fontSize,
+  gridXs,
+) {
   return (
 
     <Grid
@@ -92,13 +109,13 @@ function TextFieldInput(id, placeholder, onChange, values, errors, touched, onBl
         display: 'flex', justifyContent: 'space-around', alignItems: 'center',
       }}
     >
-      <Grid item xs={4}>
+      <Grid item xs={gridXs[0]}>
         <FormLabel sx={{ color: (errors[id] && touched[id]) ? 'yellow' : 'white', fontSize, fontWeight: 'bold' }}>
           {id === 'Rut' ? 'RUT' : id}
           :
         </FormLabel>
       </Grid>
-      <Grid item xs={8} style={{ display: 'table-column' }}>
+      <Grid item xs={gridXs[1]} style={{ display: 'table-column' }}>
         <TextField
           id={id}
           name={id}
@@ -122,8 +139,10 @@ function TextFieldInput(id, placeholder, onChange, values, errors, touched, onBl
 }
 function FormularioCancelar({ initialValues, setId, handleSubmit }) {
   const theme = useTheme();
-  const fontSize = useMediaQuery(theme.breakpoints.down('sm')) ? '0.9rem' : '1rem';
-  const fontSizeRadio = useMediaQuery(theme.breakpoints.down('sm')) ? '0.75rem' : '1rem';
+  const onMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const fontSize = onMobile ? '0.9rem' : '1rem';
+  const fontSizeRadio = onMobile ? '0.75rem' : '1rem';
+  const gridXs = onMobile ? [4, 8] : [4, 4];
   const validationSchema = Yup.object().shape({
     Nacionalidad: Yup.string().required(''),
     Email: Yup.string().email('Correo inválido').required('Debes ingresar un correo'),
@@ -165,17 +184,25 @@ function FormularioCancelar({ initialValues, setId, handleSubmit }) {
             }}
           >
             <Box sx={{
-              padding: 2, borderRadius: 5,
+              padding: 1, borderRadius: 5,
             }}
             >
 
               <FormControl sx={{ width: '100%' }}>
-                {NacionalidadRadio(handleChange, values, touched, setId, fontSize, fontSizeRadio)}
+                {NacionalidadRadio(
+                  handleChange,
+                  values,
+                  touched,
+                  setId,
+                  fontSize,
+                  fontSizeRadio,
+                  gridXs,
+                )}
                 {values.Nacionalidad === 'Chileno'
-                 && TextFieldInput('Rut', '10258680k', handleChange, values, errors, touched, handleBlur, fontSize)}
+                 && TextFieldInput('Rut', '10258680k', handleChange, values, errors, touched, handleBlur, fontSize, gridXs)}
                 {values.Nacionalidad !== 'Chileno'
-                 && TextFieldInput('Pasaporte', '102586808', handleChange, values, errors, touched, handleBlur, fontSize)}
-                {TextFieldInput('Email', 'ejemplo@gmail.com', handleChange, values, errors, touched, handleBlur, fontSize)}
+                 && TextFieldInput('Pasaporte', '102586808', handleChange, values, errors, touched, handleBlur, fontSize, gridXs)}
+                {TextFieldInput('Email', 'ejemplo@gmail.com', handleChange, values, errors, touched, handleBlur, fontSize, gridXs)}
 
               </FormControl>
 

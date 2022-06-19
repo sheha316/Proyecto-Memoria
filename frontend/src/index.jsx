@@ -18,6 +18,7 @@ import ReservarConMedico from './modulos/Views/ReservarConMedico';
 import Home from './modulos/Views/Home';
 import CancelarReserva from './modulos/Views/CancelarReserva';
 import CancelarReservaMisReservas from './modulos/Views/CancelarReservaMisReservas';
+import INFO from './modulos/Views/INFO';
 import ScrollToTop from './ScrollToTop';
 import {
   RUTAS_HOME,
@@ -30,6 +31,7 @@ import {
   RUTAS_RESERVAR_HORA_CON_MEDICO,
   RUTAS_CANCELAR_RESERVAS,
   RUTAS_CANCELAR_RESERVAS_MIS_RESERVAS,
+  RUTAS_INFO,
   primary,
   secondary,
   success,
@@ -68,6 +70,7 @@ root.render(
           <Route exact path={RUTAS_CANCELAR_RESERVAS} element={<Layout component={<CancelarReserva />} />} />
           <Route exact path={RUTAS_CANCELAR_RESERVAS_MIS_RESERVAS} element={<Layout component={<CancelarReservaMisReservas />} />} />
 
+          <Route exact path={RUTAS_INFO} element={<Layout component={<INFO />} />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

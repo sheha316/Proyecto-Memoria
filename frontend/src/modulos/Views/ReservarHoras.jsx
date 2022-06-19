@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Container, Box, Radio, RadioGroup, FormLabel, FormControlLabel,
+  Container, Box, Radio, RadioGroup, FormLabel, FormControlLabel, Grid, Divider,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -17,11 +17,12 @@ import loadingGif from '../../assets/loading.gif';
 
 function ReservarHoras() {
   const history = useNavigate();
-  const OpcionesDeBusqueda = ['Área Médica', 'Médico Especialista'];
+  const OpcionesDeBusqueda = ['Área Médica', 'Nombre del Médico'];
   const [OpcionesDeBusquedaSeleccionada,
     setOpcionesDeBusquedaSeleccionada] = useState(OpcionesDeBusqueda[0]);
   const theme = useTheme();
   const imgWidth = useMediaQuery(theme.breakpoints.down('sm')) ? '80%' : '';
+  const SearchOptionsVertical = useMediaQuery(theme.breakpoints.down('lg'));
 
   const [areaMedica, setAreaMedica] = useState([]);
   const [medicos, setMedicos] = useState([]);
@@ -44,7 +45,7 @@ function ReservarHoras() {
       {
         state: {
           medico: [values.medicoSeleccionado],
-          OpcionesDeBusquedaSeleccionada,
+          OpcionesDeBusquedaSeleccionada: 'Médico Especialista',
         },
       },
     );
@@ -55,7 +56,7 @@ function ReservarHoras() {
       {
         state: {
           area: values.areaSeleccionada,
-          OpcionesDeBusquedaSeleccionada,
+          OpcionesDeBusquedaSeleccionada: 'Área Médica',
         },
       },
     );
@@ -63,53 +64,56 @@ function ReservarHoras() {
 
   return (
     <Container>
-      <Stepper step={0} search={`por ${OpcionesDeBusquedaSeleccionada}`} OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada} />
+      <Stepper
+        step={0}
+        search="Método de Búsqueda"
+        OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
+      />
       <Box sx={{ marginTop: 5, width: '100%' }}>
-        {/* <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Método de Búsqueda</FormLabel>
-        <RadioGroup
-          row
-          sx={{ marginBottom: 2 }}
-          aria-labelledby="demo-row-radio-buttons-group-label"
-          name="row-radio-buttons-group"
-          defaultValue={OpcionesDeBusqueda[0]}
-          onChange={(e) => setOpcionesDeBusquedaSeleccionada(e.target.value)}
-        >
-          <FormControlLabel
-            value={OpcionesDeBusqueda[0]}
-            control={<Radio />}
-            label={OpcionesDeBusqueda[0]}
-          />
-          <FormControlLabel
-            value={OpcionesDeBusqueda[1]}
-            control={<Radio />}
-            label={OpcionesDeBusqueda[1]}
-          />
-        </RadioGroup> */}
-
         <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>
-          Metodo de Busqueda
+          Elija Método de Búsqueda
         </FormLabel>
         {(areaMedica.length > 0 && medicos.length > 0)
           ? (
-            <AutocompleteForm
-              OpcionesDeBusqueda={OpcionesDeBusqueda}
-              handleSubmit={
-                OpcionesDeBusqueda[0] === OpcionesDeBusquedaSeleccionada
-                  ? handleSubmitAreaMedica : handleSubmitEspecialista
-}
-              opcionBusqueda={OpcionesDeBusquedaSeleccionada}
-              setOpcionBusqueda={
-                setOpcionesDeBusquedaSeleccionada
-}
-              opciones={
-                OpcionesDeBusqueda[0] === OpcionesDeBusquedaSeleccionada
-                  ? areaMedica : medicos
-}
-              seter={
-                OpcionesDeBusqueda[0] === OpcionesDeBusquedaSeleccionada
-                  ? setAreaSeleccionada : setMedicoSeleccionado
-}
-            />
+            <Grid
+              container
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Grid item xs={SearchOptionsVertical ? 12 : 5.8}>
+                <AutocompleteForm
+                  OpcionesDeBusqueda={OpcionesDeBusqueda}
+                  handleSubmit={handleSubmitAreaMedica}
+                  opcionBusqueda={OpcionesDeBusqueda[0]}
+                  setOpcionBusqueda={setOpcionesDeBusquedaSeleccionada}
+                  opciones={areaMedica}
+                  seter={setAreaSeleccionada}
+                />
+              </Grid>
+              {!SearchOptionsVertical && (
+                <Divider orientation="vertical" flexItem>
+                  o
+                </Divider>
+              )}
+              {SearchOptionsVertical && (
+              <Grid item xs={10} sx={{ margin: 1 }}>
+                <Divider flexItem>
+                  o
+                </Divider>
+              </Grid>
+              )}
+              <Grid item xs={SearchOptionsVertical ? 12 : 5.9}>
+                <AutocompleteForm
+                  OpcionesDeBusqueda={OpcionesDeBusqueda}
+                  handleSubmit={handleSubmitEspecialista}
+                  opcionBusqueda={OpcionesDeBusqueda[1]}
+                  setOpcionBusqueda={setOpcionesDeBusquedaSeleccionada}
+                  opciones={medicos}
+                  seter={setMedicoSeleccionado}
+                />
+              </Grid>
+            </Grid>
           )
           : (
             <Box

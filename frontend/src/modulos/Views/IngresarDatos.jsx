@@ -30,7 +30,8 @@ function IngresarDatos() {
   const {
     hora, dia, medico, OpcionesDeBusquedaSeleccionada, area,
   } = useLocation().state;
-  const search = OpcionesDeBusquedaSeleccionada === 'Médico Especialista' ? 'Médico Especialista' : `${OpcionesDeBusquedaSeleccionada}: ${area.especializacion}`;
+  const search = OpcionesDeBusquedaSeleccionada === 'Médico Especialista'
+    ? `Médico: ${medico.nombre} ${medico.apellido} ${medico.especializacion} ` : `${OpcionesDeBusquedaSeleccionada}: ${area.especializacion}`;
   return (
     <Container>
       <Stepper

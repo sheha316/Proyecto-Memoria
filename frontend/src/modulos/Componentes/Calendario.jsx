@@ -13,12 +13,13 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import IconButton from '@mui/material/IconButton';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import newDate from '../../utilities/newDate';
 import { primary, secondary, success } from '../../constantes';
 import DatesHour from '../../utilities/Dates&Hour';
 
 function Calendario({
-  agendasMedicos, fecha, setFecha, FirstDay, LastDay,
+  agendasMedicos, fecha, setFecha, FirstDay, LastDay, sucursalSeleccionada,
 }) {
   const [cursor, setCursor] = useState('crosshair');
   const minDate = FirstDay;
@@ -112,8 +113,8 @@ function Calendario({
         alignItems="center"
         sx={{ padding: 1 }}
       >
-        <Grid item xs={cellphone ? 12 : 3} />
-        <Grid item xs={cellphone ? 12 : 6} sx={{ textAlign: 'center' }}>
+        <Grid item xs={cellphone ? 12 : 2} />
+        <Grid item xs={cellphone ? 12 : 8} sx={{ textAlign: 'center' }}>
           <Stack
             direction="row"
             justifyContent="center"
@@ -148,7 +149,7 @@ function Calendario({
             />
           </Stack>
         </Grid>
-        <Grid item xs={cellphone ? 12 : 3} />
+        <Grid item xs={cellphone ? 12 : 2} />
 
         <Grid item xs={cellphone ? 12 : 2} />
         <Grid item xs={cellphone ? 12 : 1} />
@@ -171,7 +172,15 @@ function Calendario({
             );
           }
         })}
-        <Grid item xs={cellphone ? 12 : 3} />
+        <Grid item xs={cellphone ? 12 : 1} />
+        <Grid item xs={cellphone ? 12 : 2}>
+          <Button color="success" variant="text">
+            <FilterAltIcon />
+          </Button>
+          <FormLabel sx={{ color: 'white', fontWeight: 'bold' }}>
+            Sucursal:
+          </FormLabel>
+        </Grid>
         <Grid item xs={cellphone ? 12 : 2} />
         <Grid style={{ display: 'flex', justifyContent: 'center' }} item xs={1}>
           <IconButton onClick={() => setFecha(addDaysToSelectedDate(fecha, -7))}>
@@ -220,7 +229,11 @@ function Calendario({
             <ArrowForwardIosIcon fontSize="large" sx={{ color: 'white' }} />
           </IconButton>
         </Grid>
-        <Grid item xs={cellphone ? 12 : 2} />
+        <Grid item xs={cellphone ? 12 : 2}>
+          <FormLabel sx={{ color: 'white', textAlign: 'center' }}>
+            {sucursalSeleccionada}
+          </FormLabel>
+        </Grid>
       </Grid>
       <Box />
     </Box>

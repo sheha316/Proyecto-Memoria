@@ -15,10 +15,11 @@ function stepper({
 }) {
   const history = useNavigate();
   let steps;
+  console.log(OpcionesDeBusquedaSeleccionada);
   if (OpcionesDeBusquedaSeleccionada !== 'Médico Especialista') {
-    steps = [`Buscar ${search}`, 'Seleccionar Fecha y Profesional', 'Ingresar Datos'];
+    steps = [search, 'Seleccionar Fecha y Profesional', 'Ingresar Datos'];
   } else {
-    steps = [`Buscar ${search}`, 'Seleccionar Fecha y Hora', 'Ingresar Datos'];
+    steps = [search, 'Seleccionar Fecha y Hora', 'Ingresar Datos'];
   }
   const handleStep = (index) => {
     if (index !== step) {

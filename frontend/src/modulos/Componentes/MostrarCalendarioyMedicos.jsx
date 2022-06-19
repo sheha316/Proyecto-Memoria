@@ -8,7 +8,9 @@ import TarjetasMedicos from './TarjetasMedicos';
 import loadingGif from '../../assets/loading.gif';
 
 function MostrarCalendarioyMedicos({
-  agendasMedicos, area, fecha, setFecha, FirstDay, LastDay, Title, OpcionesDeBusquedaSeleccionada,
+  agendasMedicos,
+  area,
+  fecha, setFecha, FirstDay, LastDay, Title, OpcionesDeBusquedaSeleccionada, sucursalSeleccionada,
 }) {
   const theme = useTheme();
   const imgWidth = useMediaQuery(theme.breakpoints.down('sm')) ? '80%' : '';
@@ -41,6 +43,7 @@ function MostrarCalendarioyMedicos({
                 setFecha={setFecha}
                 FirstDay={FirstDay}
                 LastDay={LastDay}
+                sucursalSeleccionada={sucursalSeleccionada}
               />
               <TarjetasMedicos
                 dia={fecha}

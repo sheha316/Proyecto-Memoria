@@ -19,6 +19,8 @@ export const RUTAS_HORA_RESERVADA = '/hora-reservada';
 
 export const RUTAS_CANCELAR_RESERVAS = '/cancelar-reserva';
 export const RUTAS_CANCELAR_RESERVAS_MIS_RESERVAS = '/cancelar-mi-reserva';
+
+export const RUTAS_INFO = '/INFO';
 // ----------------direcciones Sucursales
 export const SUCURSAL_1 = 'Vitacura, El Canal 4500';
 export const SUCURSAL_2 = 'Ñuñoa, Antonio Varas 3250';

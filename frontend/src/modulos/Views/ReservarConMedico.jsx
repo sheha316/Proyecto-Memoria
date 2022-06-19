@@ -32,9 +32,16 @@ function ReservarConMedico() {
     }
     getAgendaMedico();
   }, []);
+  console.log(medico);
   return (
     <Container>
-      <Stepper step={1} search={`${OpcionesDeBusquedaSeleccionada}`} medico={medico} area={OpcionesDeBusquedaSeleccionada} />
+      <Stepper
+        step={1}
+        OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
+        search={`Médico: ${medico[0].nombre} ${medico[0].apellido} ${medico[0].especializacion} `}
+        medico={medico}
+        area={OpcionesDeBusquedaSeleccionada}
+      />
 
       <Box sx={{ marginTop: 5, width: '100%' }}>
         <Grid

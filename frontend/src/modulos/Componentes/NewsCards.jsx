@@ -5,8 +5,11 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
+import { RUTAS_INFO } from '../../constantes';
 
 export default function MediaCard(imagen, Titulo, texto) {
+  const history = useNavigate();
   return (
     <Card sx={{ width: '80%', height: '100%' }}>
       <CardMedia
@@ -24,7 +27,19 @@ export default function MediaCard(imagen, Titulo, texto) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" color="secondary">Leer Más</Button>
+        <Button
+          size="small"
+          color="secondary"
+          onClick={() => history(RUTAS_INFO, {
+            state: {
+              Titulo,
+              texto,
+              imagen,
+            },
+          })}
+        >
+          Leer Más
+        </Button>
       </CardActions>
     </Card>
   );

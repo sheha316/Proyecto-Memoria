@@ -26,7 +26,7 @@ function ReservarHorasArea() {
   const theme = useTheme();
   const cellphone = useMediaQuery(theme.breakpoints.down('md'));
   const sucursales = [SUCURSAL_1, SUCURSAL_2, SUCURSAL_3, SUCURSAL_4];
-  const TODASLASSUCURSALES = 'Todas Las Sucursales';
+  const TODASLASSUCURSALES = 'Todas';
   function FiltrarDatos() {
     if (sucursalSeleccionada === '') {
       return;
@@ -140,8 +140,13 @@ function ReservarHorasArea() {
   );
   return (
     <Container>
-      <Stepper step={1} search={`${OpcionesDeBusquedaSeleccionada}: ${area.especializacion}`} />
-      <Box sx={{ marginTop: 5, width: '100%' }}>
+      <Stepper
+        step={1}
+        search={`${OpcionesDeBusquedaSeleccionada}: 
+      ${area.especializacion}`}
+        OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
+      />
+      <Box sx={{ marginTop: 4, width: '100%' }}>
         <Grid
           container
           direction="row"
@@ -149,7 +154,7 @@ function ReservarHorasArea() {
           alignItems="flex-start"
         >
 
-          {sucursalSeleccionada !== '' && (
+          {sucursalSeleccionada !== '' && false && (
             <Grid item xs={12}>
               <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Seleccione Sucursal</FormLabel>
               {optionsSucursales()}
@@ -157,6 +162,7 @@ function ReservarHorasArea() {
           )}
           <MostrarCalendarioyMedicos
             agendasMedicos={agendasMedicosFiltrados}
+            sucursalSeleccionada={sucursalSeleccionada}
             area={area}
             fecha={fechaSeleccionada}
             setFecha={setFechaSeleccionada}

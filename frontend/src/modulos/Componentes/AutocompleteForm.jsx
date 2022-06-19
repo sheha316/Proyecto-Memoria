@@ -4,16 +4,18 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button, Box,
   Paper, FormControl, FormLabel, Grid,
-  TextField, FormHelperText, Autocomplete, RadioGroup, FormControlLabel, Radio,
+  TextField, FormHelperText, Autocomplete, RadioGroup,
+  FormControlLabel, Radio, IconButton, InputAdornment, Stack,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { List } from 'react-virtualized';
+import SearchIcon from '@mui/icons-material/Search';
 import {
   RUTAS_CANCELAR_RESERVAS, secondary,
 } from '../../constantes';
@@ -71,9 +73,11 @@ function AutocompleteForm({
   seter,
 }) {
   const history = useNavigate();
+  const [label, setLabel] = useState(`${opcionBusqueda}...`);
   let validationSchema;
   let initialValues;
-  let id; const groupBy = 'profesion';
+  let id;
+  const groupBy = 'profesion';
   if (opcionBusqueda === 'Área Médica') {
     validationSchema = Yup.object().shape({
       areaSeleccionada: Yup.object().shape({
@@ -123,104 +127,80 @@ function AutocompleteForm({
               backgroundColor: secondary, padding: 5, marginTop: 1, borderRadius: 5,
             }}
           >
-
-            <Grid
-              container
-              spacing={3}
-              direction="row"
-              justifyContent="flex-start"
-              alignItems="center"
-              sx={{ marginBottom: 2 }}
-            >
-              <Grid item>
-                <FormLabel sx={{ color: 'white', fontWeight: 'bold' }}>
-                  Buscar por:
-                </FormLabel>
-              </Grid>
-              <Grid item>
-                <RadioGroup
-                  row
-                  defaultValue={OpcionesDeBusqueda[0]}
-                  onChange={(e) => setOpcionBusqueda(e.target.value)}
-                >
-                  <FormControlLabel
-                    value={OpcionesDeBusqueda[0]}
-                    sx={{ color: 'white' }}
-                    control={(
-                      <Radio sx={{
-                        '&, &.Mui-checked': {
-                          color: 'white',
-                        },
-                      }}
-                      />
-)}
-                    label={OpcionesDeBusqueda[0]}
-                  />
-                  <FormControlLabel
-                    value={OpcionesDeBusqueda[1]}
-                    sx={{ color: 'white' }}
-                    control={(
-                      <Radio sx={{
-                        '&, &.Mui-checked': {
-                          color: 'white',
-                        },
-                      }}
-                      />
-)}
-                    label={OpcionesDeBusqueda[1]}
-                  />
-                </RadioGroup>
-              </Grid>
-            </Grid>
-            <FormControl warning={errors[id] && touched[id]} sx={{ width: '100%' }}>
+            <FormControl onClick={() => { setLabel(''); }} warning={errors[id] && touched[id]} sx={{ width: '100%' }}>
               <FormLabel sx={{ color: (errors[id] && touched[id]) ? 'yellow' : 'white', fontWeight: 'bold' }}>
-                Seleccione
+                Buscar por
                 {' '}
                 {opcionBusqueda}
               </FormLabel>
-              <Autocomplete
-                id={id}
-                name={id}
-                ListboxComponent={opcionBusqueda === 'Área Médica' ? '' : ListboxComponent}
-                options={opciones}
-                groupBy={(option) => {
-                  if (opcionBusqueda === '') {
-                    return `--${option[groupBy]}--`;
-                  }
-                }}
-                renderOption={(props, option) => (
-                  <Box component="li" {...props} key={option._id}>
-                    {getLabel(option, opcionBusqueda, 0)}
-                  </Box>
-                )}
-                getOptionLabel={(option) => getLabel(option, opcionBusqueda, 1)}
-                onChange={(e, value) => {
-                  setFieldValue(
-                    id,
-                    value,
-                  );
-                  seter(value);
-                }}
-                onBlur={handleBlur}
-                value={values[id]}
-                error={errors[id]?.especializacion
-                     && touched[id]?.especializacion}
-                sx={{
-                  marginTop: 1,
-                  width: WIDTHINPUT,
-                  backgroundColor: 'white',
-                  input: { color: 'black' },
-                  borderRadius: 1,
-                  overflow: 'auto',
-                  border: 0,
-                  borderColor: 'yellow',
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                  />
-                )}
-              />
+              <Stack direction="row">
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="flex-start"
+                  alignItems="center"
+                >
+                  <Grid
+                    item
+                    xs={10.5}
+                    sx={{
+                      backgroundColor: 'white',
+                      input: { color: 'black' },
+                      borderRadius: 1,
+                      border: 0,
+                      borderColor: 'yellow',
+                    }}
+                  >
+
+                    <Autocomplete
+                      id={id}
+                      name={id}
+                      ListboxComponent={opcionBusqueda === 'Área Médica' ? '' : ListboxComponent}
+                      options={opciones}
+                      groupBy={(option) => {
+                        if (opcionBusqueda === '') {
+                          return `--${option[groupBy]}--`;
+                        }
+                      }}
+                      renderOption={(props, option) => (
+                        <Box component="li" {...props} key={option._id}>
+                          {getLabel(option, opcionBusqueda, 0)}
+                        </Box>
+                      )}
+                      getOptionLabel={(option) => getLabel(option, opcionBusqueda, 1)}
+                      onChange={(e, value) => {
+                        setFieldValue(
+                          id,
+                          value,
+                        );
+                        seter(value);
+                      }}
+                      onBlur={(e) => {
+                        handleBlur(e);
+                        if (values.areaSeleccionada?.especializacion === ''
+                      || values.medicoSeleccionado?.especializacion === '') {
+                          setLabel(`${opcionBusqueda}...`);
+                        }
+                      }}
+                      value={values[id]}
+                      error={errors[id]?.especializacion
+                      && touched[id]?.especializacion}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label={label}
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={1} style={{ height: '100%' }}>
+                    <Button color="success" variant="contained" sx={{ height: '100%' }} type="submit">
+                      <SearchIcon />
+                    </Button>
+                  </Grid>
+                  <Grid item xs={1} style={{ height: '100%' }} />
+                </Grid>
+              </Stack>
               <FormHelperText xs={{ color: 'yellow' }}>
                 {(errors[id] && touched[id])
                   ? (
@@ -230,33 +210,11 @@ function AutocompleteForm({
                   )
                   : ''}
               </FormHelperText>
-            </FormControl>
 
+            </FormControl>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }} />
           </Paper>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Button
-              variant="outlined"
-              color="secondary"
-              style={{
-                marginTop: 2,
-                alignSelf: 'flex-end',
-              }}
-              onClick={ToCancelarHora}
-            >
-              ¿Cancelar Hora?
-            </Button>
-            <Button
-              variant="contained"
-              type="submit"
-              color="success"
-              sx={{
-                marginTop: 2,
-                alignSelf: 'flex-end',
-              }}
-            >
-              Siguiente
-            </Button>
-          </Box>
+
         </Form>
       )}
     </Formik>
