@@ -5,9 +5,9 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import BasicPopover from './BasicPopover';
 import logo from '../../assets/logo512.png';
 import {
+  RUTAS_RESERVAR_HORA, RUTAS_CANCELAR_RESERVAS,
   primary,
   RUTAS_HOME,
   RUTAS_SUCURSALES,
@@ -19,7 +19,7 @@ function Header() {
   const cellphone = useMediaQuery(theme.breakpoints.down('sm'));
   const midWindow = useMediaQuery(theme.breakpoints.down('md'));
   const colorDeFondo = primary;
-  let fontSizeL = 34;
+  let fontSizeL = 28;
   let fontSizeM = 18;
   let imgStyle = { width: '80px', height: '80px' };
   let direction = 'row';
@@ -33,8 +33,8 @@ function Header() {
     direction = 'column';
     grid = [3, 9];
   } else if (midWindow) {
-    fontSizeL = 28;
-    fontSizeM = 16;
+    fontSizeL = 24;
+    fontSizeM = 14;
   }
   const history = useNavigate();
   return (
@@ -77,7 +77,6 @@ function Header() {
               <span style={{ color: 'white', fontSize: fontSizeM }}>Sucursales</span>
 
             </Button>
-
             <Button
               sx={{ textTransform: 'none' }}
               onClick={() => {
@@ -86,7 +85,30 @@ function Header() {
             >
               <span style={{ color: 'white', fontSize: fontSizeM }}>Quiénes Somos</span>
             </Button>
-            <BasicPopover fontSizeM={fontSizeM} />
+            <Stack
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+              spacing={2}
+              sx={{ p: 2 }}
+            >
+              <Button
+                variant="contained"
+                color="success"
+                style={{ fontSize: fontSizeM }}
+                onClick={() => history(RUTAS_RESERVAR_HORA)}
+              >
+                Reserva de Hora
+              </Button>
+              <Button
+                variant="outlined"
+                color="success"
+                style={{ fontSize: fontSizeM - 3 }}
+                onClick={() => history(RUTAS_CANCELAR_RESERVAS)}
+              >
+                Cancelar Hora
+              </Button>
+            </Stack>
           </Box>
         </Grid>
       </Grid>

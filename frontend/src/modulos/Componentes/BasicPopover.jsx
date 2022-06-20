@@ -1,17 +1,16 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import * as React from 'react';
 import Popover from '@mui/material/Popover';
 import Button from '@mui/material/Button';
-import { Stack } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import {
-  RUTAS_RESERVAR_HORA,
-} from '../../constantes';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import { secondary } from '../../constantes';
 
-export default function BasicPopover({ fontSizeM }) {
-  const history = useNavigate();
-  const [anchorEl, setAnchorEl] = useState(null);
+export default function BasicPopover({
+  sucursalSeleccionada,
+  TODASLASSUCURSALES, optionsSucursales,
+}) {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -24,13 +23,33 @@ export default function BasicPopover({ fontSizeM }) {
   const id = open ? 'simple-popover' : undefined;
 
   return (
-    <Button
-      variant="contained"
-      color="success"
-      style={{ fontSize: fontSizeM }}
-      onClick={() => history(RUTAS_RESERVAR_HORA)}
-    >
-      Reserva de Hora
-    </Button>
+    <div>
+      <Button
+        variant="outlined"
+        color="secondary"
+        style={{
+          color: 'white', fontWeight: 'bold', whiteSpace: 'break-spaces', border: 'solid', borderColor: secondary,
+        }}
+        onClick={handleClick}
+      >
+        <FilterAltIcon color="white" />
+        Sucursal:
+        <span>
+          {sucursalSeleccionada !== TODASLASSUCURSALES ? sucursalSeleccionada.split(',')[0] : sucursalSeleccionada}
+        </span>
+      </Button>
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        {optionsSucursales()}
+      </Popover>
+    </div>
   );
 }

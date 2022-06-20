@@ -1,9 +1,8 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Container, Box, Radio, RadioGroup, FormLabel, FormControlLabel, Grid, Divider,
+  Container, Box, FormLabel, Grid, Divider,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';

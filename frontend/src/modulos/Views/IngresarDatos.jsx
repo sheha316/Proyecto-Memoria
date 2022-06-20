@@ -1,8 +1,7 @@
 import React from 'react';
 import {
   Container, Box,
-  // eslint-disable-next-line no-unused-vars
-  Grid, Stack, FormLabel, Button,
+  Grid, Stack, FormLabel,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';

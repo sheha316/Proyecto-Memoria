@@ -1,14 +1,10 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
-  Container, Box, FormLabel, Grid, Stack,
+  Container, Box, Grid,
 } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import api from '../../API/api';
 import Stepper from '../Componentes/Stepper';
-import Fichas from '../Componentes/FichasInformacion';
 import MostrarCalendarioyMedicos from '../Componentes/MostrarCalendarioyMedicos';
 
 function ReservarConMedico() {
@@ -17,8 +13,6 @@ function ReservarConMedico() {
   const [firstDay, setfirstDay] = useState();
   const [lastDay, setlastDay] = useState();
   const [agendaMedico, setAgendaMedico] = useState({});
-  const theme = useTheme();
-  const cellphone = useMediaQuery(theme.breakpoints.down('md'));
 
   useEffect(() => {
     async function getAgendaMedico() {
@@ -32,7 +26,6 @@ function ReservarConMedico() {
     }
     getAgendaMedico();
   }, []);
-  console.log(medico);
   return (
     <Container>
       <Stepper
@@ -50,18 +43,6 @@ function ReservarConMedico() {
           justifyContent="space-between"
           alignItems="flex-start"
         >
-          {/*           {Object.keys(agendaMedico).length !== 0 && fechaSeleccionada !== '' && (
-            <Grid item xs={cellphone ? 12 : 5}>
-              <Box sx={{ marginTop: 4 }}>
-                <Stack spacing={4}>
-                  {Fichas.FichaProfeional(medico[0])}
-                  {Fichas.FichaSucursal(medico[0].sucursal)}
-                </Stack>
-              </Box>
-
-            </Grid>
-
-          )} */}
           <MostrarCalendarioyMedicos
             agendasMedicos={[{ agenda: agendaMedico.agenda }]}
             area={OpcionesDeBusquedaSeleccionada}

@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import {
   FormLabel, Grid, Container,
 } from '@mui/material';

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-shadow */
@@ -8,19 +7,16 @@ import React, { useState } from 'react';
 import {
   Button, Box,
   Paper, FormControl, FormLabel, Grid,
-  TextField, FormHelperText, Autocomplete, RadioGroup,
-  FormControlLabel, Radio, IconButton, InputAdornment, Stack,
+  TextField, FormHelperText, Autocomplete, Stack,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { List } from 'react-virtualized';
 import SearchIcon from '@mui/icons-material/Search';
 import {
-  RUTAS_CANCELAR_RESERVAS, secondary,
+  secondary,
 } from '../../constantes';
 
-const WIDTHINPUT = '85%';
 function getrowHeight(itemSize) {
   return itemSize;
 }
@@ -67,12 +63,9 @@ function getLabel(option, opcionBusqueda, tipo) {
 function AutocompleteForm({
   handleSubmit,
   opcionBusqueda,
-  setOpcionBusqueda,
   opciones,
-  OpcionesDeBusqueda,
   seter,
 }) {
-  const history = useNavigate();
   const [label, setLabel] = useState(`${opcionBusqueda}...`);
   let validationSchema;
   let initialValues;
@@ -102,9 +95,6 @@ function AutocompleteForm({
     initialValues = { medicoSeleccionado: { nombre: '', apellido: '', especializacion: '' } };
     id = 'medicoSeleccionado';
   }
-  const ToCancelarHora = () => {
-    history(RUTAS_CANCELAR_RESERVAS);
-  };
   return (
     <Formik
       initialValues={initialValues}

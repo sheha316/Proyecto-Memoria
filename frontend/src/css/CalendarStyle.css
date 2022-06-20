@@ -50,10 +50,15 @@ div.rmdp-day.rmdp-selected > span.sd{
 /* #estiloDiasSemana*/
 .rmdp-day span, .rmdp-week-day {
     color: var(--PRIMARY)!important;
+    background-color: #fff!important;
 }
 /* #estiloFlechas */
-.rmdp-arrow-container {
-    border-color: var(--PRIMARY)!important;
+.rmdp-arrow-container >i.rmdp-arrow {
+    border-color: var(--PRIMARY);
+}
+.rmdp-arrow.disabled .rmdp-arrow, .rmdp-arrow-container.disabled:hover .rmdp-arrow {
+    border: solid gray!important;
+    border-width: 0 2px 2px 0!important;
 }
 /* #estiloFlechas-hover */
 .rmdp-arrow-container:hover{

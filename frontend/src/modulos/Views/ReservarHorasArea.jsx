@@ -2,13 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
-  Container, Box, Radio, RadioGroup, FormLabel, FormControlLabel, Grid, Paper,
+  Container, Box, Radio, RadioGroup, FormControlLabel, Grid, Paper,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import api from '../../API/api';
 import {
-  success,
   SUCURSAL_1, SUCURSAL_2, SUCURSAL_3, SUCURSAL_4,
 } from '../../constantes';
 import Stepper from '../Componentes/Stepper';
@@ -85,52 +84,40 @@ function ReservarHorasArea() {
   const optionsSucursales = () => (
     <Paper
       elevation={4}
-      sx={{
-        backgroundColor: success, padding: 2, borderRadius: 5, color: 'white',
-      }}
+      sx={{ padding: 2 }}
     >
       <RadioGroup
         row={cellphone}
-        defaultValue={TODASLASSUCURSALES}
+        defaultValue={sucursalSeleccionada}
         onChange={(e) => { setSucursalSeleccionada(e.target.value); }}
       >
         <Grid
           container
-          direction={cellphone ? 'column' : 'row'}
+          direction="column"
           justifyContent="center"
-          alignItems={cellphone ? 'flex-start' : 'center'}
+          alignItems="flex-start"
         >
           {sucursales.map((sucursalOptions) => (
-            <Grid key={sucursalOptions} item xs={2}>
-              <FormControlLabel
-                style={{ width: 'fit-content' }}
-                key={sucursalOptions}
-                value={sucursalOptions}
-                control={(
-                  <Radio sx={{
-                    '&, &.Mui-checked': {
-                      color: 'white',
-                    },
-                  }}
-                  />
-)}
-                label={<span style={{ fontSize: cellphone ? 16 : null }}>{sucursalOptions}</span>}
-                disabled={sucursalesHabilitadas[sucursalOptions] === 0}
-              />
-            </Grid>
+            <>
+              <Grid key={sucursalOptions} item xs={2}>
+                <FormControlLabel
+                  style={{ width: 'fit-content' }}
+                  key={sucursalOptions}
+                  value={sucursalOptions}
+                  control={(<Radio />)}
+                  label={<span>{sucursalOptions}</span>}
+                  disabled={sucursalesHabilitadas[sucursalOptions] === 0}
+                />
+
+              </Grid>
+              {' '}
+            </>
           ))}
           <FormControlLabel
             style={{ width: 'fit-content' }}
             value={TODASLASSUCURSALES}
-            control={(
-              <Radio sx={{
-                '&, &.Mui-checked': {
-                  color: 'white',
-                },
-              }}
-              />
-)}
-            label={<span style={{ fontSize: cellphone ? 16 : null }}>{TODASLASSUCURSALES}</span>}
+            control={(<Radio />)}
+            label={<span>{TODASLASSUCURSALES}</span>}
           />
 
         </Grid>
@@ -146,20 +133,13 @@ function ReservarHorasArea() {
       ${area.especializacion}`}
         OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
       />
-      <Box sx={{ marginTop: 4, width: '100%' }}>
+      <Box sx={{ marginTop: 2, width: '100%' }}>
         <Grid
           container
           direction="row"
           justifyContent="space-between"
           alignItems="flex-start"
         >
-
-          {sucursalSeleccionada !== '' && false && (
-            <Grid item xs={12}>
-              <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>Seleccione Sucursal</FormLabel>
-              {optionsSucursales()}
-            </Grid>
-          )}
           <MostrarCalendarioyMedicos
             agendasMedicos={agendasMedicosFiltrados}
             sucursalSeleccionada={sucursalSeleccionada}
@@ -168,7 +148,9 @@ function ReservarHorasArea() {
             setFecha={setFechaSeleccionada}
             FirstDay={firstDay}
             LastDay={lastDay}
+            TODASLASSUCURSALES={TODASLASSUCURSALES}
             OpcionesDeBusquedaSeleccionada={OpcionesDeBusquedaSeleccionada}
+            optionsSucursales={optionsSucursales}
             Title="Seleccione Fecha y Profesional"
           />
         </Grid>
