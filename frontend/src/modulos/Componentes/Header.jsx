@@ -90,7 +90,7 @@ function Header() {
               justifyContent="center"
               alignItems="center"
               spacing={2}
-              sx={{ p: 2 }}
+              sx={{ p: 1.5 }}
             >
               <Button
                 variant="contained"
@@ -98,12 +98,12 @@ function Header() {
                 style={{ fontSize: fontSizeM }}
                 onClick={() => history(RUTAS_RESERVAR_HORA)}
               >
-                Reserva de Hora
+                Reservar Hora
               </Button>
               <Button
-                variant="outlined"
-                color="success"
-                style={{ fontSize: fontSizeM - 3 }}
+                variant="contained"
+                color="secondary"
+                style={{ fontSize: fontSizeM - 2, color: 'white' }}
                 onClick={() => history(RUTAS_CANCELAR_RESERVAS)}
               >
                 Cancelar Hora

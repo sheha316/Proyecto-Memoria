@@ -3,6 +3,8 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import {
   primary,
 } from '../../constantes';
@@ -13,6 +15,9 @@ function INFO() {
     texto,
     imagen,
   } = useLocation().state;
+  const theme = useTheme();
+  const cellphone = useMediaQuery(theme.breakpoints.down('md'));
+  const grid = cellphone ? [12, 0, 12] : [4, 3, 4];
   return (
     <Container>
       <FormLabel
@@ -33,10 +38,11 @@ function INFO() {
         alignItems="center"
         sx={{ marginTop: 2 }}
       >
-        <Grid item xs={4}>
+        <Grid item xs={grid[0]}>
           <img alt="" src={imagen} />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={grid[1]} />
+        <Grid item xs={grid[2]}>
           {texto}
         </Grid>
       </Grid>
