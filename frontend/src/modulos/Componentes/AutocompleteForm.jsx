@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import {
   Button, Box,
-  Paper, FormControl, FormLabel, Grid,
+  Paper, FormControl, Grid,
   TextField, FormHelperText, Autocomplete, Stack,
 } from '@mui/material';
 import { Form, Formik } from 'formik';
@@ -65,6 +65,7 @@ function AutocompleteForm({
   opcionBusqueda,
   opciones,
   seter,
+  selected,
 }) {
   const [label, setLabel] = useState(`${opcionBusqueda}...`);
   let validationSchema;
@@ -114,15 +115,10 @@ function AutocompleteForm({
           <Paper
             elevation={4}
             sx={{
-              backgroundColor: secondary, padding: 5, marginTop: 1, borderRadius: 5,
+              backgroundColor: selected ? secondary : 'gray', padding: 5, marginTop: 1, borderRadius: 5,
             }}
           >
-            <FormControl onClick={() => { setLabel(''); }} warning={errors[id] && touched[id]} sx={{ width: '100%' }}>
-              <FormLabel sx={{ color: (errors[id] && touched[id]) ? 'yellow' : 'white', fontWeight: 'bold' }}>
-                Buscar por
-                {' '}
-                {opcionBusqueda}
-              </FormLabel>
+            <FormControl onClick={() => { setLabel(''); }} warning={errors[id] && touched[id] && selected} sx={{ width: '100%' }}>
               <Stack direction="row">
                 <Grid
                   container
@@ -145,6 +141,7 @@ function AutocompleteForm({
                     <Autocomplete
                       id={id}
                       name={id}
+                      disabled={!selected}
                       ListboxComponent={opcionBusqueda === 'Área Médica' ? '' : ListboxComponent}
                       options={opciones}
                       groupBy={(option) => {
@@ -174,7 +171,7 @@ function AutocompleteForm({
                       }}
                       value={values[id]}
                       error={errors[id]?.especializacion
-                      && touched[id]?.especializacion}
+                      && touched[id]?.especializacion && selected}
                       renderInput={(params) => (
                         <TextField
                           {...params}
@@ -184,7 +181,7 @@ function AutocompleteForm({
                     />
                   </Grid>
                   <Grid item xs={1} style={{ height: '100%' }}>
-                    <Button color="success" variant="contained" sx={{ height: '100%' }} type="submit">
+                    <Button color="success" variant="contained" sx={{ height: '100%' }} type="submit" disabled={!selected}>
                       <SearchIcon />
                     </Button>
                   </Grid>
@@ -192,7 +189,7 @@ function AutocompleteForm({
                 </Grid>
               </Stack>
               <FormHelperText xs={{ color: 'yellow' }}>
-                {(errors[id] && touched[id])
+                {(errors[id] && touched[id] && selected)
                   ? (
                     <span style={{ color: 'yellow' }}>
                       {errors[id]?.especializacion || errors[id]}
