@@ -96,8 +96,6 @@ function ReservarHoras() {
                 >
                   <FormControlLabel value={OpcionesDeBusqueda[0]} control={<Radio />} />
                   <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>
-                    Buscar por
-                    {' '}
                     {OpcionesDeBusqueda[0]}
                   </FormLabel>
                   <AutocompleteForm
@@ -131,8 +129,6 @@ function ReservarHoras() {
                 >
                   <FormControlLabel value={OpcionesDeBusqueda[1]} control={<Radio />} />
                   <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>
-                    Buscar por
-                    {' '}
                     {OpcionesDeBusqueda[1]}
                   </FormLabel>
                   <AutocompleteForm
