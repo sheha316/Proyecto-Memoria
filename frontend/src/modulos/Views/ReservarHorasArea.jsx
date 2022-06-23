@@ -108,7 +108,6 @@ function ReservarHorasArea() {
                   label={<span>{sucursalOptions}</span>}
                   disabled={sucursalesHabilitadas[sucursalOptions] === 0}
                 />
-
               </Grid>
               {' '}
             </>

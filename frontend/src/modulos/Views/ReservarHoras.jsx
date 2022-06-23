@@ -19,11 +19,10 @@ function ReservarHoras() {
   const history = useNavigate();
   const OpcionesDeBusqueda = ['Área Médica', 'Nombre del Médico'];
   const [OpcionesDeBusquedaSeleccionada,
-    setOpcionesDeBusquedaSeleccionada] = useState(OpcionesDeBusqueda[0]);
+    setOpcionesDeBusquedaSeleccionada] = useState();
   const theme = useTheme();
   const imgWidth = useMediaQuery(theme.breakpoints.down('sm')) ? '80%' : '';
-  const SearchOptionsVertical = useMediaQuery(theme.breakpoints.down('lg'));
-  console.log(OpcionesDeBusquedaSeleccionada);
+  const SearchOptionsVertical = true;
   const [areaMedica, setAreaMedica] = useState([]);
   const [medicos, setMedicos] = useState([]);
 
@@ -71,12 +70,11 @@ function ReservarHoras() {
       />
       <Box sx={{ marginTop: 5, width: '100%' }}>
         <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>
-          Elija Método de Búsqueda
+          Buscar por:
         </FormLabel>
         {(areaMedica.length > 0 && medicos.length > 0)
           ? (
             <RadioGroup
-              defaultValue={OpcionesDeBusqueda[0]}
               onChange={(e) => { setOpcionesDeBusquedaSeleccionada(e.target.value); }}
               value={OpcionesDeBusquedaSeleccionada}
             >
@@ -90,14 +88,18 @@ function ReservarHoras() {
                 <Grid
                   item
                   xs={SearchOptionsVertical ? 12 : 5.8}
-                  onClick={() => {
-                    setOpcionesDeBusquedaSeleccionada(OpcionesDeBusqueda[0]);
-                  }}
                 >
-                  <FormControlLabel value={OpcionesDeBusqueda[0]} control={<Radio />} />
-                  <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>
-                    {OpcionesDeBusqueda[0]}
-                  </FormLabel>
+                  <FormControlLabel
+                    value={OpcionesDeBusqueda[0]}
+                    label={(
+                      <span style={{ color: 'black', fontWeight: 'bold' }}>
+                        {OpcionesDeBusqueda[0]}
+                      </span>
+                      )}
+                    control={(<Radio />)}
+                  />
+                  {OpcionesDeBusquedaSeleccionada === OpcionesDeBusqueda[0]
+                  && (
                   <AutocompleteForm
                     OpcionesDeBusqueda={OpcionesDeBusqueda}
                     handleSubmit={handleSubmitAreaMedica}
@@ -107,30 +109,23 @@ function ReservarHoras() {
                     seter={setAreaSeleccionada}
                     selected={OpcionesDeBusquedaSeleccionada === OpcionesDeBusqueda[0]}
                   />
+                  )}
                 </Grid>
-                {!SearchOptionsVertical && (
-                <Divider orientation="vertical" flexItem>
-                  o
-                </Divider>
-                )}
-                {SearchOptionsVertical && (
-                <Grid item xs={10} sx={{ margin: 1 }}>
-                  <Divider flexItem>
-                    o
-                  </Divider>
-                </Grid>
-                )}
                 <Grid
                   item
                   xs={SearchOptionsVertical ? 12 : 5.9}
-                  onClick={() => {
-                    setOpcionesDeBusquedaSeleccionada(OpcionesDeBusqueda[1]);
-                  }}
                 >
-                  <FormControlLabel value={OpcionesDeBusqueda[1]} control={<Radio />} />
-                  <FormLabel sx={{ color: 'black', fontWeight: 'bold' }}>
-                    {OpcionesDeBusqueda[1]}
-                  </FormLabel>
+                  <FormControlLabel
+                    value={OpcionesDeBusqueda[1]}
+                    control={(<Radio />)}
+                    label={(
+                      <span style={{ color: 'black', fontWeight: 'bold' }}>
+                        {OpcionesDeBusqueda[1]}
+                      </span>
+)}
+                  />
+                  {OpcionesDeBusquedaSeleccionada === OpcionesDeBusqueda[1]
+                  && (
                   <AutocompleteForm
                     OpcionesDeBusqueda={OpcionesDeBusqueda}
                     handleSubmit={handleSubmitEspecialista}
@@ -140,6 +135,7 @@ function ReservarHoras() {
                     seter={setMedicoSeleccionado}
                     selected={OpcionesDeBusquedaSeleccionada === OpcionesDeBusqueda[1]}
                   />
+                  )}
                 </Grid>
 
               </Grid>
