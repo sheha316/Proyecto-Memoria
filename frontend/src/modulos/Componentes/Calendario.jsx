@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable array-callback-return */
@@ -63,7 +64,7 @@ function WEEKLESELECTOR(
       alignItems="center"
       spacing={cellphone ? 2 : 10}
     >
-      <IconButton onClick={() => setFecha(addDaysToSelectedDate(fecha, -7))}>
+      <IconButton onClick={() => setFecha(addDaysToSelectedDate(fecha, -7, agendasMedicos))}>
         <ArrowBackIosNewIcon fontSize="large" sx={{ color: 'white' }} />
       </IconButton>
       {weekDaysofDateSelected.length > 0 && weekDays.map((dia, index) => {
@@ -108,6 +109,7 @@ function WEEKLESELECTOR(
                   backgroundColor: colorCirculo,
                   padding: 1,
                   borderRadius: 5000,
+                  border: colorCirculo !== 'gray' ? 2 : 0,
                   width: 20,
                   height: 20,
                   cursor: colorCirculo !== 'gray' ? cursor : '',
@@ -127,7 +129,7 @@ function WEEKLESELECTOR(
           );
         }
       })}
-      <IconButton onClick={() => setFecha(addDaysToSelectedDate(fecha, 7))}>
+      <IconButton onClick={() => setFecha(addDaysToSelectedDate(fecha, 7, agendasMedicos))}>
         <ArrowForwardIosIcon fontSize="large" sx={{ color: 'white' }} />
       </IconButton>
     </Stack>
@@ -149,7 +151,7 @@ function Calendario({
     const aux = new Date(_date);
     return new Date(aux.setDate(aux.getDate() + _noOfDays));
   }
-  function addDaysToSelectedDate(_date, _noOfDays) {
+  function addDaysToSelectedDate(_date, _noOfDays, agendas) {
     const aux = new Date(_date);
     aux.setDate(aux.getDate() + _noOfDays);
     if (aux.getTime() < minDate.getTime()) {
@@ -157,7 +159,15 @@ function Calendario({
     } if (aux.getTime() > maxDate.getTime()) {
       return maxDate;
     }
-    return aux;
+    const first = aux.getDate() - aux.getDay() + 1;
+    const monday = new Date(aux.setDate(first));
+    for (let i = 0; i < 6; i++) {
+      if (HayUnDoctorDisponible(monday, minDate, maxDate, agendas)) {
+        return monday;
+      }
+      monday.setDate(monday.getDate() + 1);
+    }
+    return addDaysToSelectedDate(monday, _noOfDays, agendas);
   }
 
   useEffect(() => {
