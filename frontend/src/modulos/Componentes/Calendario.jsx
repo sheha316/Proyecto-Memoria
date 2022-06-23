@@ -117,7 +117,7 @@ function WEEKLESELECTOR(
                 <FormLabel
                   onMouseEnter={() => { setCursor('pointer'); }}
                   sx={{
-                    color: 'white', fontWeight: 'bold', cursor: colorCirculo !== 'gray' ? cursor : '',
+                    color: colorCirculo !== 'gray' ? 'white' : 'lightgray', fontWeight: 'bold', cursor: colorCirculo !== 'gray' ? cursor : '',
                   }}
                 >
                   {weekDaysofDateSelected[index - 1].getDate()}

@@ -95,7 +95,7 @@ function Header() {
               <Button
                 variant="contained"
                 color="success"
-                style={{ fontSize: fontSizeM }}
+                style={{ fontSize: fontSizeM, width: '100%' }}
                 onClick={() => history(RUTAS_RESERVAR_HORA)}
               >
                 Reservar Hora
@@ -103,7 +103,7 @@ function Header() {
               <Button
                 variant="contained"
                 color="secondary"
-                style={{ fontSize: fontSizeM - 2, color: 'white' }}
+                style={{ fontSize: fontSizeM - 2, color: 'white', width: '100%' }}
                 onClick={() => history(RUTAS_CANCELAR_RESERVAS)}
               >
                 Cancelar Hora
