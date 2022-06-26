@@ -222,7 +222,7 @@ function TextFieldInput(
           sx={{
             marginTop: 1,
             width: '90%',
-            backgroundColor: 'white',
+            backgroundColor: (errors[id] && touched[id]) ? 'yellow' : 'white',
             input: { color: 'black' },
             borderRadius: 1,
           }}
