@@ -27,23 +27,23 @@ const ListboxComponent = React.forwardRef((
   const { children, role, ...other } = props;
   const childrenaux = children[0].props.children[1].props.children;
   const itemCount = Array.isArray(childrenaux) ? childrenaux.length : 0;
-  const itemSize = 36;
+  const itemSize = 50;
+  const size = [800, 150];
 
   return (
-    <div ref={ref}>
-      <div {...other}>
-        <List
-          width={900}
-          height={250}
-          rowHeight={(a) => getrowHeight(itemSize, a, children)}
-          overscanCount={5}
-          rowRenderer={(props) => React.cloneElement(childrenaux[props.index], {
-            style: props.style,
-          })}
-          role={role}
-          rowCount={itemCount}
-        />
-      </div>
+    <div ref={ref} {...other}>
+      <List
+        style={{ width: '100%', top: -10 }}
+        width={size[0]}
+        height={size[1]}
+        rowHeight={(a) => getrowHeight(itemSize, a, children)}
+        overscanCount={5}
+        rowRenderer={(props) => React.cloneElement(childrenaux[props.index], {
+          style: props.style,
+        })}
+        role={role}
+        rowCount={itemCount}
+      />
     </div>
   );
 });
